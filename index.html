@@ -1334,7 +1334,6 @@
             <span>🦋 Tangkap: <em id="bfCount">0</em> / <em id="bfTotal">8</em></span>
         </div>
         <div class="intro-card" id="bfIntro">
-            <h2>🦋 Tangkap Kupu-kupu!</h2>
             <p>Ada 8 kupu-kupu terbang di sini.<br>Tangkap semuanya untuk lanjut!</p>
             <button class="start-btn" id="bfStartBtn">Mulai!</button>
         </div>
@@ -1519,8 +1518,8 @@
                 blowHint.textContent = candlesLeft + ' lilin menyala ✨';
             } else {
                 blowDone = true;
-                blowHint.textContent = 'Semua padam! 🎉';
-                blowBtn.textContent = 'Lanjut 🦋';
+                blowHint.textContent = 'Yeyy semua padam!';
+                blowBtn.textContent = 'Lanjut';
                 spawnConfetti();
                 blowBtn.removeEventListener('click', blowOne);
                 blowBtn.addEventListener('click', function () { goTo('stageButterfly'); });
@@ -1529,7 +1528,7 @@
 
         /* ── STAGE 2: KUPU-KUPU ── */
         var BF_TOTAL = 8;
-        var BF_WORDS = ['Cantik!', 'Lucu!', 'Imut!', 'Manis!', 'Kawaii~', 'Gemesin!', 'Senyum!', 'Cihuy!'];
+        var BF_WORDS = ['Cantik!', 'Lucu!', 'Imut!', 'Manis!', 'Kawaii~', 'Gemesin!', 'Rawr!', 'Cihuy!'];
         var bfCaught = 0;
         var bfIntervals = [];
         var bfContainer = document.getElementById('bfContainer');
