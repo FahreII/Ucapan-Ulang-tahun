@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Birthday Book</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Nunito:wght@400;600;700;800&display=swap"
+        rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        :root {
+            --rose: #ff4f8b;
+            --plum: #5a2d4f
+        }
+
+        body {
+            width: 100%;
+            min-height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(ellipse at 20% 30%, #ffd6e7 0%, #ffe9f3 40%, #f4d9ff 80%, #dce8ff 100%);
+            font-family: 'Nunito', sans-serif
+        }
+
+        .blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: .35;
+            pointer-events: none;
+            animation: drift 14s ease-in-out infinite alternate
+        }
+
+        .blob-1 {
+            width: 380px;
+            height: 380px;
+            background: #ffb6d9;
+            top: -80px;
+            left: -80px
+        }
+
+        .blob-2 {
+            width: 300px;
+            height: 300px;
+            background: #d4b3ff;
+            bottom: -60px;
+            right: -60px;
+            animation-delay: -5s
+        }
+
+        .blob-3 {
+            width: 200px;
+            height: 200px;
+            background: #b3d8ff;
+            top: 50%;
+            right: 10%;
+            animation-delay: -9s
+        }
+
+        @keyframes drift {
+            from {
+                transform: translate(0, 0) scale(1)
+            }
+
+            to {
+                transform: translate(40px, 30px) scale(1.08)
+            }
+        }
+
+        .scene {
+            perspective: 2800px
+        }
+
+        .book-wrapper {
+            position: relative;
+            width: 480px;
+            height: 620px
+        }
+
+        .book {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 1s ease
+        }
+
+        .book.open {
+            transform: rotateZ(1.5deg) rotateY(-10deg)
+        }
+
+        .cover {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, #ff3d7f, #ff6fa3, #ff4f8b);
+            border-radius: 20px 6px 6px 20px;
+            transform-origin: left center;
+            transition: transform 1.2s cubic-bezier(.77, 0, .175, 1);
+            z-index: 10;
+            cursor: pointer;
+            overflow: hidden;
+            box-shadow: 8px 0 0 #cc2f66, 0 30px 60px rgba(0, 0, 0, .3), inset -4px 0 12px rgba(0, 0, 0, .15)
+        }
+
+        .cover::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 22px;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(0, 0, 0, .25), transparent);
+            border-radius: 20px 0 0 20px
+        }
+
+        .cover::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, .22) 0%, transparent 55%, rgba(255, 255, 255, .08) 100%);
+            pointer-events: none
+        }
+
+        .book.open .cover {
+            transform: rotateY(-148deg)
+        }
+
+        .cover-pattern {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            opacity: .18
+        }
+
+        .cover-pattern span {
+            position: absolute;
+            font-size: 18px;
+            animation: floatP 6s ease-in-out infinite
+        }
+
+        @keyframes floatP {
+
+            0%,
+            100% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(-10px)
+            }
+        }
+
+        .cover-content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            gap: 14px;
+            transition: opacity .5s ease
+        }
+
+        .book.open .cover-content {
+            opacity: 0;
+            transition-delay: .2s
+        }
+
+        .cover-badge {
+            font-size: 11px;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            opacity: .85;
+            font-weight: 700;
+            border: 1.5px solid rgba(255, 255, 255, .6);
+            border-radius: 20px;
+            padding: 4px 14px
+        }
+
+        .cover-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 52px;
+            line-height: 1.1;
+            font-weight: 700
+        }
+
+        .cover-sub {
+            font-size: 13px;
+            opacity: .8;
+            letter-spacing: .05em
+        }
+
+        .cover-hint {
+            margin-top: 16px;
+            font-size: 13px;
+            opacity: .7;
+            display: flex;
+            align-items: center;
+            gap: 6px
+        }
+
+        .cover-hint::before,
+        .cover-hint::after {
+            content: '';
+            width: 24px;
+            height: 1px;
+            background: rgba(255, 255, 255, .5)
+        }
+
+        .page {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(160deg, #fff8fb 0%, #fff4f9 60%, #fef0ff 100%);
+            border-radius: 20px;
+            overflow: hidden
+        }
+
+        .page::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(transparent, transparent 39px, rgba(255, 79, 139, .06) 39px, rgba(255, 79, 139, .06) 40px);
+            pointer-events: none
+        }
+
+        .page::after {
+            content: '';
+            position: absolute;
+            left: 58px;
+            top: 0;
+            bottom: 0;
+            width: 1.5px;
+            background: rgba(255, 150, 190, .25)
+        }
+
+        .page-inner {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 50px 54px;
+            gap: 16px
+        }
+
+        .page-tag {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: #ffb3d0;
+            border: 1px solid #ffcfe0;
+            border-radius: 20px;
+            padding: 4px 14px
+        }
+
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--rose);
+            line-height: 1.1
+        }
+
+        .page-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 30px;
+            font-style: italic;
+            color: var(--plum);
+            line-height: 1.2
+        }
+
+        .page-divider {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ffb3d0, transparent);
+            border-radius: 2px
+        }
+
+        .page-msg {
+            max-width: 320px;
+            line-height: 1.9;
+            color: #7a5570;
+            font-size: 15px;
+            font-weight: 600
+        }
+
+        .gift-btn {
+            opacity: 0;
+            pointer-events: none;
+            position: absolute;
+            right: 18px;
+            bottom: 18px;
+            border: none;
+            background: linear-gradient(135deg, var(--rose), #ff7ab5);
+            color: white;
+            padding: 13px 26px;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 800;
+            font-family: 'Nunito', sans-serif;
+            cursor: pointer;
+            box-shadow: 0 12px 30px rgba(255, 79, 139, .4);
+            transition: opacity .5s ease, transform .3s ease, box-shadow .3s ease;
+            letter-spacing: .03em
+        }
+
+        .book.open~.gift-btn {
+            opacity: 1;
+            pointer-events: auto;
+            transition-delay: .9s
+        }
+
+        .gift-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 18px 38px rgba(255, 79, 139, .5)
+        }
+
+        /* SECRET PAGE */
+        .secret-page {
+            position: fixed;
+            inset: 0;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 32px;
+            background: linear-gradient(135deg, #ffd9ea, #fff1f8, #f3e8ff);
+            z-index: 9999
+        }
+
+        .secret-page.visible {
+            display: flex;
+            animation: fadeSlide .6s ease
+        }
+
+        @keyframes fadeSlide {
+            from {
+                opacity: 0;
+                transform: scale(.97)
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1)
+            }
+        }
+
+        /* ENVELOPE */
+        .env-wrap {
+            position: relative;
+            width: 260px;
+            height: 230px;
+            margin: 0 auto;
+            perspective: 900px;
+            transform-style: preserve-3d;
+        }
+
+        /* Letter — z:1, tersembunyi di dalam, naik saat hover */
+        .env-letter {
+            position: absolute;
+            left: 12px;
+            right: 12px;
+            bottom: 10px;
+            height: 148px;
+            background: white;
+            border-radius: 10px;
+            border: 1.5px solid #ffd8e8;
+            box-shadow: 0 4px 16px rgba(255, 79, 139, .1);
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transform: translateY(0px);
+            transition: transform .7s cubic-bezier(.25, .8, .25, 1);
+        }
+
+        .env-letter-inner {
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity .35s ease .4s, transform .35s ease .4s;
+            text-align: center;
+            padding: 0 12px;
+        }
+
+        .env-letter-emoji {
+            font-size: 26px;
+            display: block;
+            margin-bottom: 4px
+        }
+
+        .env-letter-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 15px;
+            color: var(--plum);
+            line-height: 1.3;
+            margin-bottom: 3px
+        }
+
+        .env-letter-sub {
+            font-size: 10px;
+            color: #c090b0;
+            font-weight: 700;
+            letter-spacing: .06em
+        }
+
+        /* Body amplop — z:2, pocket pink */
+        .env-body {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 70px;
+            height: 160px;
+            background: linear-gradient(160deg, #ff6fa3, #ff4f8b);
+            border-radius: 0 0 16px 16px;
+            z-index: 2;
+            overflow: hidden;
+        }
+
+        .env-body::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-bottom: 80px solid rgba(0, 0, 0, .12);
+            border-right: 130px solid transparent;
+        }
+
+        .env-body::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 0;
+            border-bottom: 80px solid rgba(0, 0, 0, .18);
+            border-left: 130px solid transparent;
+        }
+
+        .env-shine {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, .2) 0%, transparent 55%);
+            pointer-events: none
+        }
+
+        /* Tutup atas amplop (V shape) — z:4, di atas segalanya saat tertutup */
+        .env-top {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            height: 100px;
+            z-index: 4;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .env-top svg {
+            width: 100%;
+            height: 100%;
+            display: block
+        }
+
+        /* Flap — segitiga yang flip saat hover */
+        .env-flap {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            height: 100px;
+            z-index: 3;
+            transform-origin: top center;
+            transform: rotateX(0deg);
+            transition: transform .6s cubic-bezier(.4, 0, .2, 1);
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .env-flap svg {
+            width: 100%;
+            height: 100%;
+            display: block
+        }
+
+        .env-wrap:hover .env-flap,
+        .env-wrap.locked-open .env-flap {
+            transform: rotateX(-175deg)
+        }
+
+        .env-wrap:hover .env-letter,
+        .env-wrap.locked-open .env-letter {
+            transform: translateY(-145px)
+        }
+
+        .env-wrap:hover .env-letter-inner,
+        .env-wrap.locked-open .env-letter-inner {
+            opacity: 1;
+            transform: translateY(0)
+        }
+
+        /* CHOICE AREA — wrapper tidak terlihat, hanya spacing placeholder */
+        .choice-area {
+            height: 0;
+            overflow: visible;
+            pointer-events: none
+        }
+
+        /* YES & NO BTN — keduanya fixed, diposisikan JS */
+        .yes-btn,
+        .no-btn {
+            border: none;
+            padding: 14px 34px;
+            border-radius: 999px;
+            font-size: 16px;
+            font-weight: 800;
+            font-family: 'Nunito', sans-serif;
+            cursor: pointer;
+            color: white;
+            letter-spacing: .02em;
+            white-space: nowrap;
+            position: fixed;
+            z-index: 999999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .4s ease, left .15s ease, top .15s ease;
+            display: block;
+        }
+
+        .yes-btn {
+            background: linear-gradient(135deg, var(--rose), #ff7ab5);
+            box-shadow: 0 8px 24px rgba(255, 79, 139, .4);
+        }
+
+        .yes-btn:hover {
+            transform: scale(1.07);
+            box-shadow: 0 14px 30px rgba(255, 79, 139, .5)
+        }
+
+        .yes-btn.shown,
+        .no-btn.shown {
+            opacity: 1;
+            pointer-events: auto
+        }
+
+        /* NO BTN */
+        .no-btn {
+            background: linear-gradient(135deg, #9b8fa0, #7a6d7e);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, .2);
+        }
+
+        /* FORM CARD */
+        .form-card {
+            display: none;
+            background: white;
+            border-radius: 28px;
+            padding: 44px 48px;
+            box-shadow: 0 32px 80px rgba(180, 60, 120, .18), 0 0 0 1px rgba(255, 150, 190, .15);
+            width: 420px;
+            flex-direction: column;
+            align-items: center;
+            animation: popIn .5s cubic-bezier(.34, 1.56, .64, 1)
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(.85);
+                opacity: 0
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1
+            }
+        }
+
+        .form-card h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            color: var(--rose);
+            margin-bottom: 22px
+        }
+
+        .form-fields {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            width: 100%
+        }
+
+        .form-fields input,
+        .form-fields textarea {
+            padding: 15px 18px;
+            border-radius: 14px;
+            border: 2px solid #ffd0e2;
+            font-size: 15px;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 600;
+            outline: none;
+            color: var(--plum);
+            transition: border-color .2s, box-shadow .2s;
+            background: #fff8fb
+        }
+
+        .form-fields input:focus,
+        .form-fields textarea:focus {
+            border-color: var(--rose);
+            box-shadow: 0 0 0 4px rgba(255, 79, 139, .1)
+        }
+
+        .form-fields textarea {
+            min-height: 110px;
+            resize: none
+        }
+
+        .submit-btn {
+            width: 100%;
+            border: none;
+            padding: 16px;
+            border-radius: 999px;
+            font-size: 16px;
+            font-weight: 800;
+            font-family: 'Nunito', sans-serif;
+            color: white;
+            cursor: pointer;
+            letter-spacing: .04em;
+            background: linear-gradient(135deg, var(--rose), #ff7ab5);
+            box-shadow: 0 10px 28px rgba(255, 79, 139, .4);
+            transition: transform .2s, box-shadow .2s
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 36px rgba(255, 79, 139, .5)
+        }
+
+        .submit-btn:active {
+            transform: scale(.97)
+        }
+
+        .success-msg {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px
+        }
+
+        .success-msg .checkmark {
+            font-size: 52px;
+            animation: pop .5s cubic-bezier(.34, 1.56, .64, 1)
+        }
+
+        .success-msg h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            color: var(--rose)
+        }
+
+        .success-msg p {
+            color: #9a7090;
+            font-size: 15px;
+            font-weight: 600
+        }
+
+        @keyframes pop {
+            from {
+                transform: scale(0)
+            }
+
+            to {
+                transform: scale(1)
+            }
+        }
+
+        /* PARTICLES */
+        .particles {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 99999
+        }
+
+        .particle {
+            position: absolute;
+            font-size: 20px;
+            pointer-events: none;
+            animation: fly 2.8s ease-out forwards
+        }
+
+        @keyframes fly {
+            0% {
+                opacity: 0;
+                transform: scale(.5)
+            }
+
+            15% {
+                opacity: 1
+            }
+
+            100% {
+                opacity: 0;
+                transform: translate(var(--dx), var(--dy)) scale(1.3) rotate(var(--r))
+            }
+        }
+
+        .confetti-piece {
+            position: fixed;
+            pointer-events: none;
+            z-index: 100000;
+            border-radius: 2px;
+            animation: confettiFall var(--dur) ease-in forwards
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+                opacity: 1
+            }
+
+            100% {
+                transform: translate(var(--dx), var(--dy)) rotate(var(--r));
+                opacity: 0
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <div class="scene">
+        <div class="book-wrapper">
+            <div class="book" id="book">
+                <div class="cover" id="cover">
+                    <div class="cover-pattern" id="coverPattern"></div>
+                    <div class="cover-content">
+                        <div class="cover-badge">Special For Soya</div>
+                        <div class="cover-title">Birthday<br>Book</div>
+                        <div class="cover-sub">A little something for you ✦</div>
+                        <div class="cover-hint">Klik untuk membuka</div>
+                    </div>
+                </div>
+                <div class="page">
+                    <div class="page-inner">
+                        <div class="page-tag">Happy Birthday 🎂</div>
+                        <div class="page-title">Selamat<br>Ulang Tahun</div>
+                        <div class="page-divider"></div>
+                        <div class="page-name">Silvi Adelia Putri</div>
+                        <div class="page-msg">Selamat ulang tahun yang ke-20 untuk seseorang yang begitu spesial. Semoga
+                            setiap langkahmu dipenuhi kebahagiaan, kesehatan, tawa, dan semua hal indah yang selalu kamu
+                            harapkan ✨</div>
+                    </div>
+                </div>
+            </div>
+            <button class="gift-btn" id="secretBtn">?</button>
+        </div>
+    </div>
+
+    <!-- SECRET PAGE -->
+    <div class="secret-page" id="secretPage">
+
+        <div id="stage1" style="display:flex;flex-direction:column;align-items:center;gap:28px">
+            <p class="env-letter-sub">Arahkan mouse ke amplop</p>
+            <div
+                style="background:white;border-radius:28px;padding:36px 48px 32px;box-shadow:0 32px 80px rgba(180,60,120,.18),0 0 0 1px rgba(255,150,190,.15);animation:popIn .5s cubic-bezier(.34,1.56,.64,1)">
+                <div class="env-wrap" id="envWrap">
+                    <!-- z:1 letter -->
+                    <div class="env-letter">
+                        <div class="env-letter-inner">
+                            <p class="env-letter-title">Kangen main<br>bareng lagi ngga?</p>
+                        </div>
+                    </div>
+                    <!-- z:2 body pocket -->
+                    <div class="env-body">
+                        <div class="env-shine"></div>
+                    </div>
+                    <!-- z:3 flap yang flip ke belakang saat hover -->
+                    <div class="env-flap">
+                        <svg viewBox="0 0 260 100" xmlns="http://www.w3.org/2000/svg">
+                            <polygon points="0,0 260,0 130,85" fill="url(#flapGrad)" />
+                            <defs>
+                                <linearGradient id="flapGrad" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#ff8fc0" />
+                                    <stop offset="100%" stop-color="#ff5898" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <!-- z:4 tutup atas kiri-kanan (V shape statis, tidak flip) -->
+                    <div class="env-top">
+                        <svg viewBox="0 0 260 100" xmlns="http://www.w3.org/2000/svg">
+                            <!-- sisi kiri atas -->
+                            <polygon points="0,0 130,85 0,100" fill="#ff6fa3" />
+                            <!-- sisi kanan atas -->
+                            <polygon points="260,0 130,85 260,100" fill="#ff4f8b" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- choice-area: placeholder kosong -->
+            <div class="choice-area" id="choiceArea"></div>
+        </div>
+
+        <!-- Stage 2 form -->
+        <div class="form-card" id="formCard">
+            <div class="form-fields" id="formFields">
+                <input type="text" id="game" placeholder="Game Apa?" />
+                <input type="text" id="schedule" placeholder="Kapan?" />
+                <textarea id="note" placeholder="Catatan tambahan (optional)"></textarea>
+                <button class="submit-btn" id="submitBtn">Kirim</button>
+            </div>
+            <div class="success-msg" id="successMsg">
+                <div class="checkmark">💖</div>
+                <h2>Yeay, Terkirim!</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kedua tombol di luar secret-page, langsung child of body -->
+    <button class="yes-btn" id="yesBtn">kangenn</button>
+    <button class="no-btn" id="noBtn">Nggaa</button>
+
+    <div class="particles" id="particles"></div>
+
+    <script>
+        /* ── Book ── */
+        const book = document.getElementById('book');
+        const cover = document.getElementById('cover');
+        let opened = false;
+        cover.addEventListener('click', () => { opened = !opened; book.classList.toggle('open', opened); });
+
+        const cp = document.getElementById('coverPattern');
+        const em = ['✨', '🌸', '💕', '⭐', '🦋', '💫', '🌷'];
+        for (let i = 0; i < 21; i++) {
+            const s = document.createElement('span');
+            s.textContent = em[Math.floor(Math.random() * em.length)];
+            s.style.cssText = `left:${Math.random() * 100}%;top:${Math.random() * 100}%;animation-delay:${Math.random() * 6}s;animation-duration:${4 + Math.random() * 4}s;`;
+            cp.appendChild(s);
+        }
+
+        const particles = document.getElementById('particles');
+        cover.addEventListener('mousemove', e => {
+            if (Math.random() > .55) return;
+            const p = document.createElement('div'); p.classList.add('particle');
+            p.textContent = ['✨', '🦋', '🌸'][Math.floor(Math.random() * 3)];
+            p.style.left = (e.clientX - 12) + 'px'; p.style.top = (e.clientY - 12) + 'px';
+            p.style.setProperty('--dx', (Math.random() * 400 - 200) + 'px');
+            p.style.setProperty('--dy', (-Math.random() * 400 - 50) + 'px');
+            p.style.setProperty('--r', (Math.random() * 360) + 'deg');
+            particles.appendChild(p); setTimeout(() => p.remove(), 2800);
+        });
+
+        /* ── Secret page ── */
+        document.getElementById('secretBtn').addEventListener('click', () => {
+            document.querySelector('.scene').style.display = 'none';
+            const sp = document.getElementById('secretPage');
+            sp.style.display = 'flex';
+            sp.classList.add('visible');
+        });
+
+        /* ── Envelope ── */
+        const envWrap = document.getElementById('envWrap');
+        const choiceArea = document.getElementById('choiceArea');
+        const noBtn = document.getElementById('noBtn');
+        let buttonsShown = false;
+        let leaveTimer = null;
+
+        envWrap.addEventListener('mouseenter', () => {
+            clearTimeout(leaveTimer);
+            if (buttonsShown) return;
+            leaveTimer = setTimeout(() => {
+                buttonsShown = true;
+                envWrap.classList.add('locked-open');
+                /* tampilkan yes btn */
+                choiceArea.classList.add('visible');
+                /* tampilkan no btn */
+                showNoBtn();
+            }, 1100);
+        });
+
+        envWrap.addEventListener('mouseleave', () => {
+            if (buttonsShown) return;
+            clearTimeout(leaveTimer);
+        });
+
+        /* ── Tampilkan kedua tombol di center layar berdampingan ── */
+        function showNoBtn() {
+            const yesBtn = document.getElementById("yesBtn");
+            const gap = 16; /* jarak antara dua tombol */
+
+            /* render dulu (display:block sudah, tapi opacity 0) biar offsetWidth bisa diukur */
+            yesBtn.classList.add("shown");
+            noBtn.classList.add("shown");
+
+            setTimeout(() => {
+                const yw = yesBtn.offsetWidth || 174;
+                const yh = yesBtn.offsetHeight || 51;
+                const nw = noBtn.offsetWidth || 130;
+                const nh = noBtn.offsetHeight || 51;
+
+                /* total lebar kedua tombol + gap */
+                const totalW = yw + gap + nw;
+                const startX = (window.innerWidth - totalW) / 2;
+                /* hitung centerY dari posisi envelope card */
+                const envCard = document.getElementById("envWrap").closest("div[style]");
+                const envRect = envCard ? envCard.getBoundingClientRect() : null;
+                const centerY = envRect
+                    ? envRect.bottom + 32 + Math.max(yh, nh) / 2
+                    : window.innerHeight / 2 + 160;
+
+                /* yes-btn: kiri */
+                yesBtn.style.left = startX + "px";
+                yesBtn.style.top = (centerY - yh / 2) + "px";
+
+                /* no-btn: kanan */
+                noBtn.style.left = (startX + yw + gap) + "px";
+                noBtn.style.top = (centerY - nh / 2) + "px";
+            }, 50);
+        }
+
+        function runAway() {
+            const bw = noBtn.offsetWidth || 130;
+            const bh = noBtn.offsetHeight || 50;
+            const pad = 24;
+            /* ambil posisi sekarang, lalu lompat ke tempat random yang JAUH */
+            const curL = parseFloat(noBtn.style.left) || window.innerWidth / 2;
+            const curT = parseFloat(noBtn.style.top) || window.innerHeight / 2;
+            let newL, newT, attempts = 0;
+            do {
+                newL = pad + Math.random() * (window.innerWidth - bw - pad * 2);
+                newT = pad + Math.random() * (window.innerHeight - bh - pad * 2);
+                attempts++;
+            } while (Math.abs(newL - curL) < 150 && Math.abs(newT - curT) < 80 && attempts < 20);
+            noBtn.style.left = newL + 'px';
+            noBtn.style.top = newT + 'px';
+        }
+
+        noBtn.addEventListener('mouseenter', runAway);
+        noBtn.addEventListener('touchstart', e => { e.preventDefault(); runAway(); }, { passive: false });
+
+        /* ── Yes → form ── */
+        document.getElementById('yesBtn').addEventListener('click', () => {
+            spawnConfetti();
+            noBtn.classList.remove('shown');
+            document.getElementById('yesBtn').classList.remove('shown');
+            setTimeout(() => {
+                document.getElementById('stage1').style.display = 'none';
+                document.getElementById('formCard').style.display = 'flex';
+            }, 300);
+        });
+
+        /* ── Submit ── */
+        document.getElementById('submitBtn').addEventListener('click', async () => {
+            const game = document.getElementById('game').value.trim();
+            const schedule = document.getElementById('schedule').value.trim();
+            const note = document.getElementById('note').value.trim();
+            document.getElementById('game').style.borderColor = game ? '#ffd0e2' : '#ff4f8b';
+            document.getElementById('schedule').style.borderColor = schedule ? '#ffd0e2' : '#ff4f8b';
+            if (!game || !schedule) return;
+
+            const BOT_TOKEN = '8365008697:AAEC9bMFFrxdFur3J2vxNE87bYzQ_sKSsus';
+            const CHAT_ID = '1999536233';
+            const msg = `🎮 Permintaan Main Baru\n\nGame: ${game}\nJadwal: ${schedule}\nCatatan: ${note || '-'}`;
+            const btn = document.getElementById('submitBtn');
+            btn.textContent = 'Mengirim...'; btn.disabled = true;
+            try {
+                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: CHAT_ID, text: msg })
+                });
+            } catch (e) { }
+            document.getElementById('formFields').style.display = 'none';
+            document.getElementById('successMsg').style.display = 'flex';
+            spawnConfetti();
+        });
+
+        /* ── Confetti ── */
+        function spawnConfetti() {
+            const cols = ['#ff4f8b', '#ff86b3', '#f5c542', '#9b5de5', '#4ecdc4', '#ff6b6b', '#fff0f6'];
+            for (let i = 0; i < 80; i++) {
+                const c = document.createElement('div'); c.classList.add('confetti-piece');
+                c.style.cssText = `left:${50 + (Math.random() - .5) * 30}vw;top:40vh;
+                    background:${cols[Math.floor(Math.random() * cols.length)]};
+                    border-radius:${Math.random() > .5 ? '50%' : '2px'};
+                    width:${6 + Math.random() * 6}px;height:${6 + Math.random() * 6}px;
+                    --dx:${(Math.random() - .5) * window.innerWidth * 1.2}px;
+                    --dy:${Math.random() * window.innerHeight + 200}px;
+                    --r:${Math.random() * 720}deg;--dur:${1.2 + Math.random() * 1.2}s;
+                    animation-delay:${Math.random() * .4}s;`;
+                document.body.appendChild(c); setTimeout(() => c.remove(), 2800);
+            }
+        }
+    </script>
+</body>
+
+</html>
