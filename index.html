@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Birthday Book</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Birthday Book – Silvi</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Nunito:wght@400;600;700;800&display=swap"
         rel="stylesheet" />
@@ -17,7 +17,8 @@
 
         :root {
             --rose: #ff4f8b;
-            --plum: #5a2d4f
+            --plum: #5a2d4f;
+            --gold: #ffcc44
         }
 
         body {
@@ -74,6 +75,42 @@
             to {
                 transform: translate(40px, 30px) scale(1.08)
             }
+        }
+
+        .screen {
+            position: fixed;
+            inset: 0;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 24px;
+            z-index: 100;
+            background: radial-gradient(ellipse at 20% 30%, #ffd6e7 0%, #ffe9f3 40%, #f4d9ff 80%, #dce8ff 100%)
+        }
+
+        .screen.active {
+            display: flex;
+            animation: fadeIn .6s ease
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(.97)
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1)
+            }
+        }
+
+        /* BOOK */
+        #stageBook {
+            z-index: 50;
+            background: transparent;
+            position: relative
         }
 
         .scene {
@@ -261,17 +298,6 @@
             gap: 16px
         }
 
-        .page-tag {
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: .18em;
-            text-transform: uppercase;
-            color: #ffb3d0;
-            border: 1px solid #ffcfe0;
-            border-radius: 20px;
-            padding: 4px 14px
-        }
-
         .page-title {
             font-family: 'Playfair Display', serif;
             font-size: 42px;
@@ -319,7 +345,7 @@
             font-family: 'Nunito', sans-serif;
             cursor: pointer;
             box-shadow: 0 12px 30px rgba(255, 79, 139, .4);
-            transition: opacity .5s ease, transform .3s ease, box-shadow .3s ease;
+            transition: opacity .5s ease, transform .3s, box-shadow .3s;
             letter-spacing: .03em
         }
 
@@ -334,34 +360,382 @@
             box-shadow: 0 18px 38px rgba(255, 79, 139, .5)
         }
 
-        /* SECRET PAGE */
-        .secret-page {
+        /* CAKE STAGE */
+        #stageCake .card {
+            background: white;
+            border-radius: 32px;
+            padding: 40px 52px 36px;
+            box-shadow: 0 32px 80px rgba(180, 60, 120, .18), 0 0 0 1px rgba(255, 150, 190, .15);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 18px;
+            min-width: 340px
+        }
+
+        #stageCake h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px;
+            color: var(--rose);
+            text-align: center
+        }
+
+        .cake-scene {
+            width: 240px;
+            height: 220px
+        }
+
+        .cake-scene svg {
+            width: 100%;
+            height: 100%
+        }
+
+        .smoke-e {
+            display: none
+        }
+
+        .smoke-e.puffing {
+            display: block
+        }
+
+        .blow-btn {
+            border: none;
+            background: linear-gradient(135deg, var(--rose), #ff7ab5);
+            color: white;
+            padding: 14px 36px;
+            border-radius: 999px;
+            font-size: 15px;
+            font-weight: 800;
+            font-family: 'Nunito', sans-serif;
+            cursor: pointer;
+            box-shadow: 0 10px 28px rgba(255, 79, 139, .4);
+            transition: transform .2s, box-shadow .2s;
+            letter-spacing: .03em
+        }
+
+        .blow-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 36px rgba(255, 79, 139, .5)
+        }
+
+        .blow-btn:active {
+            transform: scale(.96)
+        }
+
+        .blow-hint {
+            font-size: 13px;
+            color: #c090b0;
+            font-weight: 700;
+            min-height: 20px;
+            text-align: center
+        }
+
+        /* BUTTERFLY */
+        #stageButterfly {
+            background: radial-gradient(ellipse at 50% 60%, #e8f8ff 0%, #fce4ff 50%, #ffe4f0 100%)
+        }
+
+        #stageButterfly .hud {
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            border-radius: 999px;
+            padding: 10px 28px;
+            box-shadow: 0 8px 24px rgba(255, 79, 139, .2);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 200
+        }
+
+        #stageButterfly .hud span {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--plum)
+        }
+
+        #stageButterfly .hud em {
+            font-style: normal;
+            color: var(--rose)
+        }
+
+        .bf-container {
             position: fixed;
             inset: 0;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            gap: 32px;
-            background: linear-gradient(135deg, #ffd9ea, #fff1f8, #f3e8ff);
-            z-index: 9999
+            pointer-events: none;
+            z-index: 150
         }
 
-        .secret-page.visible {
-            display: flex;
-            animation: fadeSlide .6s ease
+        .bf-container.active {
+            pointer-events: auto
         }
 
-        @keyframes fadeSlide {
-            from {
-                opacity: 0;
-                transform: scale(.97)
-            }
+        .bf {
+            position: absolute;
+            font-size: 32px;
+            cursor: pointer;
+            user-select: none;
+            filter: drop-shadow(0 4px 8px rgba(180, 60, 120, .2))
+        }
 
-            to {
-                opacity: 1;
+        .bf:hover {
+            transform: scale(1.2)
+        }
+
+        .bf.caught {
+            animation: bfCatch .4s ease forwards;
+            pointer-events: none
+        }
+
+        @keyframes bfCatch {
+            0% {
                 transform: scale(1)
             }
+
+            50% {
+                transform: scale(1.6)
+            }
+
+            100% {
+                transform: scale(0);
+                opacity: 0
+            }
+        }
+
+        .word-pop {
+            position: absolute;
+            font-family: 'Playfair Display', serif;
+            font-size: 16px;
+            color: var(--rose);
+            font-style: italic;
+            pointer-events: none;
+            z-index: 160;
+            animation: wordFly 1.4s ease-out forwards
+        }
+
+        @keyframes wordFly {
+            0% {
+                opacity: 0;
+                transform: translateY(0) scale(.8)
+            }
+
+            20% {
+                opacity: 1;
+                transform: translateY(-10px) scale(1)
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-70px) scale(.9)
+            }
+        }
+
+        #stageButterfly .intro-card {
+            background: white;
+            border-radius: 28px;
+            padding: 36px 44px;
+            box-shadow: 0 24px 60px rgba(180, 60, 120, .18);
+            text-align: center;
+            max-width: 320px
+        }
+
+        #stageButterfly .intro-card h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            color: var(--rose);
+            margin-bottom: 10px
+        }
+
+        #stageButterfly .intro-card p {
+            font-size: 14px;
+            color: #9a7090;
+            font-weight: 700;
+            margin-bottom: 20px
+        }
+
+        .start-btn {
+            border: none;
+            background: linear-gradient(135deg, var(--rose), #ff7ab5);
+            color: white;
+            padding: 13px 32px;
+            border-radius: 999px;
+            font-size: 15px;
+            font-weight: 800;
+            font-family: 'Nunito', sans-serif;
+            cursor: pointer;
+            box-shadow: 0 10px 28px rgba(255, 79, 139, .4)
+        }
+
+        .start-btn:hover {
+            transform: translateY(-2px)
+        }
+
+        /* GIFT */
+        #stageGift .gift-card {
+            background: white;
+            border-radius: 32px;
+            padding: 48px 52px 44px;
+            box-shadow: 0 32px 80px rgba(180, 60, 120, .18), 0 0 0 1px rgba(255, 150, 190, .15);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 18px;
+            min-width: 340px;
+            max-width: 380px
+        }
+
+        #stageGift h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            color: var(--rose);
+            text-align: center
+        }
+
+        .gift-box-wrap {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            cursor: pointer;
+            transition: transform .3s
+        }
+
+        .gift-box-wrap:hover {
+            transform: translateY(-6px) rotate(-3deg)
+        }
+
+        .gift-box-wrap.shake {
+            animation: shake .4s ease
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: rotate(0)
+            }
+
+            25% {
+                transform: rotate(-6deg)
+            }
+
+            75% {
+                transform: rotate(6deg)
+            }
+        }
+
+        .gift-box-wrap.open-anim {
+            animation: giftOpen .6s ease forwards
+        }
+
+        @keyframes giftOpen {
+            0% {
+                transform: scale(1)
+            }
+
+            50% {
+                transform: scale(1.3) rotate(5deg)
+            }
+
+            100% {
+                transform: scale(0);
+                opacity: 0
+            }
+        }
+
+        .clue {
+            font-size: 13px;
+            color: #c090b0;
+            font-weight: 700;
+            text-align: center;
+            background: #fff0f6;
+            border-radius: 12px;
+            padding: 8px 18px;
+            border: 1.5px dashed #ffd0e2
+        }
+
+        .clue em {
+            font-style: normal;
+            color: var(--rose)
+        }
+
+        .pw-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            width: 100%
+        }
+
+        .pw-input {
+            width: 100%;
+            padding: 15px 18px;
+            border-radius: 14px;
+            border: 2px solid #ffd0e2;
+            font-size: 18px;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 800;
+            letter-spacing: .25em;
+            text-align: center;
+            outline: none;
+            color: var(--plum);
+            background: #fff8fb;
+            transition: border-color .2s, box-shadow .2s
+        }
+
+        .pw-input:focus {
+            border-color: var(--rose);
+            box-shadow: 0 0 0 4px rgba(255, 79, 139, .1)
+        }
+
+        .pw-input.wrong {
+            border-color: #ff4444;
+            animation: wrongShake .3s ease
+        }
+
+        @keyframes wrongShake {
+
+            0%,
+            100% {
+                transform: translateX(0)
+            }
+
+            25% {
+                transform: translateX(-8px)
+            }
+
+            75% {
+                transform: translateX(8px)
+            }
+        }
+
+        .pw-err {
+            font-size: 13px;
+            color: #ff4444;
+            font-weight: 700;
+            height: 18px
+        }
+
+        .pw-btn {
+            width: 100%;
+            border: none;
+            padding: 15px;
+            border-radius: 999px;
+            font-size: 15px;
+            font-weight: 800;
+            font-family: 'Nunito', sans-serif;
+            color: white;
+            cursor: pointer;
+            letter-spacing: .04em;
+            background: linear-gradient(135deg, var(--rose), #ff7ab5);
+            box-shadow: 0 10px 28px rgba(255, 79, 139, .4);
+            transition: transform .2s, box-shadow .2s
+        }
+
+        .pw-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 36px rgba(255, 79, 139, .5)
         }
 
         /* ENVELOPE */
@@ -371,10 +745,9 @@
             height: 230px;
             margin: 0 auto;
             perspective: 900px;
-            transform-style: preserve-3d;
+            transform-style: preserve-3d
         }
 
-        /* Letter — z:1, tersembunyi di dalam, naik saat hover */
         .env-letter {
             position: absolute;
             left: 12px;
@@ -390,9 +763,8 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 5px;
-            transform: translateY(0px);
-            transition: transform .7s cubic-bezier(.25, .8, .25, 1);
+            transform: translateY(0);
+            transition: transform .7s cubic-bezier(.25, .8, .25, 1)
         }
 
         .env-letter-inner {
@@ -400,13 +772,7 @@
             transform: translateY(6px);
             transition: opacity .35s ease .4s, transform .35s ease .4s;
             text-align: center;
-            padding: 0 12px;
-        }
-
-        .env-letter-emoji {
-            font-size: 26px;
-            display: block;
-            margin-bottom: 4px
+            padding: 0 12px
         }
 
         .env-letter-title {
@@ -417,14 +783,6 @@
             margin-bottom: 3px
         }
 
-        .env-letter-sub {
-            font-size: 10px;
-            color: #c090b0;
-            font-weight: 700;
-            letter-spacing: .06em
-        }
-
-        /* Body amplop — z:2, pocket pink */
         .env-body {
             position: absolute;
             left: 0;
@@ -434,7 +792,7 @@
             background: linear-gradient(160deg, #ff6fa3, #ff4f8b);
             border-radius: 0 0 16px 16px;
             z-index: 2;
-            overflow: hidden;
+            overflow: hidden
         }
 
         .env-body::before {
@@ -445,7 +803,7 @@
             width: 0;
             height: 0;
             border-bottom: 80px solid rgba(0, 0, 0, .12);
-            border-right: 130px solid transparent;
+            border-right: 130px solid transparent
         }
 
         .env-body::after {
@@ -456,7 +814,7 @@
             width: 0;
             height: 0;
             border-bottom: 80px solid rgba(0, 0, 0, .18);
-            border-left: 130px solid transparent;
+            border-left: 130px solid transparent
         }
 
         .env-shine {
@@ -466,7 +824,6 @@
             pointer-events: none
         }
 
-        /* Tutup atas amplop (V shape) — z:4, di atas segalanya saat tertutup */
         .env-top {
             position: absolute;
             left: 0;
@@ -475,16 +832,16 @@
             height: 100px;
             z-index: 4;
             pointer-events: none;
-            overflow: hidden;
+            overflow: hidden
         }
 
-        .env-top svg {
+        .env-top svg,
+        .env-flap svg {
             width: 100%;
             height: 100%;
             display: block
         }
 
-        /* Flap — segitiga yang flip saat hover */
         .env-flap {
             position: absolute;
             left: 0;
@@ -496,13 +853,7 @@
             transform: rotateX(0deg);
             transition: transform .6s cubic-bezier(.4, 0, .2, 1);
             pointer-events: none;
-            overflow: hidden;
-        }
-
-        .env-flap svg {
-            width: 100%;
-            height: 100%;
-            display: block
+            overflow: hidden
         }
 
         .env-wrap:hover .env-flap,
@@ -521,14 +872,6 @@
             transform: translateY(0)
         }
 
-        /* CHOICE AREA — wrapper tidak terlihat, hanya spacing placeholder */
-        .choice-area {
-            height: 0;
-            overflow: visible;
-            pointer-events: none
-        }
-
-        /* YES & NO BTN — keduanya fixed, diposisikan JS */
         .yes-btn,
         .no-btn {
             border: none;
@@ -546,17 +889,17 @@
             opacity: 0;
             pointer-events: none;
             transition: opacity .4s ease, left .15s ease, top .15s ease;
-            display: block;
+            display: block
         }
 
         .yes-btn {
             background: linear-gradient(135deg, var(--rose), #ff7ab5);
-            box-shadow: 0 8px 24px rgba(255, 79, 139, .4);
+            box-shadow: 0 8px 24px rgba(255, 79, 139, .4)
         }
 
-        .yes-btn:hover {
-            transform: scale(1.07);
-            box-shadow: 0 14px 30px rgba(255, 79, 139, .5)
+        .no-btn {
+            background: linear-gradient(135deg, #9b8fa0, #7a6d7e);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, .2)
         }
 
         .yes-btn.shown,
@@ -565,13 +908,6 @@
             pointer-events: auto
         }
 
-        /* NO BTN */
-        .no-btn {
-            background: linear-gradient(135deg, #9b8fa0, #7a6d7e);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, .2);
-        }
-
-        /* FORM CARD */
         .form-card {
             display: none;
             background: white;
@@ -610,7 +946,6 @@
             width: 100%
         }
 
-        .form-fields input,
         .form-fields textarea {
             padding: 15px 18px;
             border-radius: 14px;
@@ -621,18 +956,14 @@
             outline: none;
             color: var(--plum);
             transition: border-color .2s, box-shadow .2s;
-            background: #fff8fb
+            background: #fff8fb;
+            min-height: 140px;
+            resize: none
         }
 
-        .form-fields input:focus,
         .form-fields textarea:focus {
             border-color: var(--rose);
             box-shadow: 0 0 0 4px rgba(255, 79, 139, .1)
-        }
-
-        .form-fields textarea {
-            min-height: 110px;
-            resize: none
         }
 
         .submit-btn {
@@ -652,12 +983,7 @@
         }
 
         .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 16px 36px rgba(255, 79, 139, .5)
-        }
-
-        .submit-btn:active {
-            transform: scale(.97)
+            transform: translateY(-2px)
         }
 
         .success-msg {
@@ -694,7 +1020,6 @@
             }
         }
 
-        /* PARTICLES */
         .particles {
             position: fixed;
             inset: 0;
@@ -744,62 +1069,326 @@
                 opacity: 0
             }
         }
+
+        .stage-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: #ffb3d0;
+            margin-bottom: -8px
+        }
     </style>
 </head>
 
 <body>
-
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
     <div class="blob blob-3"></div>
 
-    <div class="scene">
-        <div class="book-wrapper">
-            <div class="book" id="book">
-                <div class="cover" id="cover">
-                    <div class="cover-pattern" id="coverPattern"></div>
-                    <div class="cover-content">
-                        <div class="cover-badge">Special For Soya</div>
-                        <div class="cover-title">Birthday<br>Book</div>
-                        <div class="cover-sub">A little something for you ✦</div>
-                        <div class="cover-hint">Klik untuk membuka</div>
+    <!-- STAGE 0: BOOK -->
+    <div class="screen active" id="stageBook">
+        <div class="scene">
+            <div class="book-wrapper">
+                <div class="book" id="book">
+                    <div class="cover" id="cover">
+                        <div class="cover-pattern" id="coverPattern"></div>
+                        <div class="cover-content">
+                            <div class="cover-badge">Special For Soya</div>
+                            <div class="cover-title">Happy<br>Birthday</div>
+                            <div class="cover-sub">15-Juni-2026</div>
+                            <div class="cover-hint">Klik untuk membuka</div>
+                        </div>
+                    </div>
+                    <div class="page">
+                        <div class="page-inner">
+                            <div class="page-title">Selamat<br>Ulang Tahun</div>
+                            <div class="page-divider"></div>
+                            <div class="page-name">Silvi Adelia Putri</div>
+                            <div class="page-msg">Haloo ipii, selamat ulang tahun yang ke 20 yaa, semoga sehat selalu
+                                dan semoga dengan seiring bertambahnya usia tinggi ipii juga ikut nambah hehe.</div>
+                        </div>
                     </div>
                 </div>
-                <div class="page">
-                    <div class="page-inner">
-                        <div class="page-tag">Happy Birthday 🎂</div>
-                        <div class="page-title">Selamat<br>Ulang Tahun</div>
-                        <div class="page-divider"></div>
-                        <div class="page-name">Silvi Adelia Putri</div>
-                        <div class="page-msg">Selamat ulang tahun yang ke-20 untuk seseorang yang begitu spesial. Semoga
-                            setiap langkahmu dipenuhi kebahagiaan, kesehatan, tawa, dan semua hal indah yang selalu kamu
-                            harapkan ✨</div>
-                    </div>
-                </div>
+                <button class="gift-btn" id="toStage1Btn">Mulai</button>
             </div>
-            <button class="gift-btn" id="secretBtn">?</button>
         </div>
     </div>
 
-    <!-- SECRET PAGE -->
-    <div class="secret-page" id="secretPage">
+    <!-- STAGE 1: TIUP LILIN -->
+    <div class="screen" id="stageCake">
+        <p class="stage-label">Step 1 of 3</p>
+        <div class="card">
+            <h2>Tiup Semua Lilinnya!</h2>
 
-        <div id="stage1" style="display:flex;flex-direction:column;align-items:center;gap:28px">
-            <p class="env-letter-sub">Arahkan mouse ke amplop</p>
+            <div class="cake-scene">
+                <svg viewBox="0 0 240 220" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="cBotGrad" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#ffc0da" />
+                            <stop offset="100%" stop-color="#ff7ab5" />
+                        </linearGradient>
+                        <linearGradient id="cMidGrad" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#ffe0ee" />
+                            <stop offset="100%" stop-color="#ffaacf" />
+                        </linearGradient>
+                        <linearGradient id="cTopGrad" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#fff4fa" />
+                            <stop offset="100%" stop-color="#ffd6ea" />
+                        </linearGradient>
+                        <filter id="cs" x="-10%" y="-10%" width="120%" height="130%">
+                            <feDropShadow dx="0" dy="5" stdDeviation="7" flood-color="#e0508a" flood-opacity="0.22" />
+                        </filter>
+                    </defs>
+
+                    <!-- plate shadow -->
+                    <ellipse cx="120" cy="214" rx="88" ry="7" fill="rgba(200,80,130,0.13)" />
+
+                    <!-- ── BOTTOM LAYER ── -->
+                    <rect x="24" y="147" width="192" height="64" rx="16" fill="url(#cBotGrad)" filter="url(#cs)" />
+                    <!-- shine strip -->
+                    <rect x="24" y="147" width="192" height="20" rx="16" fill="rgba(255,255,255,0.2)" />
+                    <!-- pearl dots row -->
+                    <circle cx="56" cy="179" r="5.5" fill="rgba(255,255,255,0.45)" />
+                    <circle cx="78" cy="179" r="4" fill="rgba(255,255,255,0.32)" />
+                    <circle cx="100" cy="179" r="5.5" fill="rgba(255,255,255,0.45)" />
+                    <circle cx="120" cy="179" r="4" fill="rgba(255,255,255,0.32)" />
+                    <circle cx="140" cy="179" r="5.5" fill="rgba(255,255,255,0.45)" />
+                    <circle cx="162" cy="179" r="4" fill="rgba(255,255,255,0.32)" />
+                    <circle cx="184" cy="179" r="5.5" fill="rgba(255,255,255,0.45)" />
+                    <!-- frosting drips bottom -->
+                    <path
+                        d="M24,158 Q36,146 50,155 Q64,164 78,152 Q92,140 106,153 Q120,164 134,152 Q148,140 162,153 Q176,164 190,152 Q204,142 216,154 L216,147 Q200,138 184,147 Q168,138 152,147 Q136,138 120,147 Q104,138 88,147 Q72,138 56,147 Q40,138 24,147 Z"
+                        fill="rgba(255,255,255,0.6)" />
+
+                    <!-- ── MIDDLE LAYER ── -->
+                    <rect x="38" y="108" width="164" height="45" rx="12" fill="url(#cMidGrad)" />
+                    <rect x="38" y="108" width="164" height="16" rx="12" fill="rgba(255,255,255,0.22)" />
+                    <!-- hearts -->
+                    <text x="120" y="138" text-anchor="middle" font-size="14" fill="rgba(255,79,139,0.45)"
+                        font-family="serif">♥ ♥ ♥</text>
+                    <!-- frosting drips mid -->
+                    <path
+                        d="M38,120 Q52,108 66,118 Q80,128 94,116 Q108,104 122,117 Q136,128 150,116 Q164,104 178,117 Q190,126 202,116 L202,108 Q186,99 170,108 Q154,99 138,108 Q122,99 106,108 Q90,99 74,108 Q58,99 38,108 Z"
+                        fill="rgba(255,255,255,0.58)" />
+
+                    <!-- ── TOP LAYER ── -->
+                    <rect x="56" y="74" width="128" height="40" rx="10" fill="url(#cTopGrad)" />
+                    <rect x="56" y="74" width="128" height="14" rx="10" fill="rgba(255,255,255,0.35)" />
+                    <!-- strawberries -->
+                    <text x="88" y="99" text-anchor="middle" font-size="13">🍓</text>
+                    <text x="120" y="99" text-anchor="middle" font-size="13">🍓</text>
+                    <text x="152" y="99" text-anchor="middle" font-size="13">🍓</text>
+                    <!-- frosting drips top -->
+                    <path
+                        d="M56,86 Q70,74 84,83 Q98,92 112,81 Q126,70 140,82 Q154,92 168,81 Q180,72 184,80 L184,74 Q168,65 152,74 Q136,65 120,74 Q104,65 88,74 Q72,65 56,74 Z"
+                        fill="rgba(255,255,255,0.62)" />
+
+                    <!-- ── CANDLES (5) ── -->
+                    <!-- colours alternate yellow/pink/yellow -->
+                    <!-- candle 0 -->
+                    <rect x="70" y="48" width="11" height="27" rx="4" fill="#ffe066" />
+                    <rect x="70" y="48" width="11" height="9" rx="4" fill="rgba(255,255,255,0.3)" />
+                    <!-- candle 1 -->
+                    <rect x="91" y="43" width="11" height="32" rx="4" fill="#ffb3d9" />
+                    <rect x="91" y="43" width="11" height="9" rx="4" fill="rgba(255,255,255,0.3)" />
+                    <!-- candle 2 centre tallest -->
+                    <rect x="114" y="38" width="12" height="37" rx="4" fill="#ffe066" />
+                    <rect x="114" y="38" width="12" height="9" rx="4" fill="rgba(255,255,255,0.3)" />
+                    <!-- candle 3 -->
+                    <rect x="138" y="43" width="11" height="32" rx="4" fill="#ffb3d9" />
+                    <rect x="138" y="43" width="11" height="9" rx="4" fill="rgba(255,255,255,0.3)" />
+                    <!-- candle 4 -->
+                    <rect x="159" y="48" width="11" height="27" rx="4" fill="#ffe066" />
+                    <rect x="159" y="48" width="11" height="9" rx="4" fill="rgba(255,255,255,0.3)" />
+
+                    <!-- ── WICKS ── -->
+                    <line x1="75.5" y1="49" x2="75.5" y2="43" stroke="#7a4a20" stroke-width="1.5"
+                        stroke-linecap="round" />
+                    <line x1="96.5" y1="44" x2="96.5" y2="38" stroke="#7a4a20" stroke-width="1.5"
+                        stroke-linecap="round" />
+                    <line x1="120" y1="39" x2="120" y2="33" stroke="#7a4a20" stroke-width="1.5"
+                        stroke-linecap="round" />
+                    <line x1="143.5" y1="44" x2="143.5" y2="38" stroke="#7a4a20" stroke-width="1.5"
+                        stroke-linecap="round" />
+                    <line x1="164.5" y1="49" x2="164.5" y2="43" stroke="#7a4a20" stroke-width="1.5"
+                        stroke-linecap="round" />
+
+                    <!-- ── GLOWS (warm halos, behind flames) ── -->
+                    <circle id="glow0" cx="75.5" cy="44" r="8" fill="rgba(255,210,60,0.22)" />
+                    <circle id="glow1" cx="96.5" cy="39" r="8" fill="rgba(255,210,60,0.22)" />
+                    <circle id="glow2" cx="120" cy="34" r="9" fill="rgba(255,210,60,0.22)" />
+                    <circle id="glow3" cx="143.5" cy="39" r="8" fill="rgba(255,210,60,0.22)" />
+                    <circle id="glow4" cx="164.5" cy="44" r="8" fill="rgba(255,210,60,0.22)" />
+
+                    <!-- ── FLAMES (SVG-native animation, no CSS transform) ── -->
+                    <!-- Flame 0 -->
+                    <g id="flame0">
+                        <ellipse cx="75.5" cy="36" rx="4.5" ry="7" fill="#ff9500" opacity="0.9">
+                            <animate attributeName="ry" values="7;7.6;6.8;7.4;7" dur="0.5s" repeatCount="indefinite" />
+                            <animate attributeName="opacity" values="0.9;0.85;0.92;0.88;0.9" dur="0.5s"
+                                repeatCount="indefinite" />
+                        </ellipse>
+                        <ellipse cx="75.5" cy="33.5" rx="3" ry="4.8" fill="#ffcc00">
+                            <animate attributeName="ry" values="4.8;5.2;4.5;5;4.8" dur="0.5s"
+                                repeatCount="indefinite" />
+                        </ellipse>
+                        <ellipse cx="75.5" cy="31.5" rx="1.6" ry="2.6" fill="#fff8e0" opacity="0.88">
+                            <animate attributeName="ry" values="2.6;2.9;2.4;2.8;2.6" dur="0.5s"
+                                repeatCount="indefinite" />
+                        </ellipse>
+                        <ellipse cx="75.5" cy="43" rx="2.2" ry="1.4" fill="rgba(255,140,0,0.2)" />
+                    </g>
+                    <ellipse id="smoke0" class="smoke-e" cx="75.5" cy="37" rx="2" ry="3" fill="#bbb" opacity="0.45" />
+
+                    <!-- Flame 1 -->
+                    <g id="flame1">
+                        <ellipse cx="96.5" cy="31" rx="4.5" ry="7" fill="#ff9500" opacity="0.9">
+                            <animate attributeName="ry" values="7;6.8;7.5;7;6.9;7" dur="0.48s" begin="0.06s"
+                                repeatCount="indefinite" />
+                            <animate attributeName="opacity" values="0.9;0.92;0.86;0.9;0.88;0.9" dur="0.48s"
+                                begin="0.06s" repeatCount="indefinite" />
+                        </ellipse>
+                        <ellipse cx="96.5" cy="28.5" rx="3" ry="4.8" fill="#ffcc00">
+                            <animate attributeName="ry" values="4.8;5.1;4.6;5;4.8" dur="0.48s" begin="0.06s"
+                                repeatCount="indefinite" />
+                        </ellipse>
+                        <ellipse cx="96.5" cy="26.5" rx="1.6" ry="2.6" fill="#fff8e0" opacity="0.88">
+                            <animate attributeName="ry" values="2.6;2.8;2.5;2.9;2.6" dur="0.48s" begin="0.06s"
+                                repeatCount="indefinite" />
+                        </ellipse>
+                        <ellipse cx="96.5" cy="38" rx="2.2" ry="1.4" fill="rgba(255,140,0,0.2)" />
+                    </g>
+                    <ellipse id="smoke1" class="smoke-e" cx="96.5" cy="32" rx="2" ry="3" fill="#bbb" opacity="0.45" />
+
+                    <!-- Flame 2 (centre, tallest) -->
+                    <g id="flame2">
+                        <ellipse cx="120" cy="26" rx="5.2" ry="8" fill="#ff9500" opacity="0.9">
+                            <animate attributeName="ry" values="8;8.6;7.8;8.4;8" dur="0.52s" begin="0.13s"
+                                repeatCount="indefinite" />
+                            <animate attributeName="opacity" values="0.9;0.86;0.93;0.88;0.9" dur="0.52s" begin="0.13s"
+                                repeatCount="indefinite" />
+                        </ellipse>
+                        <ellipse cx="120" cy="23.5" rx="3.5" ry="5.5" fill="#ffcc00">
+                            <animate attributeName="ry" values="5.5;5.9;5.2;5.7;5.5" dur="0.52s" begin="0.13s"
+                                repeatCount="indefinite" />
+                        </ellipse>
+                        <ellipse cx="120" cy="21" rx="2" ry="3.2" fill="#fff8e0" opacity="0.88">
+                            <animate attributeName="ry" values="3.2;3.5;3;3.4;3.2" dur="0.52s" begin="0.13s"
+                                repeatCount="indefinite" />
+                        </ellipse>
+                        <ellipse cx="120" cy="34" rx="2.6" ry="1.6" fill="rgba(255,140,0,0.2)" />
+                    </g>
+                    <ellipse id="smoke2" class="smoke-e" cx="120" cy="27" rx="2" ry="3" fill="#bbb" opacity="0.45" />
+
+                    <!-- Flame 3 -->
+                    <g id="flame3">
+                        <ellipse cx="143.5" cy="31" rx="4.5" ry="7" fill="#ff9500" opacity="0.9">
+                            <animate attributeName="ry" values="7;7.4;6.9;7.6;7" dur="0.46s" begin="0.04s"
+                                repeatCount="indefinite" />
+                            <animate attributeName="opacity" values="0.9;0.88;0.94;0.87;0.9" dur="0.46s" begin="0.04s"
+                                repeatCount="indefinite" />
+                        </ellipse>
+                        <ellipse cx="143.5" cy="28.5" rx="3" ry="4.8" fill="#ffcc00">
+                            <animate attributeName="ry" values="4.8;5.2;4.7;5.1;4.8" dur="0.46s" begin="0.04s"
+                                repeatCount="indefinite" />
+                        </ellipse>
+                        <ellipse cx="143.5" cy="26.5" rx="1.6" ry="2.6" fill="#fff8e0" opacity="0.88">
+                            <animate attributeName="ry" values="2.6;2.9;2.5;2.8;2.6" dur="0.46s" begin="0.04s"
+                                repeatCount="indefinite" />
+                        </ellipse>
+                        <ellipse cx="143.5" cy="38" rx="2.2" ry="1.4" fill="rgba(255,140,0,0.2)" />
+                    </g>
+                    <ellipse id="smoke3" class="smoke-e" cx="143.5" cy="32" rx="2" ry="3" fill="#bbb" opacity="0.45" />
+
+                    <!-- Flame 4 -->
+                    <g id="flame4">
+                        <ellipse cx="164.5" cy="36" rx="4.5" ry="7" fill="#ff9500" opacity="0.9">
+                            <animate attributeName="ry" values="7;7.5;6.8;7.3;7" dur="0.44s" begin="0.1s"
+                                repeatCount="indefinite" />
+                            <animate attributeName="opacity" values="0.9;0.87;0.93;0.89;0.9" dur="0.44s" begin="0.1s"
+                                repeatCount="indefinite" />
+                        </ellipse>
+                        <ellipse cx="164.5" cy="33.5" rx="3" ry="4.8" fill="#ffcc00">
+                            <animate attributeName="ry" values="4.8;5;4.6;5.1;4.8" dur="0.44s" begin="0.1s"
+                                repeatCount="indefinite" />
+                        </ellipse>
+                        <ellipse cx="164.5" cy="31.5" rx="1.6" ry="2.6" fill="#fff8e0" opacity="0.88">
+                            <animate attributeName="ry" values="2.6;2.8;2.4;2.7;2.6" dur="0.44s" begin="0.1s"
+                                repeatCount="indefinite" />
+                        </ellipse>
+                        <ellipse cx="164.5" cy="43" rx="2.2" ry="1.4" fill="rgba(255,140,0,0.2)" />
+                    </g>
+                    <ellipse id="smoke4" class="smoke-e" cx="164.5" cy="37" rx="2" ry="3" fill="#bbb" opacity="0.45" />
+                </svg>
+            </div>
+
+            <button class="blow-btn" id="blowBtn">Tiup!</button>
+            <p class="blow-hint" id="blowHint">5 lilin menyala ✨</p>
+        </div>
+    </div>
+
+    <!-- STAGE 2: KUPU-KUPU -->
+    <div class="screen" id="stageButterfly">
+        <div class="hud" id="bfHud" style="display:none">
+            <span>🦋 Tangkap: <em id="bfCount">0</em> / <em id="bfTotal">8</em></span>
+        </div>
+        <div class="intro-card" id="bfIntro">
+            <h2>🦋 Tangkap Kupu-kupu!</h2>
+            <p>Ada 8 kupu-kupu terbang di sini.<br>Tangkap semuanya untuk lanjut!</p>
+            <button class="start-btn" id="bfStartBtn">Mulai!</button>
+        </div>
+        <div class="bf-container" id="bfContainer"></div>
+    </div>
+
+    <!-- STAGE 3: PASSWORD KADO -->
+    <div class="screen" id="stageGift">
+        <p class="stage-label">Step 3 of 3</p>
+        <div class="gift-card">
+            <h2>Buka Hadiahnya!</h2>
+            <div class="gift-box-wrap" id="giftBox">
+                <svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="10" y="52" width="100" height="62" rx="8" fill="#ff7ab5" />
+                    <rect x="10" y="52" width="100" height="62" rx="8" fill="url(#boxGrad)" />
+                    <rect x="5" y="38" width="110" height="22" rx="6" fill="#ff4f8b" />
+                    <rect x="52" y="38" width="16" height="76" rx="4" fill="#ffcc44" />
+                    <rect x="5" y="44" width="110" height="10" rx="4" fill="#ffcc44" />
+                    <ellipse cx="60" cy="38" rx="14" ry="9" fill="#ffee88" />
+                    <ellipse cx="60" cy="38" rx="8" ry="5" fill="#ffcc44" />
+                    <ellipse cx="40" cy="30" rx="18" ry="9" fill="#ffee88" transform="rotate(-30 40 30)" />
+                    <ellipse cx="80" cy="30" rx="18" ry="9" fill="#ffee88" transform="rotate(30 80 30)" />
+                    <defs>
+                        <linearGradient id="boxGrad" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="rgba(255,255,255,.15)" />
+                            <stop offset="100%" stop-color="rgba(0,0,0,.05)" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+            <div class="clue">Clue: <em>nama pet minecraft kita</em></div>
+            <div class="pw-wrap">
+                <input class="pw-input" id="pwInput" type="text" placeholder="Ketik jawabannya..." autocomplete="off" />
+                <div class="pw-err" id="pwErr"></div>
+                <button class="pw-btn" id="pwBtn">Buka Kado</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- STAGE 4: AMPLOP -->
+    <div class="screen" id="stageEnvelope">
+        <div id="envStage1" style="display:flex;flex-direction:column;align-items:center;gap:28px">
+            <p class="stage-label">Arahkan mouse ke amplop</p>
             <div
-                style="background:white;border-radius:28px;padding:36px 48px 32px;box-shadow:0 32px 80px rgba(180,60,120,.18),0 0 0 1px rgba(255,150,190,.15);animation:popIn .5s cubic-bezier(.34,1.56,.64,1)">
+                style="background:white;border-radius:28px;padding:36px 48px 32px;box-shadow:0 32px 80px rgba(180,60,120,.18),0 0 0 1px rgba(255,150,190,.15)">
                 <div class="env-wrap" id="envWrap">
-                    <!-- z:1 letter -->
                     <div class="env-letter">
                         <div class="env-letter-inner">
-                            <p class="env-letter-title">Kangen main<br>bareng lagi ngga?</p>
+                            <p class="env-letter-title">Gimana?<br>seru ngga?</p>
                         </div>
                     </div>
-                    <!-- z:2 body pocket -->
                     <div class="env-body">
                         <div class="env-shine"></div>
                     </div>
-                    <!-- z:3 flap yang flip ke belakang saat hover -->
                     <div class="env-flap">
                         <svg viewBox="0 0 260 100" xmlns="http://www.w3.org/2000/svg">
                             <polygon points="0,0 260,0 130,85" fill="url(#flapGrad)" />
@@ -811,211 +1400,292 @@
                             </defs>
                         </svg>
                     </div>
-                    <!-- z:4 tutup atas kiri-kanan (V shape statis, tidak flip) -->
                     <div class="env-top">
                         <svg viewBox="0 0 260 100" xmlns="http://www.w3.org/2000/svg">
-                            <!-- sisi kiri atas -->
                             <polygon points="0,0 130,85 0,100" fill="#ff6fa3" />
-                            <!-- sisi kanan atas -->
                             <polygon points="260,0 130,85 260,100" fill="#ff4f8b" />
                         </svg>
                     </div>
                 </div>
             </div>
-
-            <!-- choice-area: placeholder kosong -->
-            <div class="choice-area" id="choiceArea"></div>
         </div>
-
-        <!-- Stage 2 form -->
         <div class="form-card" id="formCard">
+            <h1>💌 Tulis Pesan</h1>
             <div class="form-fields" id="formFields">
-                <input type="text" id="game" placeholder="Game Apa?" />
-                <input type="text" id="schedule" placeholder="Kapan?" />
-                <textarea id="note" placeholder="Catatan tambahan (optional)"></textarea>
+                <textarea id="pesan" placeholder="Tuliskan pesanmu di sini..."></textarea>
                 <button class="submit-btn" id="submitBtn">Kirim</button>
             </div>
             <div class="success-msg" id="successMsg">
                 <div class="checkmark">💖</div>
                 <h2>Yeay, Terkirim!</h2>
+                <p>Pesanmu sudah sampai!</p>
             </div>
         </div>
     </div>
 
-    <!-- Kedua tombol di luar secret-page, langsung child of body -->
-    <button class="yes-btn" id="yesBtn">kangenn</button>
+    <button class="yes-btn" id="yesBtn">Seruu</button>
     <button class="no-btn" id="noBtn">Nggaa</button>
-
     <div class="particles" id="particles"></div>
 
     <script>
-        /* ── Book ── */
-        const book = document.getElementById('book');
-        const cover = document.getElementById('cover');
-        let opened = false;
-        cover.addEventListener('click', () => { opened = !opened; book.classList.toggle('open', opened); });
-
-        const cp = document.getElementById('coverPattern');
-        const em = ['✨', '🌸', '💕', '⭐', '🦋', '💫', '🌷'];
-        for (let i = 0; i < 21; i++) {
-            const s = document.createElement('span');
-            s.textContent = em[Math.floor(Math.random() * em.length)];
-            s.style.cssText = `left:${Math.random() * 100}%;top:${Math.random() * 100}%;animation-delay:${Math.random() * 6}s;animation-duration:${4 + Math.random() * 4}s;`;
-            cp.appendChild(s);
+        /* ── HELPERS ── */
+        function goTo(id) {
+            document.querySelectorAll('.screen').forEach(function (s) { s.classList.remove('active'); });
+            document.getElementById(id).classList.add('active');
+        }
+        function spawnConfetti() {
+            var cols = ['#ff4f8b', '#ff86b3', '#f5c542', '#9b5de5', '#4ecdc4', '#ff6b6b', '#fff0f6'];
+            for (var i = 0; i < 80; i++) {
+                var c = document.createElement('div'); c.classList.add('confetti-piece');
+                c.style.cssText = 'left:' + (50 + (Math.random() - .5) * 30) + 'vw;top:40vh;'
+                    + 'background:' + cols[Math.floor(Math.random() * cols.length)] + ';'
+                    + 'border-radius:' + (Math.random() > .5 ? '50%' : '2px') + ';'
+                    + 'width:' + (6 + Math.random() * 6) + 'px;height:' + (6 + Math.random() * 6) + 'px;'
+                    + '--dx:' + ((Math.random() - .5) * window.innerWidth * 1.2) + 'px;'
+                    + '--dy:' + (Math.random() * window.innerHeight + 200) + 'px;'
+                    + '--r:' + (Math.random() * 720) + 'deg;'
+                    + '--dur:' + (1.2 + Math.random() * 1.2) + 's;'
+                    + 'animation-delay:' + (Math.random() * .4) + 's;';
+                document.body.appendChild(c);
+                setTimeout(function (el) { return function () { el.remove(); }; }(c), 2800);
+            }
         }
 
-        const particles = document.getElementById('particles');
-        cover.addEventListener('mousemove', e => {
+        /* ── STAGE 0: BOOK ── */
+        var book = document.getElementById('book');
+        var cover = document.getElementById('cover');
+        var opened = false;
+        cover.addEventListener('click', function () { opened = !opened; book.classList.toggle('open', opened); });
+        var cp = document.getElementById('coverPattern');
+        var emArr = ['✨', '🌸', '💕', '⭐', '🦋', '💫', '🌷'];
+        for (var i = 0; i < 21; i++) {
+            var s = document.createElement('span');
+            s.textContent = emArr[Math.floor(Math.random() * emArr.length)];
+            s.style.cssText = 'left:' + Math.random() * 100 + '%;top:' + Math.random() * 100 + '%;'
+                + 'animation-delay:' + Math.random() * 6 + 's;animation-duration:' + (4 + Math.random() * 4) + 's;';
+            cp.appendChild(s);
+        }
+        var particles = document.getElementById('particles');
+        cover.addEventListener('mousemove', function (e) {
             if (Math.random() > .55) return;
-            const p = document.createElement('div'); p.classList.add('particle');
+            var p = document.createElement('div'); p.classList.add('particle');
             p.textContent = ['✨', '🦋', '🌸'][Math.floor(Math.random() * 3)];
             p.style.left = (e.clientX - 12) + 'px'; p.style.top = (e.clientY - 12) + 'px';
             p.style.setProperty('--dx', (Math.random() * 400 - 200) + 'px');
             p.style.setProperty('--dy', (-Math.random() * 400 - 50) + 'px');
             p.style.setProperty('--r', (Math.random() * 360) + 'deg');
-            particles.appendChild(p); setTimeout(() => p.remove(), 2800);
+            particles.appendChild(p);
+            setTimeout(function (el) { return function () { el.remove(); }; }(p), 2800);
         });
+        document.getElementById('toStage1Btn').addEventListener('click', function () { goTo('stageCake'); });
 
-        /* ── Secret page ── */
-        document.getElementById('secretBtn').addEventListener('click', () => {
-            document.querySelector('.scene').style.display = 'none';
-            const sp = document.getElementById('secretPage');
-            sp.style.display = 'flex';
-            sp.classList.add('visible');
-        });
+        /* ── STAGE 1: TIUP LILIN ── */
+        var TOTAL_CANDLES = 5;
+        var candlesLeft = TOTAL_CANDLES;
+        var blowBtn = document.getElementById('blowBtn');
+        var blowHint = document.getElementById('blowHint');
+        var blowDone = false;
 
-        /* ── Envelope ── */
-        const envWrap = document.getElementById('envWrap');
-        const choiceArea = document.getElementById('choiceArea');
-        const noBtn = document.getElementById('noBtn');
-        let buttonsShown = false;
-        let leaveTimer = null;
+        blowBtn.addEventListener('click', blowOne);
 
-        envWrap.addEventListener('mouseenter', () => {
-            clearTimeout(leaveTimer);
-            if (buttonsShown) return;
-            leaveTimer = setTimeout(() => {
-                buttonsShown = true;
-                envWrap.classList.add('locked-open');
-                /* tampilkan yes btn */
-                choiceArea.classList.add('visible');
-                /* tampilkan no btn */
-                showNoBtn();
-            }, 1100);
-        });
+        function blowOne() {
+            if (blowDone || candlesLeft <= 0) return;
+            var idx = TOTAL_CANDLES - candlesLeft;  // left to right
 
-        envWrap.addEventListener('mouseleave', () => {
-            if (buttonsShown) return;
-            clearTimeout(leaveTimer);
-        });
+            var flameEl = document.getElementById('flame' + idx);
+            var smokeEl = document.getElementById('smoke' + idx);
+            var glowEl = document.getElementById('glow' + idx);
 
-        /* ── Tampilkan kedua tombol di center layar berdampingan ── */
-        function showNoBtn() {
-            const yesBtn = document.getElementById("yesBtn");
-            const gap = 16; /* jarak antara dua tombol */
+            /* 1. Quick flicker then fade out */
+            if (flameEl) {
+                flameEl.style.transition = 'opacity 0.25s ease';
+                flameEl.style.opacity = '0';
+                setTimeout(function (f) { f.style.visibility = 'hidden'; f.classList.remove('lit'); }(flameEl), 260);
+            }
+            /* 2. Fade glow */
+            if (glowEl) {
+                glowEl.style.transition = 'opacity 0.3s ease';
+                glowEl.style.opacity = '0';
+            }
+            /* 3. Smoke puff for 2s */
+            if (smokeEl) {
+                smokeEl.classList.add('puffing');
+                setTimeout(function (sm) { sm.classList.remove('puffing'); }(smokeEl), 2000);
+            }
 
-            /* render dulu (display:block sudah, tapi opacity 0) biar offsetWidth bisa diukur */
-            yesBtn.classList.add("shown");
-            noBtn.classList.add("shown");
+            candlesLeft--;
 
-            setTimeout(() => {
-                const yw = yesBtn.offsetWidth || 174;
-                const yh = yesBtn.offsetHeight || 51;
-                const nw = noBtn.offsetWidth || 130;
-                const nh = noBtn.offsetHeight || 51;
-
-                /* total lebar kedua tombol + gap */
-                const totalW = yw + gap + nw;
-                const startX = (window.innerWidth - totalW) / 2;
-                /* hitung centerY dari posisi envelope card */
-                const envCard = document.getElementById("envWrap").closest("div[style]");
-                const envRect = envCard ? envCard.getBoundingClientRect() : null;
-                const centerY = envRect
-                    ? envRect.bottom + 32 + Math.max(yh, nh) / 2
-                    : window.innerHeight / 2 + 160;
-
-                /* yes-btn: kiri */
-                yesBtn.style.left = startX + "px";
-                yesBtn.style.top = (centerY - yh / 2) + "px";
-
-                /* no-btn: kanan */
-                noBtn.style.left = (startX + yw + gap) + "px";
-                noBtn.style.top = (centerY - nh / 2) + "px";
-            }, 50);
+            if (candlesLeft > 0) {
+                blowHint.textContent = candlesLeft + ' lilin menyala ✨';
+            } else {
+                blowDone = true;
+                blowHint.textContent = 'Semua padam! 🎉';
+                blowBtn.textContent = 'Lanjut 🦋';
+                spawnConfetti();
+                blowBtn.removeEventListener('click', blowOne);
+                blowBtn.addEventListener('click', function () { goTo('stageButterfly'); });
+            }
         }
 
+        /* ── STAGE 2: KUPU-KUPU ── */
+        var BF_TOTAL = 8;
+        var BF_WORDS = ['Cantik!', 'Lucu!', 'Imut!', 'Manis!', 'Kawaii~', 'Gemesin!', 'Senyum!', 'Cihuy!'];
+        var bfCaught = 0;
+        var bfIntervals = [];
+        var bfContainer = document.getElementById('bfContainer');
+
+        document.getElementById('bfStartBtn').addEventListener('click', function () {
+            document.getElementById('bfIntro').style.display = 'none';
+            document.getElementById('bfHud').style.display = 'flex';
+            bfContainer.classList.add('active');
+            spawnButterflies();
+        });
+
+        function spawnButterflies() {
+            for (var bi = 0; bi < BF_TOTAL; bi++) {
+                (function (idx) { setTimeout(function () { createBf(idx); }, idx * 300); })(bi);
+            }
+        }
+
+        function createBf(idx) {
+            var bf = document.createElement('div');
+            bf.className = 'bf';
+            bf.textContent = '🦋';
+            var x = Math.random() * (window.innerWidth - 60);
+            var y = 80 + Math.random() * (window.innerHeight - 160);
+            bf.style.left = x + 'px'; bf.style.top = y + 'px';
+            bfContainer.appendChild(bf);
+
+            var vx = (Math.random() * 2 + 1) * (Math.random() > .5 ? 1 : -1);
+            var vy = (Math.random() * 1.5 + .5) * (Math.random() > .5 ? 1 : -1);
+            var iv = setInterval(function () {
+                x += vx; y += vy;
+                if (x < 0 || x > window.innerWidth - 50) vx *= -1;
+                if (y < 70 || y > window.innerHeight - 60) vy *= -1;
+                bf.style.left = x + 'px'; bf.style.top = y + 'px';
+            }, 16);
+            bfIntervals.push(iv);
+
+            bf.addEventListener('click', function () {
+                if (bf.classList.contains('caught')) return;
+                bf.classList.add('caught');
+                clearInterval(iv);
+                var w = document.createElement('div'); w.className = 'word-pop';
+                w.textContent = BF_WORDS[idx];
+                w.style.left = x + 'px'; w.style.top = y + 'px';
+                bfContainer.appendChild(w);
+                setTimeout(function () { w.remove(); }, 1400);
+                bfCaught++;
+                document.getElementById('bfCount').textContent = bfCaught;
+                setTimeout(function () { bf.remove(); }, 400);
+                if (bfCaught >= BF_TOTAL) {
+                    bfIntervals.forEach(function (iv2) { clearInterval(iv2); });
+                    bfContainer.classList.remove('active');
+                    setTimeout(function () { spawnConfetti(); goTo('stageGift'); }, 600);
+                }
+            });
+        }
+
+        /* ── STAGE 3: PASSWORD ── */
+        var PASSWORD = 'ruki';
+        var pwInput = document.getElementById('pwInput');
+        var pwBtn = document.getElementById('pwBtn');
+        var pwErr = document.getElementById('pwErr');
+        var giftBox = document.getElementById('giftBox');
+        giftBox.addEventListener('click', function () {
+            giftBox.classList.add('shake');
+            setTimeout(function () { giftBox.classList.remove('shake'); }, 400);
+        });
+        pwInput.addEventListener('keydown', function (e) { if (e.key === 'Enter') checkPw(); });
+        pwBtn.addEventListener('click', checkPw);
+        function checkPw() {
+            var val = pwInput.value.trim().toLowerCase();
+            if (val === PASSWORD) {
+                pwErr.textContent = '';
+                giftBox.classList.add('open-anim');
+                spawnConfetti();
+                setTimeout(function () { goTo('stageEnvelope'); }, 700);
+            } else {
+                pwInput.classList.add('wrong');
+                pwErr.textContent = 'Hmm, coba lagi yaa... 🐾';
+                setTimeout(function () { pwInput.classList.remove('wrong'); }, 400);
+            }
+        }
+
+        /* ── STAGE 4: AMPLOP ── */
+        var envWrap = document.getElementById('envWrap');
+        var noBtn = document.getElementById('noBtn');
+        var buttonsShown = false;
+        var leaveTimer = null;
+        envWrap.addEventListener('mouseenter', function () {
+            clearTimeout(leaveTimer);
+            if (buttonsShown) return;
+            leaveTimer = setTimeout(function () {
+                buttonsShown = true;
+                envWrap.classList.add('locked-open');
+                showYesNo();
+            }, 1100);
+        });
+        envWrap.addEventListener('mouseleave', function () {
+            if (buttonsShown) return;
+            clearTimeout(leaveTimer);
+        });
+        function showYesNo() {
+            var yesBtn = document.getElementById('yesBtn');
+            var gap = 16;
+            yesBtn.classList.add('shown'); noBtn.classList.add('shown');
+            setTimeout(function () {
+                var yw = yesBtn.offsetWidth || 174, yh = yesBtn.offsetHeight || 51;
+                var nw = noBtn.offsetWidth || 130, nh = noBtn.offsetHeight || 51;
+                var startX = (window.innerWidth - (yw + gap + nw)) / 2;
+                var envCard = envWrap.closest('div[style]');
+                var envRect = envCard ? envCard.getBoundingClientRect() : null;
+                var centerY = envRect ? envRect.bottom + 32 + Math.max(yh, nh) / 2 : window.innerHeight / 2 + 160;
+                yesBtn.style.left = startX + 'px'; yesBtn.style.top = (centerY - yh / 2) + 'px';
+                noBtn.style.left = (startX + yw + gap) + 'px'; noBtn.style.top = (centerY - nh / 2) + 'px';
+            }, 50);
+        }
         function runAway() {
-            const bw = noBtn.offsetWidth || 130;
-            const bh = noBtn.offsetHeight || 50;
-            const pad = 24;
-            /* ambil posisi sekarang, lalu lompat ke tempat random yang JAUH */
-            const curL = parseFloat(noBtn.style.left) || window.innerWidth / 2;
-            const curT = parseFloat(noBtn.style.top) || window.innerHeight / 2;
-            let newL, newT, attempts = 0;
+            var bw = noBtn.offsetWidth || 130, bh = noBtn.offsetHeight || 50, pad = 24;
+            var curL = parseFloat(noBtn.style.left) || window.innerWidth / 2;
+            var curT = parseFloat(noBtn.style.top) || window.innerHeight / 2;
+            var newL, newT, attempts = 0;
             do {
                 newL = pad + Math.random() * (window.innerWidth - bw - pad * 2);
                 newT = pad + Math.random() * (window.innerHeight - bh - pad * 2);
                 attempts++;
             } while (Math.abs(newL - curL) < 150 && Math.abs(newT - curT) < 80 && attempts < 20);
-            noBtn.style.left = newL + 'px';
-            noBtn.style.top = newT + 'px';
+            noBtn.style.left = newL + 'px'; noBtn.style.top = newT + 'px';
         }
-
         noBtn.addEventListener('mouseenter', runAway);
-        noBtn.addEventListener('touchstart', e => { e.preventDefault(); runAway(); }, { passive: false });
-
-        /* ── Yes → form ── */
-        document.getElementById('yesBtn').addEventListener('click', () => {
+        noBtn.addEventListener('touchstart', function (e) { e.preventDefault(); runAway(); }, { passive: false });
+        document.getElementById('yesBtn').addEventListener('click', function () {
             spawnConfetti();
             noBtn.classList.remove('shown');
             document.getElementById('yesBtn').classList.remove('shown');
-            setTimeout(() => {
-                document.getElementById('stage1').style.display = 'none';
+            setTimeout(function () {
+                document.getElementById('envStage1').style.display = 'none';
                 document.getElementById('formCard').style.display = 'flex';
             }, 300);
         });
-
-        /* ── Submit ── */
-        document.getElementById('submitBtn').addEventListener('click', async () => {
-            const game = document.getElementById('game').value.trim();
-            const schedule = document.getElementById('schedule').value.trim();
-            const note = document.getElementById('note').value.trim();
-            document.getElementById('game').style.borderColor = game ? '#ffd0e2' : '#ff4f8b';
-            document.getElementById('schedule').style.borderColor = schedule ? '#ffd0e2' : '#ff4f8b';
-            if (!game || !schedule) return;
-
-            const BOT_TOKEN = '8365008697:AAEC9bMFFrxdFur3J2vxNE87bYzQ_sKSsus';
-            const CHAT_ID = '1999536233';
-            const msg = `🎮 Permintaan Main Baru\n\nGame: ${game}\nJadwal: ${schedule}\nCatatan: ${note || '-'}`;
-            const btn = document.getElementById('submitBtn');
+        document.getElementById('submitBtn').addEventListener('click', async function () {
+            var pesan = document.getElementById('pesan').value.trim();
+            document.getElementById('pesan').style.borderColor = pesan ? '#ffd0e2' : '#ff4f8b';
+            if (!pesan) return;
+            var BOT_TOKEN = '8365008697:AAEC9bMFFrxdFur3J2vxNE87bYzQ_sKSsus';
+            var CHAT_ID = '1999536233';
+            var btn = document.getElementById('submitBtn');
             btn.textContent = 'Mengirim...'; btn.disabled = true;
             try {
-                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                await fetch('https://api.telegram.org/bot' + BOT_TOKEN + '/sendMessage', {
                     method: 'POST', headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ chat_id: CHAT_ID, text: msg })
+                    body: JSON.stringify({ chat_id: CHAT_ID, text: '💌 Pesan Baru\n\n' + pesan })
                 });
             } catch (e) { }
             document.getElementById('formFields').style.display = 'none';
             document.getElementById('successMsg').style.display = 'flex';
             spawnConfetti();
         });
-
-        /* ── Confetti ── */
-        function spawnConfetti() {
-            const cols = ['#ff4f8b', '#ff86b3', '#f5c542', '#9b5de5', '#4ecdc4', '#ff6b6b', '#fff0f6'];
-            for (let i = 0; i < 80; i++) {
-                const c = document.createElement('div'); c.classList.add('confetti-piece');
-                c.style.cssText = `left:${50 + (Math.random() - .5) * 30}vw;top:40vh;
-                    background:${cols[Math.floor(Math.random() * cols.length)]};
-                    border-radius:${Math.random() > .5 ? '50%' : '2px'};
-                    width:${6 + Math.random() * 6}px;height:${6 + Math.random() * 6}px;
-                    --dx:${(Math.random() - .5) * window.innerWidth * 1.2}px;
-                    --dy:${Math.random() * window.innerHeight + 200}px;
-                    --r:${Math.random() * 720}deg;--dur:${1.2 + Math.random() * 1.2}s;
-                    animation-delay:${Math.random() * .4}s;`;
-                document.body.appendChild(c); setTimeout(() => c.remove(), 2800);
-            }
-        }
     </script>
 </body>
 
