@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
     <title>Birthday Book – Silvi</title>
     <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Nunito:wght@400;600;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap"
         rel="stylesheet" />
     <style>
         * {
@@ -17,9 +17,13 @@
         }
 
         :root {
-            --rose: #ff4f8b;
-            --plum: #5a2d4f;
-            --gold: #ffcc44
+            --sakura: #e8779a;
+            --sakura-lt: #f9c6d5;
+            --sakura-dk: #b84c6e;
+            --indigo: #3d3b6e;
+            --matcha: #7a9e7e;
+            --washi: #fdf6ee;
+            --gold: #c8a84b;
         }
 
         html,
@@ -27,43 +31,44 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            font-family: 'Nunito', sans-serif;
-            background: radial-gradient(ellipse at 20% 30%, #ffd6e7 0%, #ffe9f3 40%, #f4d9ff 80%, #dce8ff 100%)
+            font-family: 'Zen Kaku Gothic New', 'Noto Serif JP', sans-serif;
+            background: radial-gradient(ellipse at 20% 30%, #fde8f0 0%, #fef3f8 40%, #eee8f8 75%, #dce8d0 100%)
         }
 
+        /* ─── Washi texture blobs ─── */
         .blob {
             position: fixed;
             border-radius: 50%;
-            filter: blur(60px);
-            opacity: .35;
+            filter: blur(70px);
+            opacity: .28;
             pointer-events: none;
-            animation: drift 14s ease-in-out infinite alternate
+            animation: drift 16s ease-in-out infinite alternate
         }
 
         .blob-1 {
-            width: clamp(180px, 50vw, 380px);
-            height: clamp(180px, 50vw, 380px);
-            background: #ffb6d9;
-            top: -80px;
-            left: -80px
+            width: clamp(200px, 55vw, 420px);
+            height: clamp(200px, 55vw, 420px);
+            background: #f4bad1;
+            top: -90px;
+            left: -90px
         }
 
         .blob-2 {
-            width: clamp(140px, 40vw, 300px);
-            height: clamp(140px, 40vw, 300px);
-            background: #d4b3ff;
-            bottom: -60px;
-            right: -60px;
-            animation-delay: -5s
+            width: clamp(150px, 42vw, 320px);
+            height: clamp(150px, 42vw, 320px);
+            background: #c6bce8;
+            bottom: -70px;
+            right: -70px;
+            animation-delay: -6s
         }
 
         .blob-3 {
-            width: clamp(100px, 25vw, 200px);
-            height: clamp(100px, 25vw, 200px);
-            background: #b3d8ff;
+            width: clamp(110px, 28vw, 220px);
+            height: clamp(110px, 28vw, 220px);
+            background: #a8c9a8;
             top: 50%;
-            right: 10%;
-            animation-delay: -9s
+            right: 8%;
+            animation-delay: -11s
         }
 
         @keyframes drift {
@@ -76,22 +81,46 @@
             }
         }
 
+        /* ─── Falling sakura petals (bg layer) ─── */
+        .petal-bg {
+            position: fixed;
+            top: -30px;
+            font-size: clamp(14px, 3vw, 20px);
+            pointer-events: none;
+            z-index: 5;
+            animation: petalFall linear infinite;
+            opacity: .55
+        }
+
+        @keyframes petalFall {
+            0% {
+                transform: translateY(0) rotate(0deg) translateX(0);
+                opacity: .6
+            }
+
+            100% {
+                transform: translateY(110vh) rotate(360deg) translateX(30px);
+                opacity: 0
+            }
+        }
+
+        /* ─── Mute button ─── */
         #muteBtn {
             position: fixed;
             top: clamp(10px, 3vw, 18px);
             right: clamp(10px, 3vw, 18px);
             z-index: 99999;
-            background: white;
-            border: none;
+            background: var(--washi);
+            border: 1.5px solid var(--sakura-lt);
             border-radius: 999px;
-            width: clamp(36px, 10vw, 44px);
-            height: clamp(36px, 10vw, 44px);
+            width: clamp(38px, 11vw, 46px);
+            height: clamp(38px, 11vw, 46px);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: clamp(16px, 5vw, 20px);
             cursor: pointer;
-            box-shadow: 0 4px 16px rgba(255, 79, 139, .25);
+            box-shadow: 0 4px 16px rgba(184, 76, 110, .2);
             transition: transform .2s;
             opacity: 0;
             pointer-events: none;
@@ -107,6 +136,7 @@
             transform: scale(.92)
         }
 
+        /* ─── Screens ─── */
         .screen {
             position: fixed;
             inset: 0;
@@ -118,7 +148,7 @@
             z-index: 100;
             overflow-y: auto;
             overflow-x: hidden;
-            background: radial-gradient(ellipse at 20% 30%, #ffd6e7 0%, #ffe9f3 40%, #f4d9ff 80%, #dce8ff 100%)
+            background: radial-gradient(ellipse at 20% 30%, #fde8f0 0%, #fef3f8 40%, #eee8f8 75%, #dce8d0 100%)
         }
 
         .screen.active {
@@ -143,6 +173,7 @@
             z-index: 50
         }
 
+        /* ─── Book ─── */
         .scene {
             perspective: 2800px;
             display: flex;
@@ -174,14 +205,14 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            background: linear-gradient(145deg, #ff3d7f, #ff6fa3, #ff4f8b);
+            background: linear-gradient(150deg, #3d3b6e 0%, #5b547a 40%, #7a6f9e 70%, #9d7fa5 100%);
             border-radius: 20px 6px 6px 20px;
             transform-origin: left center;
             transition: transform 1.2s cubic-bezier(.77, 0, .175, 1);
             z-index: 10;
             cursor: pointer;
             overflow: hidden;
-            box-shadow: 8px 0 0 #cc2f66, 0 30px 60px rgba(0, 0, 0, .3), inset -4px 0 12px rgba(0, 0, 0, .15)
+            box-shadow: 8px 0 0 #27254a, 0 30px 60px rgba(0, 0, 0, .32), inset -4px 0 12px rgba(0, 0, 0, .15)
         }
 
         .cover::before {
@@ -191,7 +222,7 @@
             top: 0;
             width: 22px;
             height: 100%;
-            background: linear-gradient(90deg, rgba(0, 0, 0, .25), transparent);
+            background: linear-gradient(90deg, rgba(0, 0, 0, .28), transparent);
             border-radius: 20px 0 0 20px
         }
 
@@ -199,7 +230,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, rgba(255, 255, 255, .22) 0%, transparent 55%, rgba(255, 255, 255, .08) 100%);
+            background: linear-gradient(135deg, rgba(255, 255, 255, .14) 0%, transparent 55%, rgba(255, 255, 255, .06) 100%);
             pointer-events: none
         }
 
@@ -207,16 +238,17 @@
             transform: rotateY(-148deg)
         }
 
+        /* Japanese pattern overlay on cover */
         .cover-pattern {
             position: absolute;
             inset: 0;
             overflow: hidden;
-            opacity: .18
+            opacity: .22
         }
 
         .cover-pattern span {
             position: absolute;
-            font-size: clamp(12px, 2.5vw, 18px);
+            font-size: clamp(14px, 3vw, 22px);
             animation: floatP 6s ease-in-out infinite
         }
 
@@ -230,6 +262,14 @@
             50% {
                 transform: translateY(-10px)
             }
+        }
+
+        /* Seigaiha (wave) SVG watermark */
+        .cover-seigaiha {
+            position: absolute;
+            inset: 0;
+            opacity: .09;
+            pointer-events: none
         }
 
         .cover-content {
@@ -254,49 +294,78 @@
 
         .cover-badge {
             font-size: clamp(9px, 2vw, 11px);
-            letter-spacing: .2em;
+            letter-spacing: .3em;
             text-transform: uppercase;
-            opacity: .85;
+            opacity: .8;
             font-weight: 700;
-            border: 1.5px solid rgba(255, 255, 255, .6);
-            border-radius: 20px;
-            padding: 4px 14px
+            border: 1.5px solid rgba(255, 255, 255, .45);
+            border-radius: 4px;
+            padding: 4px 16px
         }
 
         .cover-title {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(32px, 8vw, 52px);
-            line-height: 1.1;
-            font-weight: 700
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(30px, 8vw, 50px);
+            line-height: 1.15;
+            font-weight: 700;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, .3)
+        }
+
+        .cover-kana {
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(12px, 3vw, 16px);
+            opacity: .75;
+            letter-spacing: .15em;
+            font-weight: 400
         }
 
         .cover-sub {
             font-size: clamp(11px, 2.5vw, 13px);
-            opacity: .8;
-            letter-spacing: .05em
+            opacity: .75;
+            letter-spacing: .08em
         }
 
         .cover-hint {
-            margin-top: 8px;
+            margin-top: 6px;
             font-size: clamp(11px, 2.5vw, 13px);
-            opacity: .7;
+            opacity: .65;
             display: flex;
             align-items: center;
-            gap: 6px
+            gap: 8px
         }
 
         .cover-hint::before,
         .cover-hint::after {
             content: '';
-            width: 24px;
+            width: 28px;
             height: 1px;
-            background: rgba(255, 255, 255, .5)
+            background: rgba(255, 255, 255, .4)
         }
 
+        /* Red stamp / hanko */
+        .hanko {
+            width: clamp(48px, 12vw, 62px);
+            height: clamp(48px, 12vw, 62px);
+            border: 3px solid #e8455a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #e8455a;
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(11px, 2.5vw, 14px);
+            font-weight: 700;
+            letter-spacing: .05em;
+            line-height: 1.2;
+            text-align: center;
+            opacity: .85
+        }
+
+        /* ─── Page (book interior) ─── */
         .page {
             position: absolute;
             inset: 0;
-            background: linear-gradient(160deg, #fff8fb 0%, #fff4f9 60%, #fef0ff 100%);
+            background: linear-gradient(160deg, var(--washi) 0%, #fdf0e8 55%, #fef5f0 100%);
             border-radius: 20px;
             overflow: hidden
         }
@@ -305,7 +374,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: repeating-linear-gradient(transparent, transparent 39px, rgba(255, 79, 139, .06) 39px, rgba(255, 79, 139, .06) 40px);
+            background: repeating-linear-gradient(transparent, transparent 39px, rgba(184, 76, 110, .07) 39px, rgba(184, 76, 110, .07) 40px);
             pointer-events: none
         }
 
@@ -316,7 +385,7 @@
             top: 0;
             bottom: 0;
             width: 1.5px;
-            background: rgba(255, 150, 190, .25)
+            background: rgba(200, 168, 75, .3)
         }
 
         .page-inner {
@@ -334,34 +403,49 @@
         }
 
         .page-title {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(26px, 7vw, 42px);
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(24px, 6.5vw, 40px);
             font-weight: 700;
-            color: var(--rose);
-            line-height: 1.1
+            color: var(--sakura-dk);
+            line-height: 1.15
         }
 
         .page-name {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(18px, 5vw, 30px);
-            font-style: italic;
-            color: var(--plum);
-            line-height: 1.2
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(16px, 4.5vw, 26px);
+            color: var(--indigo);
+            line-height: 1.3;
+            font-weight: 400
         }
 
         .page-divider {
-            width: 60px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #ffb3d0, transparent);
-            border-radius: 2px
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            justify-content: center
+        }
+
+        .page-divider::before,
+        .page-divider::after {
+            content: '';
+            flex: 1;
+            max-width: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent)
+        }
+
+        .page-divider-icon {
+            color: var(--gold);
+            font-size: 14px
         }
 
         .page-msg {
             max-width: min(320px, 80vw);
-            line-height: 1.8;
-            color: #7a5570;
-            font-size: clamp(12px, 3vw, 15px);
-            font-weight: 600
+            line-height: 1.85;
+            color: #7a5a4a;
+            font-size: clamp(12px, 3vw, 14.5px);
+            font-weight: 500
         }
 
         .gift-btn {
@@ -371,17 +455,18 @@
             right: clamp(10px, 3vw, 18px);
             bottom: clamp(10px, 3vw, 18px);
             border: none;
-            background: linear-gradient(135deg, var(--rose), #ff7ab5);
+            background: linear-gradient(135deg, var(--sakura-dk), var(--sakura));
             color: white;
             padding: clamp(10px, 2.5vw, 13px) clamp(16px, 4vw, 26px);
-            border-radius: 999px;
+            border-radius: 4px;
             font-size: clamp(12px, 3vw, 14px);
-            font-weight: 800;
-            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            font-family: 'Zen Kaku Gothic New', sans-serif;
             cursor: pointer;
-            box-shadow: 0 12px 30px rgba(255, 79, 139, .4);
-            transition: opacity .5s ease, transform .3s, box-shadow .3s;
-            touch-action: manipulation
+            box-shadow: 0 10px 28px rgba(184, 76, 110, .35);
+            transition: opacity .5s ease, transform .3s;
+            touch-action: manipulation;
+            letter-spacing: .05em
         }
 
         .book.open~.gift-btn {
@@ -394,11 +479,13 @@
             transform: scale(.95)
         }
 
+        /* ─── Stage: Cake ─── */
         #stageCake .card {
-            background: white;
-            border-radius: clamp(20px, 4vw, 32px);
+            background: var(--washi);
+            border-radius: 4px;
+            border: 1px solid rgba(200, 168, 75, .35);
             padding: clamp(24px, 5vw, 40px) clamp(24px, 6vw, 52px) clamp(20px, 4vw, 36px);
-            box-shadow: 0 32px 80px rgba(180, 60, 120, .18), 0 0 0 1px rgba(255, 150, 190, .15);
+            box-shadow: 0 28px 70px rgba(100, 60, 80, .14), 0 0 0 1px rgba(200, 168, 75, .2);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -407,10 +494,11 @@
         }
 
         #stageCake h2 {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Noto Serif JP', serif;
             font-size: clamp(18px, 5vw, 26px);
-            color: var(--rose);
-            text-align: center
+            color: var(--sakura-dk);
+            text-align: center;
+            font-weight: 700
         }
 
         .cake-scene {
@@ -433,17 +521,18 @@
 
         .blow-btn {
             border: none;
-            background: linear-gradient(135deg, var(--rose), #ff7ab5);
+            background: linear-gradient(135deg, var(--sakura-dk), var(--sakura));
             color: white;
             padding: clamp(12px, 3vw, 14px) clamp(24px, 6vw, 36px);
-            border-radius: 999px;
+            border-radius: 4px;
             font-size: clamp(14px, 3.5vw, 15px);
-            font-weight: 800;
-            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            font-family: 'Zen Kaku Gothic New', sans-serif;
             cursor: pointer;
-            box-shadow: 0 10px 28px rgba(255, 79, 139, .4);
+            box-shadow: 0 10px 28px rgba(184, 76, 110, .35);
             transition: transform .2s;
-            touch-action: manipulation
+            touch-action: manipulation;
+            letter-spacing: .05em
         }
 
         .blow-btn:active {
@@ -452,14 +541,16 @@
 
         .blow-hint {
             font-size: clamp(12px, 3vw, 13px);
-            color: #c090b0;
+            color: #b08090;
             font-weight: 700;
             text-align: center;
-            min-height: 20px
+            min-height: 20px;
+            letter-spacing: .03em
         }
 
+        /* ─── Stage: Butterfly ─── */
         #stageButterfly {
-            background: radial-gradient(ellipse at 50% 60%, #e8f8ff 0%, #fce4ff 50%, #ffe4f0 100%)
+            background: radial-gradient(ellipse at 50% 60%, #edf6ee 0%, #f5e8f8 50%, #fde8f0 100%)
         }
 
         .bf-hud {
@@ -467,10 +558,11 @@
             top: clamp(12px, 3vw, 24px);
             left: 50%;
             transform: translateX(-50%);
-            background: white;
-            border-radius: 999px;
+            background: var(--washi);
+            border-radius: 4px;
+            border: 1px solid var(--sakura-lt);
             padding: 8px 24px;
-            box-shadow: 0 8px 24px rgba(255, 79, 139, .2);
+            box-shadow: 0 8px 24px rgba(184, 76, 110, .18);
             display: flex;
             align-items: center;
             z-index: 200;
@@ -479,13 +571,13 @@
 
         .bf-hud span {
             font-size: clamp(13px, 3.5vw, 14px);
-            font-weight: 800;
-            color: var(--plum)
+            font-weight: 700;
+            color: var(--indigo)
         }
 
         .bf-hud em {
             font-style: normal;
-            color: var(--rose)
+            color: var(--sakura-dk)
         }
 
         .bf-container {
@@ -504,7 +596,7 @@
             font-size: clamp(28px, 7vw, 36px);
             cursor: pointer;
             user-select: none;
-            filter: drop-shadow(0 4px 8px rgba(180, 60, 120, .2));
+            filter: drop-shadow(0 4px 8px rgba(100, 60, 80, .18));
             touch-action: manipulation
         }
 
@@ -534,10 +626,9 @@
 
         .word-pop {
             position: absolute;
-            font-family: 'Playfair Display', serif;
+            font-family: 'Noto Serif JP', serif;
             font-size: clamp(14px, 4vw, 16px);
-            color: var(--rose);
-            font-style: italic;
+            color: var(--sakura-dk);
             pointer-events: none;
             z-index: 160;
             animation: wordFly 1.4s ease-out forwards
@@ -561,52 +652,57 @@
         }
 
         .intro-card {
-            background: white;
-            border-radius: clamp(20px, 4vw, 28px);
+            background: var(--washi);
+            border-radius: 4px;
+            border: 1px solid rgba(200, 168, 75, .3);
             padding: clamp(24px, 6vw, 36px) clamp(24px, 7vw, 44px);
-            box-shadow: 0 24px 60px rgba(180, 60, 120, .18);
+            box-shadow: 0 24px 60px rgba(100, 60, 80, .14);
             text-align: center;
             max-width: min(320px, 88vw)
         }
 
         .intro-card h2 {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Noto Serif JP', serif;
             font-size: clamp(20px, 5vw, 24px);
-            color: var(--rose);
-            margin-bottom: 10px
+            color: var(--sakura-dk);
+            margin-bottom: 10px;
+            font-weight: 700
         }
 
         .intro-card p {
             font-size: clamp(13px, 3.5vw, 14px);
-            color: #9a7090;
-            font-weight: 700;
+            color: #9a7070;
+            font-weight: 500;
             margin-bottom: 20px;
-            line-height: 1.6
+            line-height: 1.7
         }
 
         .start-btn {
             border: none;
-            background: linear-gradient(135deg, var(--rose), #ff7ab5);
+            background: linear-gradient(135deg, var(--sakura-dk), var(--sakura));
             color: white;
             padding: clamp(12px, 3vw, 13px) clamp(24px, 6vw, 32px);
-            border-radius: 999px;
+            border-radius: 4px;
             font-size: clamp(14px, 3.5vw, 15px);
-            font-weight: 800;
-            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            font-family: 'Zen Kaku Gothic New', sans-serif;
             cursor: pointer;
-            box-shadow: 0 10px 28px rgba(255, 79, 139, .4);
-            touch-action: manipulation
+            box-shadow: 0 10px 28px rgba(184, 76, 110, .35);
+            touch-action: manipulation;
+            letter-spacing: .05em
         }
 
         .start-btn:active {
             transform: scale(.95)
         }
 
+        /* ─── Stage: Gift ─── */
         #stageGift .gift-card {
-            background: white;
-            border-radius: clamp(20px, 4vw, 32px);
+            background: var(--washi);
+            border-radius: 4px;
+            border: 1px solid rgba(200, 168, 75, .3);
             padding: clamp(28px, 6vw, 48px) clamp(24px, 6vw, 52px) clamp(24px, 5vw, 44px);
-            box-shadow: 0 32px 80px rgba(180, 60, 120, .18), 0 0 0 1px rgba(255, 150, 190, .15);
+            box-shadow: 0 28px 70px rgba(100, 60, 80, .14), 0 0 0 1px rgba(200, 168, 75, .18);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -615,10 +711,11 @@
         }
 
         #stageGift h2 {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Noto Serif JP', serif;
             font-size: clamp(20px, 5.5vw, 28px);
-            color: var(--rose);
-            text-align: center
+            color: var(--sakura-dk);
+            text-align: center;
+            font-weight: 700
         }
 
         .gift-box-wrap {
@@ -679,18 +776,18 @@
 
         .clue {
             font-size: clamp(12px, 3vw, 13px);
-            color: #c090b0;
+            color: #b08070;
             font-weight: 700;
             text-align: center;
-            background: #fff0f6;
-            border-radius: 12px;
+            background: #fef8ef;
+            border-radius: 4px;
             padding: 8px 18px;
-            border: 1.5px dashed #ffd0e2
+            border: 1px dashed var(--gold)
         }
 
         .clue em {
             font-style: normal;
-            color: var(--rose)
+            color: var(--sakura-dk)
         }
 
         .pw-wrap {
@@ -704,26 +801,26 @@
         .pw-input {
             width: 100%;
             padding: clamp(12px, 3vw, 15px) 18px;
-            border-radius: 14px;
-            border: 2px solid #ffd0e2;
+            border-radius: 4px;
+            border: 1.5px solid var(--sakura-lt);
             font-size: clamp(16px, 4vw, 18px);
-            font-family: 'Nunito', sans-serif;
-            font-weight: 800;
+            font-family: 'Zen Kaku Gothic New', sans-serif;
+            font-weight: 700;
             letter-spacing: .25em;
             text-align: center;
             outline: none;
-            color: var(--plum);
-            background: #fff8fb;
+            color: var(--indigo);
+            background: var(--washi);
             transition: border-color .2s, box-shadow .2s
         }
 
         .pw-input:focus {
-            border-color: var(--rose);
-            box-shadow: 0 0 0 4px rgba(255, 79, 139, .1)
+            border-color: var(--sakura-dk);
+            box-shadow: 0 0 0 4px rgba(184, 76, 110, .1)
         }
 
         .pw-input.wrong {
-            border-color: #ff4444;
+            border-color: #e04444;
             animation: wrongShake .3s ease
         }
 
@@ -745,7 +842,7 @@
 
         .pw-err {
             font-size: clamp(12px, 3vw, 13px);
-            color: #ff4444;
+            color: #e04444;
             font-weight: 700;
             height: 18px;
             text-align: center
@@ -755,26 +852,28 @@
             width: 100%;
             border: none;
             padding: clamp(13px, 3.5vw, 15px);
-            border-radius: 999px;
+            border-radius: 4px;
             font-size: clamp(14px, 3.5vw, 15px);
-            font-weight: 800;
-            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            font-family: 'Zen Kaku Gothic New', sans-serif;
             color: white;
             cursor: pointer;
-            background: linear-gradient(135deg, var(--rose), #ff7ab5);
-            box-shadow: 0 10px 28px rgba(255, 79, 139, .4);
-            touch-action: manipulation
+            background: linear-gradient(135deg, var(--sakura-dk), var(--sakura));
+            box-shadow: 0 10px 28px rgba(184, 76, 110, .35);
+            touch-action: manipulation;
+            letter-spacing: .05em
         }
 
         .pw-btn:active {
             transform: scale(.97)
         }
 
+        /* ─── Stage: Envelope ─── */
         .env-outer {
-            background: white;
-            border-radius: clamp(20px, 4vw, 28px);
-            padding: clamp(24px, 5vw, 36px) clamp(24px, 7vw, 48px) clamp(20px, 4vw, 32px);
-            box-shadow: 0 32px 80px rgba(180, 60, 120, .18), 0 0 0 1px rgba(255, 150, 190, .15)
+            background: var(--washi);
+            border-radius: 4px;
+            border: 1px solid rgba(200, 168, 75, .3);
+            padding: clamp(24px, 5vw, 36px) clamp(24px, 7vw, 48px) clamp(20px, 4vw, 32px)
         }
 
         .env-wrap {
@@ -792,10 +891,10 @@
             right: 12px;
             bottom: 10px;
             height: 148px;
-            background: white;
-            border-radius: 10px;
-            border: 1.5px solid #ffd8e8;
-            box-shadow: 0 4px 16px rgba(255, 79, 139, .1);
+            background: var(--washi);
+            border-radius: 4px;
+            border: 1px solid rgba(200, 168, 75, .3);
+            box-shadow: 0 4px 16px rgba(100, 60, 80, .1);
             z-index: 1;
             display: flex;
             flex-direction: column;
@@ -814,10 +913,10 @@
         }
 
         .env-letter-title {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(13px, 3.5vw, 15px);
-            color: var(--plum);
-            line-height: 1.3;
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(12px, 3vw, 14px);
+            color: var(--indigo);
+            line-height: 1.5;
             margin-bottom: 3px
         }
 
@@ -827,7 +926,7 @@
             right: 0;
             top: 70px;
             height: 160px;
-            background: linear-gradient(160deg, #ff6fa3, #ff4f8b);
+            background: linear-gradient(160deg, var(--sakura), var(--sakura-dk));
             border-radius: 0 0 16px 16px;
             z-index: 2;
             overflow: hidden
@@ -840,7 +939,7 @@
             left: 0;
             width: 0;
             height: 0;
-            border-bottom: 80px solid rgba(0, 0, 0, .12);
+            border-bottom: 80px solid rgba(0, 0, 0, .1);
             border-right: 130px solid transparent
         }
 
@@ -851,14 +950,14 @@
             right: 0;
             width: 0;
             height: 0;
-            border-bottom: 80px solid rgba(0, 0, 0, .18);
+            border-bottom: 80px solid rgba(0, 0, 0, .16);
             border-left: 130px solid transparent
         }
 
         .env-shine {
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, rgba(255, 255, 255, .2) 0%, transparent 55%);
+            background: linear-gradient(135deg, rgba(255, 255, 255, .18) 0%, transparent 55%);
             pointer-events: none
         }
 
@@ -913,20 +1012,21 @@
         .env-hint {
             font-size: clamp(10px, 2.5vw, 11px);
             font-weight: 700;
-            letter-spacing: .18em;
+            letter-spacing: .2em;
             text-transform: uppercase;
-            color: #ffb3d0;
+            color: #c0a090;
             text-align: center
         }
 
+        /* Yes / No */
         .yes-btn,
         .no-btn {
             border: none;
             padding: clamp(12px, 3vw, 14px) clamp(24px, 6vw, 34px);
-            border-radius: 999px;
+            border-radius: 4px;
             font-size: clamp(14px, 4vw, 16px);
-            font-weight: 800;
-            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            font-family: 'Zen Kaku Gothic New', sans-serif;
             cursor: pointer;
             color: white;
             white-space: nowrap;
@@ -935,16 +1035,17 @@
             opacity: 0;
             pointer-events: none;
             transition: opacity .4s ease, left .15s ease, top .15s ease;
-            touch-action: manipulation
+            touch-action: manipulation;
+            letter-spacing: .05em
         }
 
         .yes-btn {
-            background: linear-gradient(135deg, var(--rose), #ff7ab5);
-            box-shadow: 0 8px 24px rgba(255, 79, 139, .4)
+            background: linear-gradient(135deg, var(--sakura-dk), var(--sakura));
+            box-shadow: 0 8px 24px rgba(184, 76, 110, .38)
         }
 
         .no-btn {
-            background: linear-gradient(135deg, #9b8fa0, #7a6d7e);
+            background: linear-gradient(135deg, #7a7888, #5e5c6a);
             box-shadow: 0 8px 20px rgba(0, 0, 0, .2)
         }
 
@@ -954,12 +1055,14 @@
             pointer-events: auto
         }
 
+        /* Form */
         .form-card {
             display: none;
-            background: white;
-            border-radius: clamp(20px, 4vw, 28px);
+            background: var(--washi);
+            border-radius: 4px;
+            border: 1px solid rgba(200, 168, 75, .3);
             padding: clamp(28px, 6vw, 44px) clamp(24px, 6vw, 48px);
-            box-shadow: 0 32px 80px rgba(180, 60, 120, .18), 0 0 0 1px rgba(255, 150, 190, .15);
+            box-shadow: 0 28px 70px rgba(100, 60, 80, .14);
             width: min(420px, 90vw);
             flex-direction: column;
             align-items: center;
@@ -979,11 +1082,13 @@
         }
 
         .form-card h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(20px, 5.5vw, 28px);
-            color: var(--rose);
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(18px, 5vw, 24px);
+            color: var(--sakura-dk);
             margin-bottom: 18px;
-            text-align: center
+            text-align: center;
+            font-weight: 700;
+            line-height: 1.4
         }
 
         .form-fields {
@@ -995,37 +1100,38 @@
 
         .form-fields textarea {
             padding: clamp(12px, 3vw, 15px) 18px;
-            border-radius: 14px;
-            border: 2px solid #ffd0e2;
+            border-radius: 4px;
+            border: 1.5px solid var(--sakura-lt);
             font-size: clamp(13px, 3.5vw, 15px);
-            font-family: 'Nunito', sans-serif;
-            font-weight: 600;
+            font-family: 'Zen Kaku Gothic New', sans-serif;
+            font-weight: 500;
             outline: none;
-            color: var(--plum);
-            background: #fff8fb;
+            color: var(--indigo);
+            background: var(--washi);
             min-height: clamp(100px, 25vw, 140px);
             resize: none;
             transition: border-color .2s, box-shadow .2s
         }
 
         .form-fields textarea:focus {
-            border-color: var(--rose);
-            box-shadow: 0 0 0 4px rgba(255, 79, 139, .1)
+            border-color: var(--sakura-dk);
+            box-shadow: 0 0 0 4px rgba(184, 76, 110, .1)
         }
 
         .submit-btn {
             width: 100%;
             border: none;
             padding: clamp(13px, 3.5vw, 16px);
-            border-radius: 999px;
+            border-radius: 4px;
             font-size: clamp(14px, 3.5vw, 16px);
-            font-weight: 800;
-            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            font-family: 'Zen Kaku Gothic New', sans-serif;
             color: white;
             cursor: pointer;
-            background: linear-gradient(135deg, var(--rose), #ff7ab5);
-            box-shadow: 0 10px 28px rgba(255, 79, 139, .4);
-            touch-action: manipulation
+            background: linear-gradient(135deg, var(--sakura-dk), var(--sakura));
+            box-shadow: 0 10px 28px rgba(184, 76, 110, .35);
+            touch-action: manipulation;
+            letter-spacing: .05em
         }
 
         .submit-btn:active {
@@ -1046,15 +1152,16 @@
         }
 
         .success-msg h2 {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Noto Serif JP', serif;
             font-size: clamp(18px, 5vw, 24px);
-            color: var(--rose)
+            color: var(--sakura-dk);
+            font-weight: 700
         }
 
         .success-msg p {
-            color: #9a7090;
+            color: #9a7070;
             font-size: clamp(13px, 3.5vw, 15px);
-            font-weight: 600
+            font-weight: 500
         }
 
         @keyframes pop {
@@ -1070,13 +1177,14 @@
         .stage-label {
             font-size: clamp(9px, 2.5vw, 11px);
             font-weight: 700;
-            letter-spacing: .18em;
+            letter-spacing: .25em;
             text-transform: uppercase;
-            color: #ffb3d0;
+            color: #c0a090;
             margin-bottom: -4px;
             text-align: center
         }
 
+        /* Particles */
         .particles {
             position: fixed;
             inset: 0;
@@ -1127,17 +1235,17 @@
             }
         }
 
-        /* ── CURTAIN OUTRO ── */
+        /* ─── Curtain Outro ─── */
         #curtainOverlay {
             position: fixed;
             inset: 0;
             z-index: 999998;
             pointer-events: none;
-            display: none;
+            display: none
         }
 
         #curtainOverlay.active {
-            display: block;
+            display: block
         }
 
         .curtain-left,
@@ -1146,29 +1254,28 @@
             top: 0;
             width: 50%;
             height: 100%;
-            background: linear-gradient(135deg, #ff4f8b, #d94f9e, #a0337a);
-            transition: transform 1.2s cubic-bezier(.77, 0, .175, 1);
+            background: linear-gradient(135deg, #3d3b6e 0%, #5b547a 45%, #7a6f9e 100%);
+            transition: transform 1.2s cubic-bezier(.77, 0, .175, 1)
         }
 
         .curtain-left {
             left: 0;
-            transform: translateX(-100%);
+            transform: translateX(-100%)
         }
 
         .curtain-right {
             right: 0;
-            transform: translateX(100%);
+            transform: translateX(100%)
         }
 
         #curtainOverlay.close .curtain-left {
-            transform: translateX(0);
+            transform: translateX(0)
         }
 
         #curtainOverlay.close .curtain-right {
-            transform: translateX(0);
+            transform: translateX(0)
         }
 
-        /* Decorative folds on curtains */
         .curtain-left::after,
         .curtain-right::after {
             content: '';
@@ -1176,18 +1283,17 @@
             top: 0;
             bottom: 0;
             width: 18px;
-            background: rgba(0, 0, 0, .15);
+            background: rgba(0, 0, 0, .14)
         }
 
         .curtain-left::after {
-            right: 0;
+            right: 0
         }
 
         .curtain-right::after {
-            left: 0;
+            left: 0
         }
 
-        /* Typing message box */
         #curtainMsg {
             position: absolute;
             top: 50%;
@@ -1197,32 +1303,32 @@
             opacity: 0;
             transition: opacity .5s ease;
             z-index: 1;
-            padding: 0 24px;
+            padding: 0 28px
         }
 
         #curtainOverlay.show-msg #curtainMsg {
-            opacity: 1;
+            opacity: 1
         }
 
         #curtainMsg .typing-line {
-            font-family: 'Nunito', sans-serif;
-            font-size: clamp(13px, 3.5vw, 16px);
-            font-weight: 700;
-            color: white;
-            letter-spacing: .03em;
-            line-height: 1.8;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, .25);
-            white-space: pre-wrap;
+            font-family: 'Zen Kaku Gothic New', sans-serif;
+            font-size: clamp(14px, 3.8vw, 17px);
+            font-weight: 500;
+            color: #fdf6ee;
+            letter-spacing: .04em;
+            line-height: 2;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, .3);
+            white-space: pre-wrap
         }
 
         #curtainMsg .cursor {
             display: inline-block;
             width: 2px;
             height: 1.1em;
-            background: white;
+            background: #fdf6ee;
             vertical-align: text-bottom;
             animation: blink .7s step-end infinite;
-            margin-left: 2px;
+            margin-left: 2px
         }
 
         @keyframes blink {
@@ -1237,29 +1343,29 @@
             }
         }
 
-        /* Falling flowers */
+        /* Falling sakura outro */
         .flower-fall {
             position: fixed;
             top: -40px;
             font-size: clamp(16px, 4vw, 22px);
             pointer-events: none;
             z-index: 999999;
-            animation: flowerDrop linear forwards;
+            animation: flowerDrop linear forwards
         }
 
         @keyframes flowerDrop {
             0% {
                 transform: translateY(0) rotate(0deg);
-                opacity: 1;
+                opacity: 1
             }
 
             90% {
-                opacity: 1;
+                opacity: 1
             }
 
             100% {
                 transform: translateY(110vh) rotate(360deg);
-                opacity: 0;
+                opacity: 0
             }
         }
     </style>
@@ -1267,34 +1373,52 @@
 
 <body>
 
-    <!-- ★ BACKSOUND: file monokrom.mp3 harus satu folder dengan HTML ini ★ -->
     <audio id="bgAudio" loop preload="auto" src="monokrom.mp3"></audio>
 
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
     <div class="blob blob-3"></div>
 
+    <!-- Background sakura petals -->
+    <div id="bgPetals"></div>
+
     <button id="muteBtn" title="Mute/Unmute">🔊</button>
 
-    <!-- STAGE 0: BOOK -->
+    <!-- ══ STAGE 0: BOOK ══ -->
     <div class="screen active" id="stageBook">
         <div class="scene">
             <div class="book-wrapper">
                 <div class="book" id="book">
                     <div class="cover" id="cover">
+                        <!-- Seigaiha wave pattern -->
+                        <svg class="cover-seigaiha" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <pattern id="seigaiha" x="0" y="0" width="40" height="30" patternUnits="userSpaceOnUse">
+                                    <ellipse cx="20" cy="32" rx="20" ry="22" fill="none" stroke="white"
+                                        stroke-width="1.5" />
+                                    <ellipse cx="0" cy="32" rx="20" ry="22" fill="none" stroke="white"
+                                        stroke-width="1.5" />
+                                    <ellipse cx="40" cy="32" rx="20" ry="22" fill="none" stroke="white"
+                                        stroke-width="1.5" />
+                                </pattern>
+                            </defs>
+                            <rect width="200" height="200" fill="url(#seigaiha)" />
+                        </svg>
                         <div class="cover-pattern" id="coverPattern"></div>
                         <div class="cover-content">
-                            <div class="cover-badge">Special For Soya</div>
+                            <div class="hanko">誕生<br>日</div>
+                            <div class="cover-kana">お誕生日おめでとう</div>
                             <div class="cover-title">Happy<br>Birthday</div>
-                            <div class="cover-sub">15-Juni-2026</div>
-                            <div class="cover-hint">Klik untuk membuka</div>
+                            <div class="cover-sub">Special For Soya ✦ 15 Juni 2026</div>
+                            <div class="cover-hint">クリックして開く</div>
                         </div>
                     </div>
                     <div class="page">
                         <div class="page-inner">
-                            <div class="page-title">Selamat<br>Ulang Tahun</div>
-                            <div class="page-divider"></div>
+                            <div class="page-title">お誕生日<br>おめでとう</div>
+                            <div class="page-divider"><span class="page-divider-icon">✦</span></div>
                             <div class="page-name">Silvi Adelia Putri</div>
+                            <div class="page-divider"><span class="page-divider-icon">🌸</span></div>
                             <div class="page-msg">Haloo ipii, selamat ulang tahun yang ke 20 yaa, semoga sehat selalu
                                 dan semoga dengan seiring bertambahnya usia tinggi ipii juga ikut nambah hehe.</div>
                         </div>
@@ -1305,82 +1429,84 @@
         </div>
     </div>
 
-    <!-- STAGE 1: CAKE -->
+    <!-- ══ STAGE 1: CAKE ══ -->
     <div class="screen" id="stageCake">
-        <p class="stage-label">✨ Step 1 of 3</p>
+        <p class="stage-label">✦ Step 1 of 3</p>
         <div class="card">
             <h2>Tiup Semua Lilinnya!</h2>
             <div class="cake-scene">
                 <svg viewBox="0 0 240 220" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <linearGradient id="cBotGrad" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stop-color="#ffc0da" />
-                            <stop offset="100%" stop-color="#ff7ab5" />
+                            <stop offset="0%" stop-color="#e8a0b8" />
+                            <stop offset="100%" stop-color="#b84c6e" />
                         </linearGradient>
                         <linearGradient id="cMidGrad" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stop-color="#ffe0ee" />
-                            <stop offset="100%" stop-color="#ffaacf" />
+                            <stop offset="0%" stop-color="#f5d0df" />
+                            <stop offset="100%" stop-color="#e090a8" />
                         </linearGradient>
                         <linearGradient id="cTopGrad" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stop-color="#fff4fa" />
-                            <stop offset="100%" stop-color="#ffd6ea" />
+                            <stop offset="0%" stop-color="#fdf6ee" />
+                            <stop offset="100%" stop-color="#f5e0cc" />
                         </linearGradient>
                         <filter id="cs">
-                            <feDropShadow dx="0" dy="5" stdDeviation="7" flood-color="#e0508a" flood-opacity="0.22" />
+                            <feDropShadow dx="0" dy="5" stdDeviation="7" flood-color="#7a3a55" flood-opacity="0.2" />
                         </filter>
                     </defs>
-                    <ellipse cx="120" cy="214" rx="88" ry="7" fill="rgba(200,80,130,0.13)" />
-                    <rect x="24" y="147" width="192" height="64" rx="16" fill="url(#cBotGrad)" filter="url(#cs)" />
-                    <rect x="24" y="147" width="192" height="20" rx="16" fill="rgba(255,255,255,0.2)" />
-                    <circle cx="56" cy="179" r="5.5" fill="rgba(255,255,255,0.45)" />
-                    <circle cx="84" cy="179" r="4" fill="rgba(255,255,255,0.32)" />
-                    <circle cx="112" cy="179" r="5.5" fill="rgba(255,255,255,0.45)" />
-                    <circle cx="140" cy="179" r="4" fill="rgba(255,255,255,0.32)" />
-                    <circle cx="168" cy="179" r="5.5" fill="rgba(255,255,255,0.45)" />
-                    <circle cx="196" cy="179" r="4" fill="rgba(255,255,255,0.32)" />
+                    <ellipse cx="120" cy="214" rx="88" ry="7" fill="rgba(100,50,70,0.1)" />
+                    <!-- Bottom tier -->
+                    <rect x="24" y="147" width="192" height="64" rx="6" fill="url(#cBotGrad)" filter="url(#cs)" />
+                    <rect x="24" y="147" width="192" height="18" rx="6" fill="rgba(255,255,255,0.18)" />
+                    <!-- Sakura dots -->
+                    <text x="56" y="182" text-anchor="middle" font-size="12">🌸</text>
+                    <text x="90" y="182" text-anchor="middle" font-size="10">✦</text>
+                    <text x="120" y="182" text-anchor="middle" font-size="12">🌸</text>
+                    <text x="150" y="182" text-anchor="middle" font-size="10">✦</text>
+                    <text x="184" y="182" text-anchor="middle" font-size="12">🌸</text>
                     <path
-                        d="M24,158 Q36,146 50,155 Q64,164 78,152 Q92,140 106,153 Q120,164 134,152 Q148,140 162,153 Q176,164 190,152 Q204,142 216,154 L216,147 Q200,138 184,147 Q168,138 152,147 Q136,138 120,147 Q104,138 88,147 Q72,138 56,147 Q40,138 24,147Z"
-                        fill="rgba(255,255,255,0.6)" />
-                    <rect x="38" y="108" width="164" height="45" rx="12" fill="url(#cMidGrad)" />
-                    <rect x="38" y="108" width="164" height="16" rx="12" fill="rgba(255,255,255,0.22)" />
-                    <text x="120" y="138" text-anchor="middle" font-size="14" fill="rgba(255,79,139,0.45)"
-                        font-family="serif">♥ ♥ ♥</text>
+                        d="M24,158 Q36,147 50,156 Q64,164 78,153 Q92,140 106,153 Q120,164 134,153 Q148,140 162,153 Q176,164 190,153 Q204,142 216,154 L216,147 Q200,138 184,147 Q168,138 152,147 Q136,138 120,147 Q104,138 88,147 Q72,138 56,147 Q40,138 24,147Z"
+                        fill="rgba(255,255,255,0.55)" />
+                    <!-- Middle tier -->
+                    <rect x="38" y="108" width="164" height="45" rx="6" fill="url(#cMidGrad)" />
+                    <rect x="38" y="108" width="164" height="14" rx="6" fill="rgba(255,255,255,0.2)" />
+                    <text x="120" y="138" text-anchor="middle" font-size="13" fill="rgba(184,76,110,0.5)"
+                        font-family="serif">— 二十歳 —</text>
                     <path
                         d="M38,120 Q52,108 66,118 Q80,128 94,116 Q108,104 122,117 Q136,128 150,116 Q164,104 178,117 Q190,126 202,116 L202,108 Q186,99 170,108 Q154,99 138,108 Q122,99 106,108 Q90,99 74,108 Q58,99 38,108Z"
-                        fill="rgba(255,255,255,0.58)" />
-                    <rect x="56" y="74" width="128" height="40" rx="10" fill="url(#cTopGrad)" />
-                    <rect x="56" y="74" width="128" height="14" rx="10" fill="rgba(255,255,255,0.35)" />
-                    <text x="88" y="99" text-anchor="middle" font-size="13"></text><text x="120" y="99"
-                        text-anchor="middle" font-size="13"></text><text x="152" y="99" text-anchor="middle"
-                        font-size="13"></text>
+                        fill="rgba(255,255,255,0.52)" />
+                    <!-- Top tier -->
+                    <rect x="56" y="74" width="128" height="40" rx="6" fill="url(#cTopGrad)" />
+                    <rect x="56" y="74" width="128" height="13" rx="6" fill="rgba(255,255,255,0.32)" />
+                    <text x="88" y="99" text-anchor="middle" font-size="12">🌸</text>
+                    <text x="120" y="99" text-anchor="middle" font-size="12">✦</text>
+                    <text x="152" y="99" text-anchor="middle" font-size="12">🌸</text>
                     <path
                         d="M56,86 Q70,74 84,83 Q98,92 112,81 Q126,70 140,82 Q154,92 168,81 Q180,72 184,80 L184,74 Q168,65 152,74 Q136,65 120,74 Q104,65 88,74 Q72,65 56,74Z"
-                        fill="rgba(255,255,255,0.62)" />
-                    <rect x="70" y="48" width="11" height="27" rx="4" fill="#ffe066" />
-                    <rect x="70" y="48" width="11" height="9" rx="4" fill="rgba(255,255,255,0.3)" />
-                    <rect x="91" y="43" width="11" height="32" rx="4" fill="#ffb3d9" />
-                    <rect x="91" y="43" width="11" height="9" rx="4" fill="rgba(255,255,255,0.3)" />
-                    <rect x="114" y="38" width="12" height="37" rx="4" fill="#ffe066" />
-                    <rect x="114" y="38" width="12" height="9" rx="4" fill="rgba(255,255,255,0.3)" />
-                    <rect x="138" y="43" width="11" height="32" rx="4" fill="#ffb3d9" />
-                    <rect x="138" y="43" width="11" height="9" rx="4" fill="rgba(255,255,255,0.3)" />
-                    <rect x="159" y="48" width="11" height="27" rx="4" fill="#ffe066" />
-                    <rect x="159" y="48" width="11" height="9" rx="4" fill="rgba(255,255,255,0.3)" />
-                    <line x1="75.5" y1="49" x2="75.5" y2="43" stroke="#7a4a20" stroke-width="1.5"
+                        fill="rgba(255,255,255,0.58)" />
+                    <!-- Candles -->
+                    <rect x="70" y="48" width="11" height="27" rx="3" fill="#c8a84b" />
+                    <rect x="91" y="43" width="11" height="32" rx="3" fill="#e8779a" />
+                    <rect x="114" y="38" width="12" height="37" rx="3" fill="#c8a84b" />
+                    <rect x="138" y="43" width="11" height="32" rx="3" fill="#e8779a" />
+                    <rect x="159" y="48" width="11" height="27" rx="3" fill="#c8a84b" />
+                    <!-- Wicks -->
+                    <line x1="75.5" y1="49" x2="75.5" y2="43" stroke="#5a3a20" stroke-width="1.5"
                         stroke-linecap="round" />
-                    <line x1="96.5" y1="44" x2="96.5" y2="38" stroke="#7a4a20" stroke-width="1.5"
+                    <line x1="96.5" y1="44" x2="96.5" y2="38" stroke="#5a3a20" stroke-width="1.5"
                         stroke-linecap="round" />
-                    <line x1="120" y1="39" x2="120" y2="33" stroke="#7a4a20" stroke-width="1.5"
+                    <line x1="120" y1="39" x2="120" y2="33" stroke="#5a3a20" stroke-width="1.5"
                         stroke-linecap="round" />
-                    <line x1="143.5" y1="44" x2="143.5" y2="38" stroke="#7a4a20" stroke-width="1.5"
+                    <line x1="143.5" y1="44" x2="143.5" y2="38" stroke="#5a3a20" stroke-width="1.5"
                         stroke-linecap="round" />
-                    <line x1="164.5" y1="49" x2="164.5" y2="43" stroke="#7a4a20" stroke-width="1.5"
+                    <line x1="164.5" y1="49" x2="164.5" y2="43" stroke="#5a3a20" stroke-width="1.5"
                         stroke-linecap="round" />
-                    <circle id="glow0" cx="75.5" cy="44" r="8" fill="rgba(255,210,60,0.22)" />
-                    <circle id="glow1" cx="96.5" cy="39" r="8" fill="rgba(255,210,60,0.22)" />
-                    <circle id="glow2" cx="120" cy="34" r="9" fill="rgba(255,210,60,0.22)" />
-                    <circle id="glow3" cx="143.5" cy="39" r="8" fill="rgba(255,210,60,0.22)" />
-                    <circle id="glow4" cx="164.5" cy="44" r="8" fill="rgba(255,210,60,0.22)" />
+                    <!-- Glows -->
+                    <circle id="glow0" cx="75.5" cy="44" r="8" fill="rgba(200,168,75,0.22)" />
+                    <circle id="glow1" cx="96.5" cy="39" r="8" fill="rgba(200,168,75,0.22)" />
+                    <circle id="glow2" cx="120" cy="34" r="9" fill="rgba(200,168,75,0.22)" />
+                    <circle id="glow3" cx="143.5" cy="39" r="8" fill="rgba(200,168,75,0.22)" />
+                    <circle id="glow4" cx="164.5" cy="44" r="8" fill="rgba(200,168,75,0.22)" />
+                    <!-- Flames -->
                     <g id="flame0">
                         <ellipse cx="75.5" cy="36" rx="4.5" ry="7" fill="#ff9500" opacity="0.9">
                             <animate attributeName="ry" values="7;7.6;6.8;7.4;7" dur="0.5s" repeatCount="indefinite" />
@@ -1391,7 +1517,7 @@
                         </ellipse>
                         <ellipse cx="75.5" cy="31.5" rx="1.6" ry="2.6" fill="#fff8e0" opacity="0.88" />
                     </g>
-                    <ellipse id="smoke0" class="smoke-e" cx="75.5" cy="37" rx="2" ry="3" fill="#bbb" opacity="0.45" />
+                    <ellipse id="smoke0" class="smoke-e" cx="75.5" cy="37" rx="2" ry="3" fill="#aaa" opacity="0.4" />
                     <g id="flame1">
                         <ellipse cx="96.5" cy="31" rx="4.5" ry="7" fill="#ff9500" opacity="0.9">
                             <animate attributeName="ry" values="7;6.8;7.5;7;6.9;7" dur="0.48s" begin="0.06s"
@@ -1403,7 +1529,7 @@
                         </ellipse>
                         <ellipse cx="96.5" cy="26.5" rx="1.6" ry="2.6" fill="#fff8e0" opacity="0.88" />
                     </g>
-                    <ellipse id="smoke1" class="smoke-e" cx="96.5" cy="32" rx="2" ry="3" fill="#bbb" opacity="0.45" />
+                    <ellipse id="smoke1" class="smoke-e" cx="96.5" cy="32" rx="2" ry="3" fill="#aaa" opacity="0.4" />
                     <g id="flame2">
                         <ellipse cx="120" cy="26" rx="5.2" ry="8" fill="#ff9500" opacity="0.9">
                             <animate attributeName="ry" values="8;8.6;7.8;8.4;8" dur="0.52s" begin="0.13s"
@@ -1415,7 +1541,7 @@
                         </ellipse>
                         <ellipse cx="120" cy="21" rx="2" ry="3.2" fill="#fff8e0" opacity="0.88" />
                     </g>
-                    <ellipse id="smoke2" class="smoke-e" cx="120" cy="27" rx="2" ry="3" fill="#bbb" opacity="0.45" />
+                    <ellipse id="smoke2" class="smoke-e" cx="120" cy="27" rx="2" ry="3" fill="#aaa" opacity="0.4" />
                     <g id="flame3">
                         <ellipse cx="143.5" cy="31" rx="4.5" ry="7" fill="#ff9500" opacity="0.9">
                             <animate attributeName="ry" values="7;7.4;6.9;7.6;7" dur="0.46s" begin="0.04s"
@@ -1427,7 +1553,7 @@
                         </ellipse>
                         <ellipse cx="143.5" cy="26.5" rx="1.6" ry="2.6" fill="#fff8e0" opacity="0.88" />
                     </g>
-                    <ellipse id="smoke3" class="smoke-e" cx="143.5" cy="32" rx="2" ry="3" fill="#bbb" opacity="0.45" />
+                    <ellipse id="smoke3" class="smoke-e" cx="143.5" cy="32" rx="2" ry="3" fill="#aaa" opacity="0.4" />
                     <g id="flame4">
                         <ellipse cx="164.5" cy="36" rx="4.5" ry="7" fill="#ff9500" opacity="0.9">
                             <animate attributeName="ry" values="7;7.5;6.8;7.3;7" dur="0.44s" begin="0.1s"
@@ -1439,51 +1565,54 @@
                         </ellipse>
                         <ellipse cx="164.5" cy="31.5" rx="1.6" ry="2.6" fill="#fff8e0" opacity="0.88" />
                     </g>
-                    <ellipse id="smoke4" class="smoke-e" cx="164.5" cy="37" rx="2" ry="3" fill="#bbb" opacity="0.45" />
+                    <ellipse id="smoke4" class="smoke-e" cx="164.5" cy="37" rx="2" ry="3" fill="#aaa" opacity="0.4" />
                 </svg>
             </div>
             <button class="blow-btn" id="blowBtn">Tiup!</button>
-            <p class="blow-hint" id="blowHint">5 lilin menyala ✨</p>
+            <p class="blow-hint" id="blowHint">5 lilin menyala</p>
         </div>
     </div>
 
-    <!-- STAGE 2: BUTTERFLY -->
+    <!-- ══ STAGE 2: BUTTERFLY ══ -->
     <div class="screen" id="stageButterfly">
         <div class="bf-hud" id="bfHud" style="display:none"><span>🦋 Tangkap: <em id="bfCount">0</em> / <em
                     id="bfTotal">8</em></span></div>
         <div class="intro-card" id="bfIntro">
-            <h2>🦋 Tangkap Kupu-kupu!</h2>
+            <h2>Tangkap Kupu-kupu!</h2>
             <p>Ada 8 kupu-kupu terbang di sini.<br>Tangkap semuanya untuk lanjut!</p>
             <button class="start-btn" id="bfStartBtn">Mulai!</button>
         </div>
         <div class="bf-container" id="bfContainer"></div>
     </div>
 
-    <!-- STAGE 3: GIFT -->
+    <!-- ══ STAGE 3: GIFT ══ -->
     <div class="screen" id="stageGift">
-        <p class="stage-label">🎁 Step 3 of 3</p>
+        <p class="stage-label">Step 3 of 3</p>
         <div class="gift-card">
             <h2>Buka Hadiahnya!</h2>
             <div class="gift-box-wrap" id="giftBox">
                 <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="10" y="52" width="100" height="62" rx="8" fill="#ff7ab5" />
-                    <rect x="10" y="52" width="100" height="62" rx="8" fill="url(#boxGrad)" />
-                    <rect x="5" y="38" width="110" height="22" rx="6" fill="#ff4f8b" />
-                    <rect x="52" y="38" width="16" height="76" rx="4" fill="#ffcc44" />
-                    <rect x="5" y="44" width="110" height="10" rx="4" fill="#ffcc44" />
-                    <ellipse cx="60" cy="38" rx="14" ry="9" fill="#ffee88" />
-                    <ellipse cx="60" cy="38" rx="8" ry="5" fill="#ffcc44" />
-                    <ellipse cx="40" cy="30" rx="18" ry="9" fill="#ffee88" transform="rotate(-30 40 30)" />
-                    <ellipse cx="80" cy="30" rx="18" ry="9" fill="#ffee88" transform="rotate(30 80 30)" />
+                    <rect x="10" y="52" width="100" height="62" rx="4" fill="#b84c6e" />
+                    <rect x="10" y="52" width="100" height="62" rx="4" fill="url(#boxGrad2)" />
+                    <rect x="5" y="38" width="110" height="22" rx="4" fill="#3d3b6e" />
+                    <rect x="52" y="38" width="16" height="76" rx="3" fill="#c8a84b" />
+                    <rect x="5" y="44" width="110" height="10" rx="3" fill="#c8a84b" />
+                    <ellipse cx="60" cy="38" rx="14" ry="9" fill="#e8d090" />
+                    <ellipse cx="60" cy="38" rx="8" ry="5" fill="#c8a84b" />
+                    <ellipse cx="40" cy="30" rx="18" ry="9" fill="#e8d090" transform="rotate(-30 40 30)" />
+                    <ellipse cx="80" cy="30" rx="18" ry="9" fill="#e8d090" transform="rotate(30 80 30)" />
+                    <!-- Sakura on box -->
+                    <text x="35" y="90" font-size="16">🌸</text>
+                    <text x="72" y="90" font-size="16">🌸</text>
                     <defs>
-                        <linearGradient id="boxGrad" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stop-color="rgba(255,255,255,.15)" />
-                            <stop offset="100%" stop-color="rgba(0,0,0,.05)" />
+                        <linearGradient id="boxGrad2" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="rgba(255,255,255,0.14)" />
+                            <stop offset="100%" stop-color="rgba(0,0,0,0.06)" />
                         </linearGradient>
                     </defs>
                 </svg>
             </div>
-            <div class="clue">Clue: <em>nama pet kita</em></div>
+            <div class="clue">Clue: <em>Kata kata andalan ku</em></div>
             <div class="pw-wrap">
                 <input class="pw-input" id="pwInput" type="text" placeholder="Ketik jawabannya..." autocomplete="off" />
                 <div class="pw-err" id="pwErr"></div>
@@ -1492,7 +1621,7 @@
         </div>
     </div>
 
-    <!-- STAGE 4: ENVELOPE -->
+    <!-- ══ STAGE 4: ENVELOPE ══ -->
     <div class="screen" id="stageEnvelope">
         <div id="envStage1" style="display:flex;flex-direction:column;align-items:center;gap:clamp(16px,4vw,28px)">
             <p class="env-hint">Arahkan / sentuh amplop</p>
@@ -1500,7 +1629,7 @@
                 <div class="env-wrap" id="envWrap">
                     <div class="env-letter">
                         <div class="env-letter-inner">
-                            <p class="env-letter-title">Selamat kamu dapat<br>Vocher mabar bersama akuh (berlaku seumur hidup)</p>
+                            <p class="env-letter-title">Gatau mau ngado apa<br>jadi aku kasih ucapan semnagat aja yaa</p>
                         </div>
                     </div>
                     <div class="env-body">
@@ -1508,77 +1637,88 @@
                     </div>
                     <div class="env-flap">
                         <svg viewBox="0 0 260 100" xmlns="http://www.w3.org/2000/svg">
-                            <polygon points="0,0 260,0 130,85" fill="url(#flapGrad)" />
+                            <polygon points="0,0 260,0 130,85" fill="url(#flapGrad2)" />
                             <defs>
-                                <linearGradient id="flapGrad" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="0%" stop-color="#ff8fc0" />
-                                    <stop offset="100%" stop-color="#ff5898" />
+                                <linearGradient id="flapGrad2" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#7a6f9e" />
+                                    <stop offset="100%" stop-color="#3d3b6e" />
                                 </linearGradient>
                             </defs>
                         </svg>
                     </div>
                     <div class="env-top">
                         <svg viewBox="0 0 260 100" xmlns="http://www.w3.org/2000/svg">
-                            <polygon points="0,0 130,85 0,100" fill="#ff6fa3" />
-                            <polygon points="260,0 130,85 260,100" fill="#ff4f8b" />
+                            <polygon points="0,0 130,85 0,100" fill="#5b547a" />
+                            <polygon points="260,0 130,85 260,100" fill="#3d3b6e" />
                         </svg>
                     </div>
                 </div>
             </div>
         </div>
         <div class="form-card" id="formCard">
-            <h1>Harapan Dan Mimpi ipii dimasa depan</h1>
+            <h1>Harapan Dan Mimpi ipii<br>di Masa Depan</h1>
             <div class="form-fields" id="formFields">
                 <textarea id="pesan" placeholder="Tuliskan pesanmu di sini..."></textarea>
                 <button class="submit-btn" id="submitBtn">Kirim</button>
             </div>
             <div class="success-msg" id="successMsg">
-                <div class="checkmark">💖</div>
+                <div class="checkmark">🌸</div>
                 <h2>Yeay, Terkirim!</h2>
                 <p>Pesanmu sudah sampai!</p>
             </div>
         </div>
     </div>
 
-    <button class="yes-btn" id="yesBtn">Terima</button>
-    <button class="no-btn" id="noBtn">Tolak</button>
+    <button class="yes-btn" id="yesBtn">Lanjut</button>
+    <button class="no-btn" id="noBtn">Secret</button>
     <div class="particles" id="particles"></div>
 
     <script>
-        /* AUDIO ENGINE */
+        /* ─── Background Sakura Petals ─── */
+        var SAKURA = ['🌸', '🌺', '🪷', '🌷'];
+        var bgPetals = document.getElementById('bgPetals');
+        for (var pi = 0; pi < 14; pi++) {
+            (function (i) {
+                var el = document.createElement('div');
+                el.className = 'petal-bg';
+                el.textContent = SAKURA[Math.floor(Math.random() * SAKURA.length)];
+                var dur = 8 + Math.random() * 12;
+                el.style.cssText = 'left:' + (Math.random() * 100) + 'vw;animation-duration:' + dur + 's;animation-delay:' + (Math.random() * dur) + 's;font-size:' + (12 + Math.random() * 14) + 'px';
+                bgPetals.appendChild(el);
+            })(pi);
+        }
+
+        /* ─── Audio ─── */
         var AC = null, muted = false;
         var bgAudio = document.getElementById('bgAudio');
         var muteBtn = document.getElementById('muteBtn');
-
         function initAC() { if (AC) return; AC = new (window.AudioContext || window.webkitAudioContext)(); }
+        muteBtn.addEventListener('click', function () { initAC(); muted = !muted; muteBtn.textContent = muted ? '🔇' : '🔊'; bgAudio.volume = muted ? 0 : 0.55; });
+        function startBgMusic() { bgAudio.currentTime = 3.5; bgAudio.volume = muted ? 0 : 0.55; bgAudio.play().catch(function () { }); }
 
-        muteBtn.addEventListener('click', function () {
-            initAC(); muted = !muted;
-            muteBtn.textContent = muted ? '🔇' : '🔊';
-            bgAudio.volume = muted ? 0 : 0.55;
-        });
-
-        function startBgMusic() {
-            bgAudio.currentTime = 3.5; // skip jeda intro, ubah angka ini sesuai kebutuhan
-            bgAudio.volume = muted ? 0 : 0.55;
-            bgAudio.play().catch(function () { });
-        }
-
-        /* SFX */
-        function sfxBookOpen() { if (!AC || muted) return; var now = AC.currentTime; var bufLen = AC.sampleRate * 0.6; var buf = AC.createBuffer(1, bufLen, AC.sampleRate); var data = buf.getChannelData(0); for (var i = 0; i < bufLen; i++)data[i] = (Math.random() * 2 - 1); var noise = AC.createBufferSource(); noise.buffer = buf; var bpf = AC.createBiquadFilter(); bpf.type = 'bandpass'; bpf.frequency.value = 1200; bpf.Q.value = 0.8; var wg = AC.createGain(); wg.gain.setValueAtTime(0, now); wg.gain.linearRampToValueAtTime(0.35, now + 0.05); wg.gain.exponentialRampToValueAtTime(0.001, now + 0.55); noise.connect(bpf); bpf.connect(wg); wg.connect(AC.destination); noise.start(now); noise.stop(now + 0.6);[1047, 1319, 1568].forEach(function (freq, i) { var osc = AC.createOscillator(); var env = AC.createGain(); osc.type = 'sine'; osc.frequency.value = freq; env.gain.setValueAtTime(0, now + i * 0.12); env.gain.linearRampToValueAtTime(0.22, now + i * 0.12 + 0.02); env.gain.exponentialRampToValueAtTime(0.001, now + i * 0.12 + 0.55); osc.connect(env); env.connect(AC.destination); osc.start(now + i * 0.12); osc.stop(now + i * 0.12 + 0.6); }); }
-        function sfxPuff() { if (!AC || muted) return; var now = AC.currentTime; var bufLen = Math.floor(AC.sampleRate * 0.35); var buf = AC.createBuffer(1, bufLen, AC.sampleRate); var data = buf.getChannelData(0); for (var i = 0; i < bufLen; i++)data[i] = (Math.random() * 2 - 1); var src = AC.createBufferSource(); src.buffer = buf; var lpf = AC.createBiquadFilter(); lpf.type = 'lowpass'; lpf.frequency.value = 400; var gain = AC.createGain(); gain.gain.setValueAtTime(0.5, now); gain.gain.exponentialRampToValueAtTime(0.001, now + 0.32); src.connect(lpf); lpf.connect(gain); gain.connect(AC.destination); src.start(now); src.stop(now + 0.35); }
+        /* ─── SFX ─── */
+        function sfxBookOpen() { if (!AC || muted) return; var now = AC.currentTime; var bufLen = AC.sampleRate * 0.6; var buf = AC.createBuffer(1, bufLen, AC.sampleRate); var data = buf.getChannelData(0); for (var i = 0; i < bufLen; i++) data[i] = (Math.random() * 2 - 1); var noise = AC.createBufferSource(); noise.buffer = buf; var bpf = AC.createBiquadFilter(); bpf.type = 'bandpass'; bpf.frequency.value = 1200; bpf.Q.value = 0.8; var wg = AC.createGain(); wg.gain.setValueAtTime(0, now); wg.gain.linearRampToValueAtTime(0.35, now + 0.05); wg.gain.exponentialRampToValueAtTime(0.001, now + 0.55); noise.connect(bpf); bpf.connect(wg); wg.connect(AC.destination); noise.start(now); noise.stop(now + 0.6);[1047, 1319, 1568].forEach(function (freq, i) { var osc = AC.createOscillator(); var env = AC.createGain(); osc.type = 'sine'; osc.frequency.value = freq; env.gain.setValueAtTime(0, now + i * 0.12); env.gain.linearRampToValueAtTime(0.22, now + i * 0.12 + 0.02); env.gain.exponentialRampToValueAtTime(0.001, now + i * 0.12 + 0.55); osc.connect(env); env.connect(AC.destination); osc.start(now + i * 0.12); osc.stop(now + i * 0.12 + 0.6); }); }
+        function sfxPuff() { if (!AC || muted) return; var now = AC.currentTime; var bufLen = Math.floor(AC.sampleRate * 0.35); var buf = AC.createBuffer(1, bufLen, AC.sampleRate); var data = buf.getChannelData(0); for (var i = 0; i < bufLen; i++) data[i] = (Math.random() * 2 - 1); var src = AC.createBufferSource(); src.buffer = buf; var lpf = AC.createBiquadFilter(); lpf.type = 'lowpass'; lpf.frequency.value = 400; var gain = AC.createGain(); gain.gain.setValueAtTime(0.5, now); gain.gain.exponentialRampToValueAtTime(0.001, now + 0.32); src.connect(lpf); lpf.connect(gain); gain.connect(AC.destination); src.start(now); src.stop(now + 0.35); }
         function sfxSparkle() { if (!AC || muted) return; var now = AC.currentTime;[1200, 1600, 2000, 2500].forEach(function (f, i) { var osc = AC.createOscillator(); var gain = AC.createGain(); osc.type = 'triangle'; osc.frequency.value = f + Math.random() * 100; gain.gain.setValueAtTime(0, now + i * 0.045); gain.gain.linearRampToValueAtTime(0.18, now + i * 0.045 + 0.01); gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.045 + 0.22); osc.connect(gain); gain.connect(AC.destination); osc.start(now + i * 0.045); osc.stop(now + i * 0.045 + 0.25); }); }
         function sfxWrong() { if (!AC || muted) return; var now = AC.currentTime;[440, 330].forEach(function (freq, i) { var osc = AC.createOscillator(); osc.type = 'sawtooth'; var gain = AC.createGain(); osc.frequency.value = freq; gain.gain.setValueAtTime(0, now + i * 0.13); gain.gain.linearRampToValueAtTime(0.28, now + i * 0.13 + 0.01); gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.13 + 0.18); osc.connect(gain); gain.connect(AC.destination); osc.start(now + i * 0.13); osc.stop(now + i * 0.13 + 0.2); }); }
         function sfxCorrect() { if (!AC || muted) return; var now = AC.currentTime;[523.25, 659.25, 784.00, 1046.50].forEach(function (freq, i) { var osc = AC.createOscillator(); osc.type = 'triangle'; var gain = AC.createGain(); osc.frequency.value = freq; gain.gain.setValueAtTime(0, now + i * 0.09); gain.gain.linearRampToValueAtTime(0.3, now + i * 0.09 + 0.015); gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.09 + 0.5); osc.connect(gain); gain.connect(AC.destination); osc.start(now + i * 0.09); osc.stop(now + i * 0.09 + 0.55); }); }
         function sfxNextStep() { if (!AC || muted) return; var now = AC.currentTime;[880, 1174.66].forEach(function (freq, i) { var osc = AC.createOscillator(); osc.type = 'sine'; var gain = AC.createGain(); osc.frequency.value = freq; gain.gain.setValueAtTime(0, now + i * 0.14); gain.gain.linearRampToValueAtTime(0.25, now + i * 0.14 + 0.01); gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.14 + 0.45); osc.connect(gain); gain.connect(AC.destination); osc.start(now + i * 0.14); osc.stop(now + i * 0.14 + 0.48); }); }
-        function sfxEnvelopeOpen() { if (!AC || muted) return; var now = AC.currentTime; var bLen = Math.floor(AC.sampleRate * 0.4); var buf = AC.createBuffer(1, bLen, AC.sampleRate); var data = buf.getChannelData(0); for (var i = 0; i < bLen; i++)data[i] = Math.random() * 2 - 1; var src = AC.createBufferSource(); src.buffer = buf; var bpf = AC.createBiquadFilter(); bpf.type = 'bandpass'; bpf.frequency.value = 2800; bpf.Q.value = 1.2; var ng = AC.createGain(); ng.gain.setValueAtTime(0, now); ng.gain.linearRampToValueAtTime(0.2, now + 0.03); ng.gain.setValueAtTime(0.2, now + 0.15); ng.gain.exponentialRampToValueAtTime(0.001, now + 0.38); src.connect(bpf); bpf.connect(ng); ng.connect(AC.destination); src.start(now); src.stop(now + 0.4); }
+        function sfxEnvelopeOpen() { if (!AC || muted) return; var now = AC.currentTime; var bLen = Math.floor(AC.sampleRate * 0.4); var buf = AC.createBuffer(1, bLen, AC.sampleRate); var data = buf.getChannelData(0); for (var i = 0; i < bLen; i++) data[i] = Math.random() * 2 - 1; var src = AC.createBufferSource(); src.buffer = buf; var bpf = AC.createBiquadFilter(); bpf.type = 'bandpass'; bpf.frequency.value = 2800; bpf.Q.value = 1.2; var ng = AC.createGain(); ng.gain.setValueAtTime(0, now); ng.gain.linearRampToValueAtTime(0.2, now + 0.03); ng.gain.setValueAtTime(0.2, now + 0.15); ng.gain.exponentialRampToValueAtTime(0.001, now + 0.38); src.connect(bpf); bpf.connect(ng); ng.connect(AC.destination); src.start(now); src.stop(now + 0.4); }
         function sfxButtonClick() { if (!AC || muted) return; var now = AC.currentTime; var osc = AC.createOscillator(); osc.type = 'sine'; var gain = AC.createGain(); osc.frequency.setValueAtTime(900, now); osc.frequency.exponentialRampToValueAtTime(400, now + 0.06); gain.gain.setValueAtTime(0.22, now); gain.gain.exponentialRampToValueAtTime(0.001, now + 0.07); osc.connect(gain); gain.connect(AC.destination); osc.start(now); osc.stop(now + 0.08); }
 
-        /* HELPERS */
+        /* ─── Helpers ─── */
         function goTo(id) { document.querySelectorAll('.screen').forEach(function (s) { s.classList.remove('active'); }); document.getElementById(id).classList.add('active'); }
-        function spawnConfetti() { var cols = ['#ff4f8b', '#ff86b3', '#f5c542', '#9b5de5', '#4ecdc4', '#ff6b6b', '#fff0f6']; for (var i = 0; i < 80; i++) { var c = document.createElement('div'); c.classList.add('confetti-piece'); c.style.cssText = 'left:' + (50 + (Math.random() - .5) * 30) + 'vw;top:40vh;background:' + cols[Math.floor(Math.random() * cols.length)] + ';border-radius:' + (Math.random() > .5 ? '50%' : '2px') + ';width:' + (6 + Math.random() * 6) + 'px;height:' + (6 + Math.random() * 6) + 'px;--dx:' + ((Math.random() - .5) * window.innerWidth * 1.2) + 'px;--dy:' + (Math.random() * window.innerHeight + 200) + 'px;--r:' + (Math.random() * 720) + 'deg;--dur:' + (1.2 + Math.random() * 1.2) + 's;animation-delay:' + (Math.random() * .4) + 's;'; document.body.appendChild(c); setTimeout(function (el) { return function () { el.remove(); }; }(c), 2800); } }
+        function spawnConfetti() {
+            var cols = ['#e8779a', '#b84c6e', '#c8a84b', '#3d3b6e', '#7a9e7e', '#f5c6d5', '#fdf6ee'];
+            for (var i = 0; i < 80; i++) {
+                var c = document.createElement('div'); c.classList.add('confetti-piece');
+                c.style.cssText = 'left:' + (50 + (Math.random() - .5) * 30) + 'vw;top:40vh;background:' + cols[Math.floor(Math.random() * cols.length)] + ';border-radius:' + (Math.random() > .5 ? '50%' : '2px') + ';width:' + (6 + Math.random() * 6) + 'px;height:' + (6 + Math.random() * 6) + 'px;--dx:' + ((Math.random() - .5) * window.innerWidth * 1.2) + 'px;--dy:' + (Math.random() * window.innerHeight + 200) + 'px;--r:' + (Math.random() * 720) + 'deg;--dur:' + (1.2 + Math.random() * 1.2) + 's;animation-delay:' + (Math.random() * .4) + 's;';
+                document.body.appendChild(c);
+                setTimeout(function (el) { return function () { el.remove(); }; }(c), 2800);
+            }
+        }
 
-        /* STAGE 0: BOOK */
+        /* ─── Stage 0: Book ─── */
         var book = document.getElementById('book');
         var cover = document.getElementById('cover');
         var opened = false, bookAudioStarted = false;
@@ -1587,30 +1727,31 @@
         cover.addEventListener('touchend', function (e) { e.preventDefault(); openBook(); }, { passive: false });
 
         var cp = document.getElementById('coverPattern');
-        var emArr = ['✨', '🌸', '💕', '⭐', '🦋', '💫', '🌷'];
+        var emArr = ['🌸', '✦', '🌺', '🍃', '🌷', '🪷', '🎋'];
         for (var i = 0; i < 21; i++) { var s = document.createElement('span'); s.textContent = emArr[Math.floor(Math.random() * emArr.length)]; s.style.cssText = 'left:' + Math.random() * 100 + '%;top:' + Math.random() * 100 + '%;animation-delay:' + Math.random() * 6 + 's;animation-duration:' + (4 + Math.random() * 4) + 's;'; cp.appendChild(s); }
+
         var particles = document.getElementById('particles');
-        cover.addEventListener('mousemove', function (e) { if (Math.random() > .55) return; var p = document.createElement('div'); p.classList.add('particle'); p.textContent = ['✨', '🦋', '🌸'][Math.floor(Math.random() * 3)]; p.style.left = (e.clientX - 12) + 'px'; p.style.top = (e.clientY - 12) + 'px'; p.style.setProperty('--dx', (Math.random() * 400 - 200) + 'px'); p.style.setProperty('--dy', (-Math.random() * 400 - 50) + 'px'); p.style.setProperty('--r', (Math.random() * 360) + 'deg'); particles.appendChild(p); setTimeout(function (el) { return function () { el.remove(); }; }(p), 2800); });
+        cover.addEventListener('mousemove', function (e) { if (Math.random() > .55) return; var p = document.createElement('div'); p.classList.add('particle'); p.textContent = ['🌸', '🦋', '✦'][Math.floor(Math.random() * 3)]; p.style.left = (e.clientX - 12) + 'px'; p.style.top = (e.clientY - 12) + 'px'; p.style.setProperty('--dx', (Math.random() * 400 - 200) + 'px'); p.style.setProperty('--dy', (-Math.random() * 400 - 50) + 'px'); p.style.setProperty('--r', (Math.random() * 360) + 'deg'); particles.appendChild(p); setTimeout(function (el) { return function () { el.remove(); }; }(p), 2800); });
         document.getElementById('toStage1Btn').addEventListener('click', function () { initAC(); sfxNextStep(); goTo('stageCake'); });
 
-        /* STAGE 1: TIUP LILIN */
+        /* ─── Stage 1: Lilin ─── */
         var TOTAL_CANDLES = 5, candlesLeft = 5, blowDone = false;
         var blowBtn = document.getElementById('blowBtn');
         var blowHint = document.getElementById('blowHint');
         blowBtn.addEventListener('click', blowOne);
-        function blowOne() { if (blowDone || candlesLeft <= 0) return; initAC(); sfxPuff(); var idx = TOTAL_CANDLES - candlesLeft; var flameEl = document.getElementById('flame' + idx); var smokeEl = document.getElementById('smoke' + idx); var glowEl = document.getElementById('glow' + idx); if (flameEl) { flameEl.style.transition = 'opacity 0.25s ease'; flameEl.style.opacity = '0'; setTimeout(function (f) { f.style.visibility = 'hidden'; }(flameEl), 260); } if (glowEl) { glowEl.style.transition = 'opacity 0.3s ease'; glowEl.style.opacity = '0'; } if (smokeEl) { smokeEl.classList.add('puffing'); setTimeout(function (sm) { sm.classList.remove('puffing'); }(smokeEl), 2000); } candlesLeft--; if (candlesLeft > 0) { blowHint.textContent = candlesLeft + ' lilin menyala ✨'; } else { blowDone = true; blowHint.textContent = 'Yeyy semua padam! 🎉'; blowBtn.textContent = 'Lanjut 🦋'; spawnConfetti(); blowBtn.removeEventListener('click', blowOne); blowBtn.addEventListener('click', function () { initAC(); sfxNextStep(); goTo('stageButterfly'); }); } }
+        function blowOne() { if (blowDone || candlesLeft <= 0) return; initAC(); sfxPuff(); var idx = TOTAL_CANDLES - candlesLeft; var flameEl = document.getElementById('flame' + idx); var smokeEl = document.getElementById('smoke' + idx); var glowEl = document.getElementById('glow' + idx); if (flameEl) { flameEl.style.transition = 'opacity 0.25s ease'; flameEl.style.opacity = '0'; setTimeout(function (f) { f.style.visibility = 'hidden'; }(flameEl), 260); } if (glowEl) { glowEl.style.transition = 'opacity 0.3s ease'; glowEl.style.opacity = '0'; } if (smokeEl) { smokeEl.classList.add('puffing'); setTimeout(function (sm) { sm.classList.remove('puffing'); }(smokeEl), 2000); } candlesLeft--; if (candlesLeft > 0) { blowHint.textContent = candlesLeft + ' lilin menyala '; } else { blowDone = true; blowHint.textContent = 'Yeyy semua padam! 🌸'; blowBtn.textContent = 'Lanjut 🦋'; spawnConfetti(); blowBtn.removeEventListener('click', blowOne); blowBtn.addEventListener('click', function () { initAC(); sfxNextStep(); goTo('stageButterfly'); }); } }
 
-        /* STAGE 2: KUPU-KUPU */
+        /* ─── Stage 2: Kupu-kupu ─── */
         var BF_TOTAL = 8;
-        var BF_WORDS = ['Cantik!', 'Lucu!', 'Imut!', 'Manis!', 'Kawaii~', 'Gemesin!', 'Rawr!', 'Cihuy!'];
+        var BF_WORDS = ['Cantik!', 'Lucu!', 'Imut!', 'Manis!', 'Kawaii~', '可愛い!', 'Kirei~', 'Gemoy!'];
         var bfCaught = 0, bfIntervals = [];
         var bfContainer = document.getElementById('bfContainer');
         document.getElementById('bfStartBtn').addEventListener('click', function () { initAC(); sfxButtonClick(); document.getElementById('bfIntro').style.display = 'none'; document.getElementById('bfHud').style.display = 'flex'; bfContainer.classList.add('active'); spawnButterflies(); });
         function spawnButterflies() { for (var bi = 0; bi < BF_TOTAL; bi++) { (function (idx) { setTimeout(function () { createBf(idx); }, idx * 300); })(bi); } }
         function createBf(idx) { var bf = document.createElement('div'); bf.className = 'bf'; bf.textContent = '🦋'; var x = Math.random() * (window.innerWidth - 60); var y = 80 + Math.random() * (window.innerHeight - 160); bf.style.left = x + 'px'; bf.style.top = y + 'px'; bfContainer.appendChild(bf); var vx = (Math.random() * 2 + 1) * (Math.random() > .5 ? 1 : -1); var vy = (Math.random() * 1.5 + .5) * (Math.random() > .5 ? 1 : -1); var iv = setInterval(function () { x += vx; y += vy; if (x < 0 || x > window.innerWidth - 50) vx *= -1; if (y < 70 || y > window.innerHeight - 60) vy *= -1; bf.style.left = x + 'px'; bf.style.top = y + 'px'; }, 16); bfIntervals.push(iv); function catchBf() { if (bf.classList.contains('caught')) return; initAC(); sfxSparkle(); bf.classList.add('caught'); clearInterval(iv); var w = document.createElement('div'); w.className = 'word-pop'; w.textContent = BF_WORDS[idx]; w.style.left = x + 'px'; w.style.top = y + 'px'; bfContainer.appendChild(w); setTimeout(function () { w.remove(); }, 1400); bfCaught++; document.getElementById('bfCount').textContent = bfCaught; setTimeout(function () { bf.remove(); }, 400); if (bfCaught >= BF_TOTAL) { bfIntervals.forEach(function (iv2) { clearInterval(iv2); }); bfContainer.classList.remove('active'); setTimeout(function () { initAC(); sfxNextStep(); spawnConfetti(); goTo('stageGift'); }, 600); } } bf.addEventListener('click', catchBf); bf.addEventListener('touchstart', function (e) { e.preventDefault(); catchBf(); }, { passive: false }); }
 
-        /* STAGE 3: PASSWORD */
-        var PASSWORD = 'ruki';
+        /* ─── Stage 3: Password ─── */
+        var PASSWORD = 'aman aja';
         var pwInput = document.getElementById('pwInput');
         var pwBtn = document.getElementById('pwBtn');
         var pwErr = document.getElementById('pwErr');
@@ -1618,9 +1759,9 @@
         giftBox.addEventListener('click', function () { giftBox.classList.add('shake'); setTimeout(function () { giftBox.classList.remove('shake'); }, 400); });
         pwInput.addEventListener('keydown', function (e) { if (e.key === 'Enter') checkPw(); });
         pwBtn.addEventListener('click', function () { initAC(); sfxButtonClick(); checkPw(); });
-        function checkPw() { var val = pwInput.value.trim().toLowerCase(); if (val === PASSWORD) { initAC(); sfxCorrect(); pwErr.textContent = ''; giftBox.classList.add('open-anim'); spawnConfetti(); setTimeout(function () { goTo('stageEnvelope'); }, 700); } else { initAC(); sfxWrong(); pwInput.classList.add('wrong'); pwErr.textContent = 'Hmm, coba lagi yaa... 🐾'; setTimeout(function () { pwInput.classList.remove('wrong'); }, 400); } }
+        function checkPw() { var val = pwInput.value.trim().toLowerCase(); if (val === PASSWORD) { initAC(); sfxCorrect(); pwErr.textContent = ''; giftBox.classList.add('open-anim'); spawnConfetti(); setTimeout(function () { goTo('stageEnvelope'); }, 700); } else { initAC(); sfxWrong(); pwInput.classList.add('wrong'); pwErr.textContent = 'Hmm, coba lagi yaa... 🌸'; setTimeout(function () { pwInput.classList.remove('wrong'); }, 400); } }
 
-        /* STAGE 4: AMPLOP */
+        /* ─── Stage 4: Amplop ─── */
         var envWrap = document.getElementById('envWrap');
         var noBtn = document.getElementById('noBtn');
         var buttonsShown = false, leaveTimer = null, envTouched = false;
@@ -1641,38 +1782,30 @@
         document.getElementById('submitBtn').addEventListener('click', async function () {
             initAC(); sfxButtonClick();
             var pesan = document.getElementById('pesan').value.trim();
-            document.getElementById('pesan').style.borderColor = pesan ? '#ffd0e2' : '#ff4f8b';
+            document.getElementById('pesan').style.borderColor = pesan ? '' : '#b84c6e';
             if (!pesan) return;
             var BOT_TOKEN = '8365008697:AAEC9bMFFrxdFur3J2vxNE87bYzQ_sKSsus';
             var CHAT_ID = '1999536233';
             var btn = document.getElementById('submitBtn');
-            btn.textContent = 'Mengirim...'; btn.disabled = true;
-            try { await fetch('https://api.telegram.org/bot' + BOT_TOKEN + '/sendMessage', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: CHAT_ID, text: '💌 Pesan Baru\n\n' + pesan }) }); } catch (e) { }
+            btn.textContent = 'Mengirim... 🌸'; btn.disabled = true;
+            try { await fetch('https://api.telegram.org/bot' + BOT_TOKEN + '/sendMessage', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: CHAT_ID, text: '🌸 Pesan Baru\n\n' + pesan }) }); } catch (e) { }
             document.getElementById('formFields').style.display = 'none';
             document.getElementById('successMsg').style.display = 'flex';
             spawnConfetti();
-            // Trigger ending sequence after short delay
             setTimeout(startOutro, 1800);
         });
 
-        /* ══════════════════════════════════════════
-           OUTRO: hujan bunga → tirai → typing
-        ══════════════════════════════════════════ */
-        var OUTRO_TEXT = 'Wihh maksih udah dibuka sampai selesai,\nsemoga harapan dan mimpi ipii dimasa depan bisa tercapai,\nSemangat terus dan sehat selalu biar tahun depan bisa liat web kayak gini lagi hehe.';
+        /* ─── Outro ─── */
+        var OUTRO_TEXT = 'Semoga cepat tercapai ya bg'
 
         function startOutro() {
-            // Phase 1: rain flowers for 2.5s
-            var flowerRain = setInterval(spawnFlower, 120);
+            var flowerRain = setInterval(spawnFlower, 100);
             setTimeout(function () {
-                // Phase 2: close curtains
                 clearInterval(flowerRain);
                 var overlay = document.getElementById('curtainOverlay');
                 overlay.style.display = 'block';
-                // Force reflow then add class
                 overlay.getBoundingClientRect();
                 overlay.classList.add('active', 'close');
-
-                // Phase 3: show typing message after curtains close
                 setTimeout(function () {
                     overlay.classList.add('show-msg');
                     typeText(OUTRO_TEXT, document.getElementById('typingLine'), 45);
@@ -1681,7 +1814,7 @@
         }
 
         function spawnFlower() {
-            var flowers = ['🌸', '🌺', '🌷', '🌼', '💐', '🪷', '🌹'];
+            var flowers = ['🌸', '🌺', '🌷', '🌼', '🪷', '🍃', '✦'];
             var el = document.createElement('div');
             el.className = 'flower-fall';
             el.textContent = flowers[Math.floor(Math.random() * flowers.length)];
@@ -1694,27 +1827,21 @@
         }
 
         function typeText(text, el, speed) {
-            // Add cursor span
             el.innerHTML = '<span class="cursor"></span>';
             var cursor = el.querySelector('.cursor');
             var i = 0;
             function typeNext() {
                 if (i < text.length) {
-                    // Insert char before cursor
-                    var textNode = document.createTextNode(text[i]);
-                    el.insertBefore(textNode, cursor);
+                    el.insertBefore(document.createTextNode(text[i]), cursor);
                     i++;
-                    // Vary speed slightly for natural feel
                     var delay = text[i - 1] === '\n' ? speed * 4 : speed + Math.random() * 20;
                     setTimeout(typeNext, delay);
                 }
             }
             typeNext();
         }
-
     </script>
 
-    <!-- CURTAIN OUTRO -->
     <div id="curtainOverlay">
         <div class="curtain-left"></div>
         <div class="curtain-right"></div>
