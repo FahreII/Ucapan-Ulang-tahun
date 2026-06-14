@@ -35,7 +35,6 @@
             background: radial-gradient(ellipse at 20% 30%, #fde8f0 0%, #fef3f8 40%, #eee8f8 75%, #dce8d0 100%)
         }
 
-        /* ─── Washi texture blobs ─── */
         .blob {
             position: fixed;
             border-radius: 50%;
@@ -81,7 +80,6 @@
             }
         }
 
-        /* ─── Falling sakura petals (bg layer) ─── */
         .petal-bg {
             position: fixed;
             top: -30px;
@@ -104,39 +102,6 @@
             }
         }
 
-        /* ─── Mute button ─── */
-        #muteBtn {
-            position: fixed;
-            top: clamp(10px, 3vw, 18px);
-            right: clamp(10px, 3vw, 18px);
-            z-index: 99999;
-            background: var(--washi);
-            border: 1.5px solid var(--sakura-lt);
-            border-radius: 999px;
-            width: clamp(38px, 11vw, 46px);
-            height: clamp(38px, 11vw, 46px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: clamp(16px, 5vw, 20px);
-            cursor: pointer;
-            box-shadow: 0 4px 16px rgba(184, 76, 110, .2);
-            transition: transform .2s;
-            opacity: 0;
-            pointer-events: none;
-            touch-action: manipulation
-        }
-
-        #muteBtn.visible {
-            opacity: 1;
-            pointer-events: auto
-        }
-
-        #muteBtn:active {
-            transform: scale(.92)
-        }
-
-        /* ─── Screens ─── */
         .screen {
             position: fixed;
             inset: 0;
@@ -173,7 +138,6 @@
             z-index: 50
         }
 
-        /* ─── Book ─── */
         .scene {
             perspective: 2800px;
             display: flex;
@@ -238,7 +202,6 @@
             transform: rotateY(-148deg)
         }
 
-        /* Japanese pattern overlay on cover */
         .cover-pattern {
             position: absolute;
             inset: 0;
@@ -264,7 +227,6 @@
             }
         }
 
-        /* Seigaiha (wave) SVG watermark */
         .cover-seigaiha {
             position: absolute;
             inset: 0;
@@ -342,7 +304,6 @@
             background: rgba(255, 255, 255, .4)
         }
 
-        /* Red stamp / hanko */
         .hanko {
             width: clamp(48px, 12vw, 62px);
             height: clamp(48px, 12vw, 62px);
@@ -361,7 +322,6 @@
             opacity: .85
         }
 
-        /* ─── Page (book interior) ─── */
         .page {
             position: absolute;
             inset: 0;
@@ -479,7 +439,6 @@
             transform: scale(.95)
         }
 
-        /* ─── Stage: Cake ─── */
         #stageCake .card {
             background: var(--washi);
             border-radius: 4px;
@@ -548,7 +507,6 @@
             letter-spacing: .03em
         }
 
-        /* ─── Stage: Butterfly ─── */
         #stageButterfly {
             background: radial-gradient(ellipse at 50% 60%, #edf6ee 0%, #f5e8f8 50%, #fde8f0 100%)
         }
@@ -593,7 +551,7 @@
 
         .bf {
             position: absolute;
-            font-size: clamp(28px, 7vw, 36px);
+            font-size: clamp(22px, 5.5vw, 30px);
             cursor: pointer;
             user-select: none;
             filter: drop-shadow(0 4px 8px rgba(100, 60, 80, .18));
@@ -627,7 +585,7 @@
         .word-pop {
             position: absolute;
             font-family: 'Noto Serif JP', serif;
-            font-size: clamp(14px, 4vw, 16px);
+            font-size: clamp(11px, 3vw, 14px);
             color: var(--sakura-dk);
             pointer-events: none;
             z-index: 160;
@@ -696,7 +654,6 @@
             transform: scale(.95)
         }
 
-        /* ─── Stage: Gift ─── */
         #stageGift .gift-card {
             background: var(--washi);
             border-radius: 4px;
@@ -868,7 +825,6 @@
             transform: scale(.97)
         }
 
-        /* ─── Stage: Envelope ─── */
         .env-outer {
             background: var(--washi);
             border-radius: 4px;
@@ -1018,7 +974,6 @@
             text-align: center
         }
 
-        /* Yes / No */
         .yes-btn,
         .no-btn {
             border: none;
@@ -1055,7 +1010,6 @@
             pointer-events: auto
         }
 
-        /* Form */
         .form-card {
             display: none;
             background: var(--washi);
@@ -1174,6 +1128,44 @@
             }
         }
 
+        .combo-pop {
+            position: fixed;
+            z-index: 9999;
+            pointer-events: none;
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(12px, 3.5vw, 16px);
+            font-weight: 700;
+            color: #fff;
+            background: linear-gradient(135deg, var(--sakura-dk), #ff6b35);
+            padding: 5px 14px;
+            border-radius: 999px;
+            box-shadow: 0 4px 14px rgba(184, 76, 110, .4), 0 0 0 2px rgba(255, 255, 255, .3);
+            white-space: nowrap;
+            animation: comboPop 1.2s cubic-bezier(.22, 1, .36, 1) forwards;
+        }
+
+        @keyframes comboPop {
+            0% {
+                opacity: 0;
+                transform: scale(.6) translateY(0);
+            }
+
+            20% {
+                opacity: 1;
+                transform: scale(1.05) translateY(-6px);
+            }
+
+            60% {
+                opacity: 1;
+                transform: scale(1) translateY(-16px);
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(.9) translateY(-40px);
+            }
+        }
+
         .stage-label {
             font-size: clamp(9px, 2.5vw, 11px);
             font-weight: 700;
@@ -1184,7 +1176,6 @@
             text-align: center
         }
 
-        /* Particles */
         .particles {
             position: fixed;
             inset: 0;
@@ -1235,7 +1226,6 @@
             }
         }
 
-        /* ─── Curtain Outro ─── */
         #curtainOverlay {
             position: fixed;
             inset: 0;
@@ -1343,7 +1333,6 @@
             }
         }
 
-        /* Falling sakura outro */
         .flower-fall {
             position: fixed;
             top: -40px;
@@ -1379,18 +1368,14 @@
     <div class="blob blob-2"></div>
     <div class="blob blob-3"></div>
 
-    <!-- Background sakura petals -->
     <div id="bgPetals"></div>
 
-    <button id="muteBtn" title="Mute/Unmute">🔊</button>
-
     <!-- ══ STAGE 0: BOOK ══ -->
-    <div class="screen active" id="stageBook">
+    <div class="screen" id="stageBook">
         <div class="scene">
             <div class="book-wrapper">
                 <div class="book" id="book">
                     <div class="cover" id="cover">
-                        <!-- Seigaiha wave pattern -->
                         <svg class="cover-seigaiha" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
                             <defs>
                                 <pattern id="seigaiha" x="0" y="0" width="40" height="30" patternUnits="userSpaceOnUse">
@@ -1409,14 +1394,13 @@
                             <div class="hanko">誕生<br>日</div>
                             <div class="cover-kana">お誕生日おめでとう</div>
                             <div class="cover-title">Happy<br>Birthday</div>
-                            <div class="cover-sub">Special For Soya ✦ 15 Juni 2026</div>
-                            <div class="cover-hint">クリックして開く</div>
+                            <div class="cover-sub">Special For Soya <br> 15 Juni 2026</div>
+                            <div class="cover-hint">click untuk membuka</div>
                         </div>
                     </div>
                     <div class="page">
                         <div class="page-inner">
                             <div class="page-title">お誕生日<br>おめでとう</div>
-                            <div class="page-divider"><span class="page-divider-icon">✦</span></div>
                             <div class="page-name">Silvi Adelia Putri</div>
                             <div class="page-divider"><span class="page-divider-icon">🌸</span></div>
                             <div class="page-msg">Haloo ipii, selamat ulang tahun yang ke 20 yaa, semoga sehat selalu
@@ -1424,14 +1408,14 @@
                         </div>
                     </div>
                 </div>
-                <button class="gift-btn" id="toStage1Btn">Mulai</button>
+                <button class="gift-btn" id="toStage1Btn">Ape nih?</button>
             </div>
         </div>
     </div>
 
     <!-- ══ STAGE 1: CAKE ══ -->
     <div class="screen" id="stageCake">
-        <p class="stage-label">✦ Step 1 of 3</p>
+        <p class="stage-label"></p>
         <div class="card">
             <h2>Tiup Semua Lilinnya!</h2>
             <div class="cake-scene">
@@ -1454,10 +1438,8 @@
                         </filter>
                     </defs>
                     <ellipse cx="120" cy="214" rx="88" ry="7" fill="rgba(100,50,70,0.1)" />
-                    <!-- Bottom tier -->
                     <rect x="24" y="147" width="192" height="64" rx="6" fill="url(#cBotGrad)" filter="url(#cs)" />
                     <rect x="24" y="147" width="192" height="18" rx="6" fill="rgba(255,255,255,0.18)" />
-                    <!-- Sakura dots -->
                     <text x="56" y="182" text-anchor="middle" font-size="12">🌸</text>
                     <text x="90" y="182" text-anchor="middle" font-size="10">✦</text>
                     <text x="120" y="182" text-anchor="middle" font-size="12">🌸</text>
@@ -1466,7 +1448,6 @@
                     <path
                         d="M24,158 Q36,147 50,156 Q64,164 78,153 Q92,140 106,153 Q120,164 134,153 Q148,140 162,153 Q176,164 190,153 Q204,142 216,154 L216,147 Q200,138 184,147 Q168,138 152,147 Q136,138 120,147 Q104,138 88,147 Q72,138 56,147 Q40,138 24,147Z"
                         fill="rgba(255,255,255,0.55)" />
-                    <!-- Middle tier -->
                     <rect x="38" y="108" width="164" height="45" rx="6" fill="url(#cMidGrad)" />
                     <rect x="38" y="108" width="164" height="14" rx="6" fill="rgba(255,255,255,0.2)" />
                     <text x="120" y="138" text-anchor="middle" font-size="13" fill="rgba(184,76,110,0.5)"
@@ -1474,7 +1455,6 @@
                     <path
                         d="M38,120 Q52,108 66,118 Q80,128 94,116 Q108,104 122,117 Q136,128 150,116 Q164,104 178,117 Q190,126 202,116 L202,108 Q186,99 170,108 Q154,99 138,108 Q122,99 106,108 Q90,99 74,108 Q58,99 38,108Z"
                         fill="rgba(255,255,255,0.52)" />
-                    <!-- Top tier -->
                     <rect x="56" y="74" width="128" height="40" rx="6" fill="url(#cTopGrad)" />
                     <rect x="56" y="74" width="128" height="13" rx="6" fill="rgba(255,255,255,0.32)" />
                     <text x="88" y="99" text-anchor="middle" font-size="12">🌸</text>
@@ -1483,13 +1463,11 @@
                     <path
                         d="M56,86 Q70,74 84,83 Q98,92 112,81 Q126,70 140,82 Q154,92 168,81 Q180,72 184,80 L184,74 Q168,65 152,74 Q136,65 120,74 Q104,65 88,74 Q72,65 56,74Z"
                         fill="rgba(255,255,255,0.58)" />
-                    <!-- Candles -->
                     <rect x="70" y="48" width="11" height="27" rx="3" fill="#c8a84b" />
                     <rect x="91" y="43" width="11" height="32" rx="3" fill="#e8779a" />
                     <rect x="114" y="38" width="12" height="37" rx="3" fill="#c8a84b" />
                     <rect x="138" y="43" width="11" height="32" rx="3" fill="#e8779a" />
                     <rect x="159" y="48" width="11" height="27" rx="3" fill="#c8a84b" />
-                    <!-- Wicks -->
                     <line x1="75.5" y1="49" x2="75.5" y2="43" stroke="#5a3a20" stroke-width="1.5"
                         stroke-linecap="round" />
                     <line x1="96.5" y1="44" x2="96.5" y2="38" stroke="#5a3a20" stroke-width="1.5"
@@ -1500,13 +1478,11 @@
                         stroke-linecap="round" />
                     <line x1="164.5" y1="49" x2="164.5" y2="43" stroke="#5a3a20" stroke-width="1.5"
                         stroke-linecap="round" />
-                    <!-- Glows -->
                     <circle id="glow0" cx="75.5" cy="44" r="8" fill="rgba(200,168,75,0.22)" />
                     <circle id="glow1" cx="96.5" cy="39" r="8" fill="rgba(200,168,75,0.22)" />
                     <circle id="glow2" cx="120" cy="34" r="9" fill="rgba(200,168,75,0.22)" />
                     <circle id="glow3" cx="143.5" cy="39" r="8" fill="rgba(200,168,75,0.22)" />
                     <circle id="glow4" cx="164.5" cy="44" r="8" fill="rgba(200,168,75,0.22)" />
-                    <!-- Flames -->
                     <g id="flame0">
                         <ellipse cx="75.5" cy="36" rx="4.5" ry="7" fill="#ff9500" opacity="0.9">
                             <animate attributeName="ry" values="7;7.6;6.8;7.4;7" dur="0.5s" repeatCount="indefinite" />
@@ -1575,10 +1551,10 @@
 
     <!-- ══ STAGE 2: BUTTERFLY ══ -->
     <div class="screen" id="stageButterfly">
-        <div class="bf-hud" id="bfHud" style="display:none"><span>🤓 Tangkap: <em id="bfCount">0</em> / <em
-                    id="bfTotal">8</em></span></div>
+        <div class="bf-hud" id="bfHud" style="display:none"><span>🤓 Tangkapan: <em id="bfCount">0</em> / <em
+                    id="bfTotal">15</em></span></div>
         <div class="intro-card" id="bfIntro">
-            <h2>Tangkap Kupu-kupu!</h2>
+            <h2>Tangkap!</h2>
             <p><br>Tangkap semua nerd!!</p>
             <button class="start-btn" id="bfStartBtn">Mulai!</button>
         </div>
@@ -1586,8 +1562,8 @@
     </div>
 
     <!-- ══ STAGE 3: GIFT ══ -->
-    <div class="screen" id="stageGift">
-        <p class="stage-label">Step 3 of 3</p>
+    <div class="screen active" id="stageGift">
+        <p class="stage-label"></p>
         <div class="gift-card">
             <h2>Buka Hadiahnya!</h2>
             <div class="gift-box-wrap" id="giftBox">
@@ -1601,7 +1577,6 @@
                     <ellipse cx="60" cy="38" rx="8" ry="5" fill="#c8a84b" />
                     <ellipse cx="40" cy="30" rx="18" ry="9" fill="#e8d090" transform="rotate(-30 40 30)" />
                     <ellipse cx="80" cy="30" rx="18" ry="9" fill="#e8d090" transform="rotate(30 80 30)" />
-                    <!-- Sakura on box -->
                     <text x="35" y="90" font-size="16">🌸</text>
                     <text x="72" y="90" font-size="16">🌸</text>
                     <defs>
@@ -1612,7 +1587,7 @@
                     </defs>
                 </svg>
             </div>
-            <div class="clue">Clue: <em>Kata kata andalan ku</em></div>
+            <div class="clue">Clue: <em>Kata kata andalan</em></div>
             <div class="pw-wrap">
                 <input class="pw-input" id="pwInput" type="text" placeholder="Ketik jawabannya..." autocomplete="off" />
                 <div class="pw-err" id="pwErr"></div>
@@ -1624,12 +1599,13 @@
     <!-- ══ STAGE 4: ENVELOPE ══ -->
     <div class="screen" id="stageEnvelope">
         <div id="envStage1" style="display:flex;flex-direction:column;align-items:center;gap:clamp(16px,4vw,28px)">
-            <p class="env-hint">Arahkan / sentuh amplop</p>
+            <p class="env-hint">Sentuh amplop</p>
             <div class="env-outer">
                 <div class="env-wrap" id="envWrap">
                     <div class="env-letter">
                         <div class="env-letter-inner">
-                            <p class="env-letter-title">Gatau mau ngado apa<br>jadi aku kasih ucapan semnagat aja yaa</p>
+                            <p class="env-letter-title">Makasih ya fans karena sering<br>join dan like live aku gwejh
+                            </p>
                         </div>
                     </div>
                     <div class="env-body">
@@ -1663,8 +1639,7 @@
             </div>
             <div class="success-msg" id="successMsg">
                 <div class="checkmark">🌸</div>
-                <h2>Yeay, Terkirim!</h2>
-                <p>Pesanmu sudah sampai!</p>
+                <p>Pesanmu sudah disimpan!</p>
             </div>
         </div>
     </div>
@@ -1689,22 +1664,20 @@
         }
 
         /* ─── Audio ─── */
-        var AC = null, muted = false;
+        var AC = null;
         var bgAudio = document.getElementById('bgAudio');
-        var muteBtn = document.getElementById('muteBtn');
         function initAC() { if (AC) return; AC = new (window.AudioContext || window.webkitAudioContext)(); }
-        muteBtn.addEventListener('click', function () { initAC(); muted = !muted; muteBtn.textContent = muted ? '🔇' : '🔊'; bgAudio.volume = muted ? 0 : 0.55; });
-        function startBgMusic() { bgAudio.currentTime = 3.5; bgAudio.volume = muted ? 0 : 0.55; bgAudio.play().catch(function () { }); }
+        function startBgMusic() { bgAudio.currentTime = 3.5; bgAudio.volume = 0.55; bgAudio.play().catch(function () { }); }
 
         /* ─── SFX ─── */
-        function sfxBookOpen() { if (!AC || muted) return; var now = AC.currentTime; var bufLen = AC.sampleRate * 0.6; var buf = AC.createBuffer(1, bufLen, AC.sampleRate); var data = buf.getChannelData(0); for (var i = 0; i < bufLen; i++) data[i] = (Math.random() * 2 - 1); var noise = AC.createBufferSource(); noise.buffer = buf; var bpf = AC.createBiquadFilter(); bpf.type = 'bandpass'; bpf.frequency.value = 1200; bpf.Q.value = 0.8; var wg = AC.createGain(); wg.gain.setValueAtTime(0, now); wg.gain.linearRampToValueAtTime(0.35, now + 0.05); wg.gain.exponentialRampToValueAtTime(0.001, now + 0.55); noise.connect(bpf); bpf.connect(wg); wg.connect(AC.destination); noise.start(now); noise.stop(now + 0.6);[1047, 1319, 1568].forEach(function (freq, i) { var osc = AC.createOscillator(); var env = AC.createGain(); osc.type = 'sine'; osc.frequency.value = freq; env.gain.setValueAtTime(0, now + i * 0.12); env.gain.linearRampToValueAtTime(0.22, now + i * 0.12 + 0.02); env.gain.exponentialRampToValueAtTime(0.001, now + i * 0.12 + 0.55); osc.connect(env); env.connect(AC.destination); osc.start(now + i * 0.12); osc.stop(now + i * 0.12 + 0.6); }); }
-        function sfxPuff() { if (!AC || muted) return; var now = AC.currentTime; var bufLen = Math.floor(AC.sampleRate * 0.35); var buf = AC.createBuffer(1, bufLen, AC.sampleRate); var data = buf.getChannelData(0); for (var i = 0; i < bufLen; i++) data[i] = (Math.random() * 2 - 1); var src = AC.createBufferSource(); src.buffer = buf; var lpf = AC.createBiquadFilter(); lpf.type = 'lowpass'; lpf.frequency.value = 400; var gain = AC.createGain(); gain.gain.setValueAtTime(0.5, now); gain.gain.exponentialRampToValueAtTime(0.001, now + 0.32); src.connect(lpf); lpf.connect(gain); gain.connect(AC.destination); src.start(now); src.stop(now + 0.35); }
-        function sfxSparkle() { if (!AC || muted) return; var now = AC.currentTime;[1200, 1600, 2000, 2500].forEach(function (f, i) { var osc = AC.createOscillator(); var gain = AC.createGain(); osc.type = 'triangle'; osc.frequency.value = f + Math.random() * 100; gain.gain.setValueAtTime(0, now + i * 0.045); gain.gain.linearRampToValueAtTime(0.18, now + i * 0.045 + 0.01); gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.045 + 0.22); osc.connect(gain); gain.connect(AC.destination); osc.start(now + i * 0.045); osc.stop(now + i * 0.045 + 0.25); }); }
-        function sfxWrong() { if (!AC || muted) return; var now = AC.currentTime;[440, 330].forEach(function (freq, i) { var osc = AC.createOscillator(); osc.type = 'sawtooth'; var gain = AC.createGain(); osc.frequency.value = freq; gain.gain.setValueAtTime(0, now + i * 0.13); gain.gain.linearRampToValueAtTime(0.28, now + i * 0.13 + 0.01); gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.13 + 0.18); osc.connect(gain); gain.connect(AC.destination); osc.start(now + i * 0.13); osc.stop(now + i * 0.13 + 0.2); }); }
-        function sfxCorrect() { if (!AC || muted) return; var now = AC.currentTime;[523.25, 659.25, 784.00, 1046.50].forEach(function (freq, i) { var osc = AC.createOscillator(); osc.type = 'triangle'; var gain = AC.createGain(); osc.frequency.value = freq; gain.gain.setValueAtTime(0, now + i * 0.09); gain.gain.linearRampToValueAtTime(0.3, now + i * 0.09 + 0.015); gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.09 + 0.5); osc.connect(gain); gain.connect(AC.destination); osc.start(now + i * 0.09); osc.stop(now + i * 0.09 + 0.55); }); }
-        function sfxNextStep() { if (!AC || muted) return; var now = AC.currentTime;[880, 1174.66].forEach(function (freq, i) { var osc = AC.createOscillator(); osc.type = 'sine'; var gain = AC.createGain(); osc.frequency.value = freq; gain.gain.setValueAtTime(0, now + i * 0.14); gain.gain.linearRampToValueAtTime(0.25, now + i * 0.14 + 0.01); gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.14 + 0.45); osc.connect(gain); gain.connect(AC.destination); osc.start(now + i * 0.14); osc.stop(now + i * 0.14 + 0.48); }); }
-        function sfxEnvelopeOpen() { if (!AC || muted) return; var now = AC.currentTime; var bLen = Math.floor(AC.sampleRate * 0.4); var buf = AC.createBuffer(1, bLen, AC.sampleRate); var data = buf.getChannelData(0); for (var i = 0; i < bLen; i++) data[i] = Math.random() * 2 - 1; var src = AC.createBufferSource(); src.buffer = buf; var bpf = AC.createBiquadFilter(); bpf.type = 'bandpass'; bpf.frequency.value = 2800; bpf.Q.value = 1.2; var ng = AC.createGain(); ng.gain.setValueAtTime(0, now); ng.gain.linearRampToValueAtTime(0.2, now + 0.03); ng.gain.setValueAtTime(0.2, now + 0.15); ng.gain.exponentialRampToValueAtTime(0.001, now + 0.38); src.connect(bpf); bpf.connect(ng); ng.connect(AC.destination); src.start(now); src.stop(now + 0.4); }
-        function sfxButtonClick() { if (!AC || muted) return; var now = AC.currentTime; var osc = AC.createOscillator(); osc.type = 'sine'; var gain = AC.createGain(); osc.frequency.setValueAtTime(900, now); osc.frequency.exponentialRampToValueAtTime(400, now + 0.06); gain.gain.setValueAtTime(0.22, now); gain.gain.exponentialRampToValueAtTime(0.001, now + 0.07); osc.connect(gain); gain.connect(AC.destination); osc.start(now); osc.stop(now + 0.08); }
+        function sfxBookOpen() { if (!AC) return; var now = AC.currentTime; var bufLen = AC.sampleRate * 0.6; var buf = AC.createBuffer(1, bufLen, AC.sampleRate); var data = buf.getChannelData(0); for (var i = 0; i < bufLen; i++) data[i] = (Math.random() * 2 - 1); var noise = AC.createBufferSource(); noise.buffer = buf; var bpf = AC.createBiquadFilter(); bpf.type = 'bandpass'; bpf.frequency.value = 1200; bpf.Q.value = 0.8; var wg = AC.createGain(); wg.gain.setValueAtTime(0, now); wg.gain.linearRampToValueAtTime(0.35, now + 0.05); wg.gain.exponentialRampToValueAtTime(0.001, now + 0.55); noise.connect(bpf); bpf.connect(wg); wg.connect(AC.destination); noise.start(now); noise.stop(now + 0.6);[1047, 1319, 1568].forEach(function (freq, i) { var osc = AC.createOscillator(); var env = AC.createGain(); osc.type = 'sine'; osc.frequency.value = freq; env.gain.setValueAtTime(0, now + i * 0.12); env.gain.linearRampToValueAtTime(0.22, now + i * 0.12 + 0.02); env.gain.exponentialRampToValueAtTime(0.001, now + i * 0.12 + 0.55); osc.connect(env); env.connect(AC.destination); osc.start(now + i * 0.12); osc.stop(now + i * 0.12 + 0.6); }); }
+        function sfxPuff() { if (!AC) return; var now = AC.currentTime; var bufLen = Math.floor(AC.sampleRate * 0.35); var buf = AC.createBuffer(1, bufLen, AC.sampleRate); var data = buf.getChannelData(0); for (var i = 0; i < bufLen; i++) data[i] = (Math.random() * 2 - 1); var src = AC.createBufferSource(); src.buffer = buf; var lpf = AC.createBiquadFilter(); lpf.type = 'lowpass'; lpf.frequency.value = 400; var gain = AC.createGain(); gain.gain.setValueAtTime(0.5, now); gain.gain.exponentialRampToValueAtTime(0.001, now + 0.32); src.connect(lpf); lpf.connect(gain); gain.connect(AC.destination); src.start(now); src.stop(now + 0.35); }
+        function sfxSparkle() { if (!AC) return; var now = AC.currentTime;[1200, 1600, 2000, 2500].forEach(function (f, i) { var osc = AC.createOscillator(); var gain = AC.createGain(); osc.type = 'triangle'; osc.frequency.value = f + Math.random() * 100; gain.gain.setValueAtTime(0, now + i * 0.045); gain.gain.linearRampToValueAtTime(0.18, now + i * 0.045 + 0.01); gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.045 + 0.22); osc.connect(gain); gain.connect(AC.destination); osc.start(now + i * 0.045); osc.stop(now + i * 0.045 + 0.25); }); }
+        function sfxWrong() { if (!AC) return; var now = AC.currentTime;[440, 330].forEach(function (freq, i) { var osc = AC.createOscillator(); osc.type = 'sawtooth'; var gain = AC.createGain(); osc.frequency.value = freq; gain.gain.setValueAtTime(0, now + i * 0.13); gain.gain.linearRampToValueAtTime(0.28, now + i * 0.13 + 0.01); gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.13 + 0.18); osc.connect(gain); gain.connect(AC.destination); osc.start(now + i * 0.13); osc.stop(now + i * 0.13 + 0.2); }); }
+        function sfxCorrect() { if (!AC) return; var now = AC.currentTime;[523.25, 659.25, 784.00, 1046.50].forEach(function (freq, i) { var osc = AC.createOscillator(); osc.type = 'triangle'; var gain = AC.createGain(); osc.frequency.value = freq; gain.gain.setValueAtTime(0, now + i * 0.09); gain.gain.linearRampToValueAtTime(0.3, now + i * 0.09 + 0.015); gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.09 + 0.5); osc.connect(gain); gain.connect(AC.destination); osc.start(now + i * 0.09); osc.stop(now + i * 0.09 + 0.55); }); }
+        function sfxNextStep() { if (!AC) return; var now = AC.currentTime;[880, 1174.66].forEach(function (freq, i) { var osc = AC.createOscillator(); osc.type = 'sine'; var gain = AC.createGain(); osc.frequency.value = freq; gain.gain.setValueAtTime(0, now + i * 0.14); gain.gain.linearRampToValueAtTime(0.25, now + i * 0.14 + 0.01); gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.14 + 0.45); osc.connect(gain); gain.connect(AC.destination); osc.start(now + i * 0.14); osc.stop(now + i * 0.14 + 0.48); }); }
+        function sfxEnvelopeOpen() { if (!AC) return; var now = AC.currentTime; var bLen = Math.floor(AC.sampleRate * 0.4); var buf = AC.createBuffer(1, bLen, AC.sampleRate); var data = buf.getChannelData(0); for (var i = 0; i < bLen; i++) data[i] = Math.random() * 2 - 1; var src = AC.createBufferSource(); src.buffer = buf; var bpf = AC.createBiquadFilter(); bpf.type = 'bandpass'; bpf.frequency.value = 2800; bpf.Q.value = 1.2; var ng = AC.createGain(); ng.gain.setValueAtTime(0, now); ng.gain.linearRampToValueAtTime(0.2, now + 0.03); ng.gain.setValueAtTime(0.2, now + 0.15); ng.gain.exponentialRampToValueAtTime(0.001, now + 0.38); src.connect(bpf); bpf.connect(ng); ng.connect(AC.destination); src.start(now); src.stop(now + 0.4); }
+        function sfxButtonClick() { if (!AC) return; var now = AC.currentTime; var osc = AC.createOscillator(); osc.type = 'sine'; var gain = AC.createGain(); osc.frequency.setValueAtTime(900, now); osc.frequency.exponentialRampToValueAtTime(400, now + 0.06); gain.gain.setValueAtTime(0.22, now); gain.gain.exponentialRampToValueAtTime(0.001, now + 0.07); osc.connect(gain); gain.connect(AC.destination); osc.start(now); osc.stop(now + 0.08); }
 
         /* ─── Helpers ─── */
         function goTo(id) { document.querySelectorAll('.screen').forEach(function (s) { s.classList.remove('active'); }); document.getElementById(id).classList.add('active'); }
@@ -1721,8 +1694,8 @@
         /* ─── Stage 0: Book ─── */
         var book = document.getElementById('book');
         var cover = document.getElementById('cover');
-        var opened = false, bookAudioStarted = false;
-        function openBook() { initAC(); opened = !opened; book.classList.toggle('open', opened); if (opened) { sfxBookOpen(); if (!bookAudioStarted) { bookAudioStarted = true; setTimeout(function () { startBgMusic(); muteBtn.classList.add('visible'); }, 500); } } }
+        var opened = false;
+        function openBook() { initAC(); opened = !opened; book.classList.toggle('open', opened); if (opened) { sfxBookOpen(); } }
         cover.addEventListener('click', openBook);
         cover.addEventListener('touchend', function (e) { e.preventDefault(); openBook(); }, { passive: false });
 
@@ -1742,13 +1715,57 @@
         function blowOne() { if (blowDone || candlesLeft <= 0) return; initAC(); sfxPuff(); var idx = TOTAL_CANDLES - candlesLeft; var flameEl = document.getElementById('flame' + idx); var smokeEl = document.getElementById('smoke' + idx); var glowEl = document.getElementById('glow' + idx); if (flameEl) { flameEl.style.transition = 'opacity 0.25s ease'; flameEl.style.opacity = '0'; setTimeout(function (f) { f.style.visibility = 'hidden'; }(flameEl), 260); } if (glowEl) { glowEl.style.transition = 'opacity 0.3s ease'; glowEl.style.opacity = '0'; } if (smokeEl) { smokeEl.classList.add('puffing'); setTimeout(function (sm) { sm.classList.remove('puffing'); }(smokeEl), 2000); } candlesLeft--; if (candlesLeft > 0) { blowHint.textContent = candlesLeft + ' lilin menyala '; } else { blowDone = true; blowHint.textContent = 'Yeyy semua padam! 🌸'; blowBtn.textContent = 'Lanjut '; spawnConfetti(); blowBtn.removeEventListener('click', blowOne); blowBtn.addEventListener('click', function () { initAC(); sfxNextStep(); goTo('stageButterfly'); }); } }
 
         /* ─── Stage 2: Kupu-kupu ─── */
-        var BF_TOTAL = 8;
-        var BF_WORDS = ['Cantik!', 'Lucu!', 'Imut!', 'Manis!', 'Kawaii~', '可愛い!', 'Kirei~', 'Gemoy!'];
+        var BF_TOTAL = 15;
+        var BF_WORDS = ['Cantik!', 'Lucu!', 'Imut!', 'Manis!', 'Kawaii~', 'Hebat!!', 'Kirei~', 'Keren!', 'Cerdas!', 'Berotak senku!', 'Seru!', 'Imup!', 'Mbg!','When yah!', 'Cihuyy!'];
         var bfCaught = 0, bfIntervals = [];
+        var comboCount = 0, comboTimer = null;
         var bfContainer = document.getElementById('bfContainer');
+
+        function sfxCombo(combo) {
+            if (!AC) return;
+            var now = AC.currentTime;
+            var baseFreqs = [523.25, 659.25, 783.99, 1046.50, 1318.51];
+            var count = Math.min(combo, 5);
+            for (var i = 0; i < count; i++) {
+                (function (i) {
+                    var osc = AC.createOscillator();
+                    var gain = AC.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.value = baseFreqs[i] * (1 + (combo - 1) * 0.04);
+                    gain.gain.setValueAtTime(0, now + i * 0.07);
+                    gain.gain.linearRampToValueAtTime(0.28, now + i * 0.07 + 0.015);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.07 + 0.35);
+                    osc.connect(gain); gain.connect(AC.destination);
+                    osc.start(now + i * 0.07); osc.stop(now + i * 0.07 + 0.38);
+                })(i);
+            }
+        }
+
+        function showComboPopup(combo, x, y) {
+            var labels = { 2: '2x Combo!', 3: '3x Gokil! ', 4: '4x GOKIL!!', 5: '5x GOKIL MANA GOKIL!!!' };
+            var label = combo >= 5 ? combo + 'x SUPER GOKIL!!!' : (labels[combo] || combo + 'x Combo!');
+            var el = document.createElement('div');
+            el.className = 'combo-pop';
+            el.textContent = label;
+            var scale = Math.min(1 + (combo - 2) * 0.15, 2);
+            el.style.cssText = 'left:' + Math.min(Math.max(x - 60, 10), window.innerWidth - 160) + 'px;top:' + Math.max(y - 60, 60) + 'px;--scale:' + scale;
+            document.body.appendChild(el);
+            setTimeout(function () { el.remove(); }, 1200);
+        }
+
         document.getElementById('bfStartBtn').addEventListener('click', function () { initAC(); sfxButtonClick(); document.getElementById('bfIntro').style.display = 'none'; document.getElementById('bfHud').style.display = 'flex'; bfContainer.classList.add('active'); spawnButterflies(); });
         function spawnButterflies() { for (var bi = 0; bi < BF_TOTAL; bi++) { (function (idx) { setTimeout(function () { createBf(idx); }, idx * 300); })(bi); } }
-        function createBf(idx) { var bf = document.createElement('div'); bf.className = 'bf'; bf.textContent = '🤓'; var x = Math.random() * (window.innerWidth - 60); var y = 80 + Math.random() * (window.innerHeight - 160); bf.style.left = x + 'px'; bf.style.top = y + 'px'; bfContainer.appendChild(bf); var vx = (Math.random() * 2 + 1) * (Math.random() > .5 ? 1 : -1); var vy = (Math.random() * 1.5 + .5) * (Math.random() > .5 ? 1 : -1); var iv = setInterval(function () { x += vx; y += vy; if (x < 0 || x > window.innerWidth - 50) vx *= -1; if (y < 70 || y > window.innerHeight - 60) vy *= -1; bf.style.left = x + 'px'; bf.style.top = y + 'px'; }, 16); bfIntervals.push(iv); function catchBf() { if (bf.classList.contains('caught')) return; initAC(); sfxSparkle(); bf.classList.add('caught'); clearInterval(iv); var w = document.createElement('div'); w.className = 'word-pop'; w.textContent = BF_WORDS[idx]; w.style.left = x + 'px'; w.style.top = y + 'px'; bfContainer.appendChild(w); setTimeout(function () { w.remove(); }, 1400); bfCaught++; document.getElementById('bfCount').textContent = bfCaught; setTimeout(function () { bf.remove(); }, 400); if (bfCaught >= BF_TOTAL) { bfIntervals.forEach(function (iv2) { clearInterval(iv2); }); bfContainer.classList.remove('active'); setTimeout(function () { initAC(); sfxNextStep(); spawnConfetti(); goTo('stageGift'); }, 600); } } bf.addEventListener('click', catchBf); bf.addEventListener('touchstart', function (e) { e.preventDefault(); catchBf(); }, { passive: false }); }
+        function createBf(idx) {
+            var bf = document.createElement('div'); bf.className = 'bf'; bf.textContent = '🤓'; var x = Math.random() * (window.innerWidth - 60); var y = 80 + Math.random() * (window.innerHeight - 160); bf.style.left = x + 'px'; bf.style.top = y + 'px'; bfContainer.appendChild(bf); var vx = (Math.random() * 2 + 1) * (Math.random() > .5 ? 1 : -1); var vy = (Math.random() * 1.5 + .5) * (Math.random() > .5 ? 1 : -1); var iv = setInterval(function () { x += vx; y += vy; if (x < 0 || x > window.innerWidth - 50) vx *= -1; if (y < 70 || y > window.innerHeight - 60) vy *= -1; bf.style.left = x + 'px'; bf.style.top = y + 'px'; }, 16); bfIntervals.push(iv); function catchBf() {
+                if (bf.classList.contains('caught')) return; initAC(); sfxSparkle(); bf.classList.add('caught'); clearInterval(iv);
+                /* combo logic */
+                clearTimeout(comboTimer);
+                comboCount++;
+                if (comboCount >= 2) { sfxCombo(comboCount); showComboPopup(comboCount, x, y); }
+                comboTimer = setTimeout(function () { comboCount = 0; }, 2000);
+                var w = document.createElement('div'); w.className = 'word-pop'; w.textContent = BF_WORDS[idx % BF_WORDS.length]; w.style.left = x + 'px'; w.style.top = y + 'px'; bfContainer.appendChild(w); setTimeout(function () { w.remove(); }, 1400); bfCaught++; document.getElementById('bfCount').textContent = bfCaught; setTimeout(function () { bf.remove(); }, 400); if (bfCaught >= BF_TOTAL) { bfIntervals.forEach(function (iv2) { clearInterval(iv2); }); bfContainer.classList.remove('active'); setTimeout(function () { initAC(); sfxNextStep(); spawnConfetti(); goTo('stageEnvelope'); }, 600); }
+            } bf.addEventListener('click', catchBf); bf.addEventListener('touchstart', function (e) { e.preventDefault(); catchBf(); }, { passive: false });
+        }
 
         /* ─── Stage 3: Password ─── */
         var PASSWORD = 'aman aja';
@@ -1759,7 +1776,7 @@
         giftBox.addEventListener('click', function () { giftBox.classList.add('shake'); setTimeout(function () { giftBox.classList.remove('shake'); }, 400); });
         pwInput.addEventListener('keydown', function (e) { if (e.key === 'Enter') checkPw(); });
         pwBtn.addEventListener('click', function () { initAC(); sfxButtonClick(); checkPw(); });
-        function checkPw() { var val = pwInput.value.trim().toLowerCase(); if (val === PASSWORD) { initAC(); sfxCorrect(); pwErr.textContent = ''; giftBox.classList.add('open-anim'); spawnConfetti(); setTimeout(function () { goTo('stageEnvelope'); }, 700); } else { initAC(); sfxWrong(); pwInput.classList.add('wrong'); pwErr.textContent = 'Hmm, coba lagi yaa... 🌸'; setTimeout(function () { pwInput.classList.remove('wrong'); }, 400); } }
+        function checkPw() { var val = pwInput.value.trim().toLowerCase(); if (val === PASSWORD) { initAC(); sfxCorrect(); startBgMusic(); pwErr.textContent = ''; giftBox.classList.add('open-anim'); spawnConfetti(); setTimeout(function () { goTo('stageBook'); }, 700); } else { initAC(); sfxWrong(); pwInput.classList.add('wrong'); pwErr.textContent = 'Hmm, coba lagi yaa... 🌸'; setTimeout(function () { pwInput.classList.remove('wrong'); }, 400); } }
 
         /* ─── Stage 4: Amplop ─── */
         var envWrap = document.getElementById('envWrap');
